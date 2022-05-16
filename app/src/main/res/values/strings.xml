@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">Jober</string>
+    <string name="company_string">Company</string>
+    <string name="jober_string">Jober</string>
+    <string name="worker_string">Worker</string>
+    <string name="recover_string">Recover</string>
+    <string name="email_string">E-mail</string>
+    <string name="register_string">Register</string>
+    <string name="no_account_string">Don\'t have an account?</string>
+    <string name="forgot_password_string">Forgot password?</string>
+    <string name="password_string">Password</string>
+    <string name="sign_in_string">Sign In</string>
+    <string name="sign_up_string">Sign Up</string>
+    <string name="already_have_an_account_string">Already have an account?</string>
 </resources>
