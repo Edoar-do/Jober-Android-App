@@ -3,7 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/edoko/Downloads/ING_UNIBS/LIBRI_e_DISPENSE/MAGISTRALE/5 ANNO/MOBILE PROGRAMMING/Jober-Android-App/app/src/main/res/layout/activity_login.xml" value="0.26197916666666665" />
         <entry key="..\:/Users/edoko/Downloads/ING_UNIBS/LIBRI_e_DISPENSE/MAGISTRALE/5 ANNO/MOBILE PROGRAMMING/Jober-Android-App/app/src/main/res/layout/activity_main.xml" value="0.12962962962962962" />
+        <entry key="..\:/Users/edoko/Downloads/ING_UNIBS/LIBRI_e_DISPENSE/MAGISTRALE/5 ANNO/MOBILE PROGRAMMING/Jober-Android-App/app/src/main/res/layout/activity_register.xml" value="0.2957427536231884" />
+        <entry key="..\:/Users/edoko/Downloads/ING_UNIBS/LIBRI_e_DISPENSE/MAGISTRALE/5 ANNO/MOBILE PROGRAMMING/Jober-Android-App/app/src/main/res/layout/fragment_offers.xml" value="0.2957427536231884" />
+        <entry key="..\:/Users/edoko/Downloads/ING_UNIBS/LIBRI_e_DISPENSE/MAGISTRALE/5 ANNO/MOBILE PROGRAMMING/Jober-Android-App/app/src/main/res/layout/fragment_options.xml" value="0.2957427536231884" />
         <entry key="app/src/main/res/drawable/custom_input_field.xml" value="0.3625" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.29048919677734375" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25359649658203126" />

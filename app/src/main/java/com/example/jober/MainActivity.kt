@@ -7,18 +7,26 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 //import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+
+    private var bottomNavigationView: BottomNavigationView? = null
+
+    private val offersFragment: Fragment? = null
+    private val calendarFragment: Fragment? = null
+    private val chatFragment: Fragment? = null
+    private val optionsFragment: Fragment? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val offersFragment=OffersFragment()
-        val calendarFragment=CalendarFragment()
-        val chatFragment=ChatFragment()
-        val optionsFragment=OptionsFragment()
+        offersFragment = OffersFragment()
+        calendarFragment = CalendarFragment()
+        chatFragment = ChatFragment()
+        optionsFragment = OptionsFragment()
 
         setCurrentFragment(offersFragment)
 
-        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
 
         bottomNavigationView.setOnNavigationItemSelectedListener {
             when(it.itemId){
