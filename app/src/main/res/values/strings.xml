@@ -17,4 +17,17 @@
     <string name="my_profile_string">My profile</string>
     <string name="my_applications_string">My applications</string>
     <string name="profile_pic_string">profile_pic</string>
+    <string name="logout_string">Logout</string>
+    <string name="name_string">name</string>
+    <string name="surname_string">surname</string>
+    <string name="age_string">age</string>
+    <string name="country_string">country</string>
+    <string name="city_string">city</string>
+    <string name="main_profession_string">main profession</string>
+    <string name="bio_string">bio</string>
+    <string name="skills_string">skills</string>
+    <string name="languages_string">languages</string>
+    <string name="educational_experience_string">educational experience</string>
+    <string name="change_photo_string">change photo</string>
+    <string name="save_string">save</string>
 </resources>

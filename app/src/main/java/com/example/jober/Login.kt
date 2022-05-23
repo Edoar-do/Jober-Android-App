@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -51,5 +52,11 @@ class Login : AppCompatActivity() {
                         Toast.LENGTH_SHORT).show()
                 }
             }
+    }
+
+    fun goToRegister(v : View) {
+        val intent : Intent = Intent(this, SignUp::class.java)
+        finish()
+        startActivity(intent)
     }
 }

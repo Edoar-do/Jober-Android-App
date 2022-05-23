@@ -20,7 +20,7 @@ class SignUp : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_register)
+        setContentView(R.layout.activity_signup)
 
         edt_email = findViewById(R.id.edt_email)
         edt_password = findViewById(R.id.edt_password)
@@ -40,7 +40,7 @@ class SignUp : AppCompatActivity() {
         mAuth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    val intent = Intent(this@SignUp, MainActivity::class.java)
+                    val intent = Intent(this@SignUp, WorkerProfileCreation::class.java)
                     finish()
                     startActivity(intent)
                 } else {
