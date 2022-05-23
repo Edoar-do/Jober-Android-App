@@ -36,4 +36,13 @@ BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
         return null
     }
 
+    fun getIndexByTitle(title : String) : Int? {
+        for (i in mFragmentTitleList.indices) {
+            if (mFragmentTitleList[i] == title) {
+                return i
+            }
+        }
+        return 0
+    }
+
 }

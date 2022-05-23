@@ -40,13 +40,12 @@
                 android:autofillHints=""
                 android:background="@drawable/custom_input_field"
                 android:ems="10"
-                android:hint="@string/name_string"
+                android:hint="company name"
                 android:inputType="text"
                 android:padding="12dp"
                 android:textColor="#7986CB"
                 android:textColorHint="#757575"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.496"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView" />
 
@@ -60,31 +59,13 @@
                 android:autofillHints=""
                 android:background="@drawable/custom_input_field"
                 android:ems="10"
-                android:hint="@string/surname_string"
+                android:hint="sector"
                 android:inputType="text"
                 android:padding="12dp"
                 android:textColorHint="#757575"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edt_name" />
-
-            <EditText
-                android:id="@+id/edt_age"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="16dp"
-                android:autofillHints=""
-                android:background="@drawable/custom_input_field"
-                android:ems="10"
-                android:hint="@string/age_string"
-                android:inputType="text"
-                android:padding="12dp"
-                android:textColorHint="#757575"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edt_sector" />
 
             <EditText
                 android:id="@+id/edt_country"
@@ -123,99 +104,23 @@
                 app:layout_constraintTop_toBottomOf="@+id/edt_country" />
 
             <EditText
-                android:id="@+id/edt_main_profession"
+                android:id="@+id/edt_description"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="150dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="25dp"
                 android:layout_marginRight="16dp"
                 android:autofillHints=""
                 android:background="@drawable/custom_input_field"
                 android:ems="10"
-                android:hint="@string/main_profession_string"
-                android:inputType="text"
+                android:gravity="top"
+                android:hint="description"
+                android:inputType="textMultiLine"
                 android:padding="12dp"
                 android:textColorHint="#757575"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/divider2" />
-
-            <EditText
-                android:id="@+id/edt_description"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="16dp"
-                android:autofillHints=""
-                android:background="@drawable/custom_input_field"
-                android:ems="10"
-                android:gravity="top"
-                android:hint="@string/bio_string"
-                android:inputType="textMultiLine"
-                android:padding="12dp"
-                android:textColorHint="#757575"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edt_main_profession" />
-
-            <EditText
-                android:id="@+id/edt_skills"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="16dp"
-                android:autofillHints=""
-                android:background="@drawable/custom_input_field"
-                android:ems="10"
-                android:gravity="top"
-                android:hint="@string/skills_string"
-                android:inputType="textMultiLine"
-                android:padding="12dp"
-                android:textColorHint="#757575"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edt_description" />
-
-            <EditText
-                android:id="@+id/edt_languages"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="16dp"
-                android:autofillHints=""
-                android:background="@drawable/custom_input_field"
-                android:ems="10"
-                android:gravity="top"
-                android:hint="@string/languages_string"
-                android:inputType="textMultiLine"
-                android:padding="12dp"
-                android:textColorHint="#757575"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edt_skills" />
-
-            <EditText
-                android:id="@+id/edt_educational_experiences"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="16dp"
-                android:autofillHints=""
-                android:background="@drawable/custom_input_field"
-                android:ems="10"
-                android:gravity="top"
-                android:hint="@string/educational_experience_string"
-                android:inputType="textMultiLine"
-                android:padding="12dp"
-                android:textColorHint="#757575"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.062"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edt_languages" />
 
             <View
                 android:id="@+id/divider"
@@ -227,7 +132,7 @@
                 android:background="?android:attr/listDivider"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edt_age" />
+                app:layout_constraintTop_toBottomOf="@+id/edt_sector" />
 
             <View
                 android:id="@+id/divider2"
@@ -265,13 +170,25 @@
 
         <Button
             android:id="@+id/btn_save"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:onClick="save"
             android:text="@string/save_string"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btn_cancel"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:backgroundTint="@color/darker_gray"
+            android:text="@android:string/cancel"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_save"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>

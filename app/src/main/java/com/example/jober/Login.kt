@@ -43,6 +43,7 @@ class Login : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     val intent = Intent(this@Login, MainActivity::class.java)
+                    intent.putExtra("fragment", "Options")
                     finish()
                     startActivity(intent)
                 } else {

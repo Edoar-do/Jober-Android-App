@@ -1,15 +1,15 @@
 package com.example.jober
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 import android.widget.EditText
 
-class WorkerProfileCreation : AppCompatActivity() {
+class WorkerProfileEdit : AppCompatActivity() {
 
     lateinit var btn_save : Button
+    lateinit var btn_cancel : Button
+
     lateinit var edt_name : EditText
     lateinit var edt_surname : EditText
     lateinit var edt_age : EditText
@@ -23,9 +23,11 @@ class WorkerProfileCreation : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_worker_profile_creation)
+        setContentView(R.layout.activity_worker_profile_edit)
 
         btn_save = findViewById(R.id.btn_save)
+        btn_cancel = findViewById(R.id.btn_cancel)
+
         edt_name = findViewById(R.id.edt_name)
         edt_surname = findViewById(R.id.edt_sector)
         edt_age = findViewById(R.id.edt_age)
@@ -36,12 +38,21 @@ class WorkerProfileCreation : AppCompatActivity() {
         edt_skills = findViewById(R.id.edt_skills)
         edt_languages = findViewById(R.id.edt_languages)
         edt_educational_experiences = findViewById(R.id.edt_educational_experiences)
+
+
+        btn_save.setOnClickListener {
+            // TODO edit new information
+            finish()
+        }
+
+        btn_cancel.setOnClickListener {
+            finish()
+        }
+
+
     }
 
-    fun save(view : View) {
-        intent = Intent(this, MainActivity::class.java)
-        intent.putExtra("fragment", "WorkerProfile")    // specifichiamo il destination fragment
-        finish()
-        startActivity(intent)
-    }
+
+
+
 }

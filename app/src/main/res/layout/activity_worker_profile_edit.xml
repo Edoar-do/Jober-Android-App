@@ -51,7 +51,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView" />
 
             <EditText
-                android:id="@+id/edt_surname"
+                android:id="@+id/edt_sector"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginLeft="16dp"
@@ -84,7 +84,7 @@
                 android:textColorHint="#757575"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edt_surname" />
+                app:layout_constraintTop_toBottomOf="@+id/edt_sector" />
 
             <EditText
                 android:id="@+id/edt_country"
@@ -141,7 +141,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/divider2" />
 
             <EditText
-                android:id="@+id/edt_bio"
+                android:id="@+id/edt_description"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:layout_marginLeft="16dp"
@@ -176,7 +176,7 @@
                 android:textColorHint="#757575"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edt_bio" />
+                app:layout_constraintTop_toBottomOf="@+id/edt_description" />
 
             <EditText
                 android:id="@+id/edt_languages"

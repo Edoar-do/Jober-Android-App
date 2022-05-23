@@ -10,6 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Jober">
         <activity
+            android:name=".CompanyProfileEdit"
+            android:exported="false" />
+        <activity
+            android:name=".CompanyProfileCreation"
+            android:exported="false" />
+        <activity
+            android:name=".WorkerProfileEdit"
+            android:exported="false" />
+        <activity
             android:name=".WorkerProfileCreation"
             android:exported="false" />
         <activity

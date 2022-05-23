@@ -3,14 +3,9 @@ package com.example.jober
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.example.jober.fragments.ViewPagerAdapter
-import com.example.tablayout.fragments.CalendarFragment
-import com.example.tablayout.fragments.ChatFragment
-import com.example.tablayout.fragments.OffersFragment
-import com.example.tablayout.fragments.OptionsFragment
+import com.example.tablayout.fragments.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 
@@ -32,15 +27,18 @@ class MainActivity : AppCompatActivity() {
 
         mAuth = FirebaseAuth.getInstance()
 
+        val starting_fragment = intent.getStringExtra("fragment")
+
         val adapter = ViewPagerAdapter(supportFragmentManager)
         adapter.addFragment(OffersFragment(), "Offers")
         adapter.addFragment(CalendarFragment(), "Calendar")
         adapter.addFragment(ChatFragment(), "Chats")
-        adapter.addFragment(OptionsFragment(), "Options")
+        adapter.addFragment(WorkerOptionsFragment(), "Options")
+        adapter.addFragment(WorkerProfileFragment(), "WorkerProfile")
         vpViewPager.adapter = adapter
 
 //        setCurrentFragment(adapter.getItemByTitle("Offers"))
-        vpViewPager.setCurrentItem(0)
+        vpViewPager.setCurrentItem(adapter.getIndexByTitle(starting_fragment!!)!!)
 
         bottomNavigationView.setOnNavigationItemSelectedListener {
             when(it.itemId){
@@ -51,6 +49,8 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
+
+        bottomNavigationView.setSelectedItemId(R.id.options_item)
     }
 
     fun logout() {
@@ -58,6 +58,10 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this@MainActivity, Login::class.java)
         finish()
         startActivity(intent)
+    }
+
+    fun setFragmentByTitle(title: String) {
+        vpViewPager.setCurrentItem((vpViewPager.adapter as ViewPagerAdapter).getIndexByTitle(title)!!)
     }
 
 /*    private fun setCurrentFragment(fragment:Fragment?)=
