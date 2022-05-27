@@ -48,7 +48,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.496"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView" />
+                app:layout_constraintTop_toBottomOf="@+id/change_photo_link" />
 
             <EditText
                 android:id="@+id/edt_sector"
@@ -243,7 +243,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/edt_city" />
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/change_photo_link"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
