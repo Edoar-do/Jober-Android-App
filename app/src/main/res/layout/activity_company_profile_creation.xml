@@ -43,7 +43,6 @@
                 android:hint="company name"
                 android:inputType="text"
                 android:padding="12dp"
-                android:textColor="#7986CB"
                 android:textColorHint="#757575"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.496"
@@ -152,6 +151,7 @@
                 android:id="@+id/change_photo_link"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="photoPicker"
                 android:layout_marginTop="10dp"
                 android:text="@string/change_photo_string"
                 android:textColor="@color/main_blue"
@@ -170,7 +170,7 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <Button
-            android:id="@+id/btn_save_company"
+            android:id="@+id/btn_save_worker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"

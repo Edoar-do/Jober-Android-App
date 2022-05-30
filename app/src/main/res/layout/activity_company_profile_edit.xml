@@ -43,7 +43,6 @@
                 android:hint="company name"
                 android:inputType="text"
                 android:padding="12dp"
-                android:textColor="#7986CB"
                 android:textColorHint="#757575"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -169,7 +168,7 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <Button
-            android:id="@+id/btn_save"
+            android:id="@+id/btn_save_worker"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
@@ -188,7 +187,7 @@
             android:backgroundTint="@color/darker_gray"
             android:text="@android:string/cancel"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btn_save"
+            app:layout_constraintEnd_toStartOf="@+id/btn_save_worker"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>

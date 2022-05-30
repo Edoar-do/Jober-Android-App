@@ -19,7 +19,7 @@ class CompanyProfileEdit : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        btn_save = findViewById(R.id.btn_save)
+        btn_save = findViewById(R.id.btn_save_worker)
         btn_cancel = findViewById(R.id.btn_cancel)
         edt_name = findViewById(R.id.edt_name)
         edt_sector = findViewById(R.id.edt_sector)

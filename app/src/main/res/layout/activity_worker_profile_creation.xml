@@ -43,7 +43,6 @@
                 android:hint="@string/name_string"
                 android:inputType="text"
                 android:padding="12dp"
-                android:textColor="#7986CB"
                 android:textColorHint="#757575"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.496"
@@ -265,7 +264,7 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <Button
-            android:id="@+id/btn_save"
+            android:id="@+id/btn_save_worker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
