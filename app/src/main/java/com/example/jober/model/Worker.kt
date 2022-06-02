@@ -1,5 +1,7 @@
 package com.example.jober.model
 
+import com.google.firebase.database.Exclude
+
 class Worker {
 
 
@@ -41,6 +43,24 @@ class Worker {
         this.bio = bio
         this.main_profession = main_profession
     }
+
+    @Exclude
+    fun toMap(): Map<String, Any?>{
+        return mapOf(
+            "name" to name,
+            "surname" to surname,
+            "age" to age,
+            "country" to country,
+            "city" to city,
+            "skills" to skills,
+            "languages" to languages,
+            "educational_experiences" to educational_experiences,
+            "bio" to bio,
+            "main_profession" to main_profession,
+            "profile_image_url" to profile_image_url
+        )
+    }
+
 
 
 }

@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.View
 import android.webkit.MimeTypeMap
 import android.widget.*
+import com.example.jober.model.UserSettings
 import com.example.jober.model.Worker
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
@@ -169,8 +170,8 @@ class WorkerProfileCreation : AppCompatActivity() {
             val worker = Worker(name, surname,
                 age, country, city, skills, languages, educational_experiences, profile_image_url, bio, main_profession)
 
-            m_db_ref.child("workers").child(m_auth.currentUser?.uid!!).setValue(worker)
 
+            m_db_ref.child("workers").child(m_auth.currentUser?.uid!!).setValue(worker)
 
             //fragment switch
             intent = Intent(this, MainActivity::class.java)

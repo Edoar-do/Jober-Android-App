@@ -5,7 +5,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.*
+import com.example.jober.model.UserSettings
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 
 class SignUp : AppCompatActivity() {
 
@@ -16,6 +23,8 @@ class SignUp : AppCompatActivity() {
     private lateinit var radio_btn_company : RadioButton
     private lateinit var radio_btn_worker : RadioButton
     private lateinit var radioGroup: RadioGroup
+    private lateinit var m_db_ref: DatabaseReference
+    private lateinit var database : FirebaseDatabase
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,7 +37,10 @@ class SignUp : AppCompatActivity() {
         radioGroup = findViewById(R.id.radioGroup)
         radio_btn_company = findViewById(R.id.radio_btn_company)
         radio_btn_worker = findViewById(R.id.radio_btn_worker)
+
         mAuth = FirebaseAuth.getInstance()
+        database = Firebase.database("https://jober-290f2-default-rtdb.europe-west1.firebasedatabase.app")
+        m_db_ref = database.getReference()
 
 
         radio_btn_worker.isChecked = true
@@ -49,11 +61,15 @@ class SignUp : AppCompatActivity() {
                 if (task.isSuccessful) {
                     when(radioGroup.checkedRadioButtonId) {
                         R.id.radio_btn_worker -> {
+                            val user_settings = UserSettings("worker")
+                            m_db_ref.child("userSettings").child(mAuth.currentUser?.uid!!).setValue(user_settings)
                             val intent = Intent(this@SignUp, WorkerProfileCreation::class.java)
                             finish()
                             startActivity(intent)
                         }
                         R.id.radio_btn_company -> {
+                            val user_settings = UserSettings("company")
+                            m_db_ref.child("userSettings").child(mAuth.currentUser?.uid!!).setValue(user_settings)
                             val intent = Intent(this@SignUp, CompanyProfileCreation::class.java)
                             finish()
                             startActivity(intent)

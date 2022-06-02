@@ -8,6 +8,7 @@ import android.view.View
 import android.webkit.MimeTypeMap
 import android.widget.*
 import com.example.jober.model.Company
+import com.example.jober.model.UserSettings
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -109,7 +110,6 @@ class CompanyProfileCreation : AppCompatActivity() {
         val company = Company(name, sector, country, city, description, profile_image_url)
 
         m_db_ref.child("companies").child(m_auth.currentUser?.uid!!).setValue(company)
-
 
         //fragment switch
         intent = Intent(this, MainActivity::class.java)

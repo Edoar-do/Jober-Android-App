@@ -138,12 +138,6 @@ class WorkerProfileEdit : AppCompatActivity() {
         return profile_pic_url
     }
 
-    fun getFileExtension(uri : Uri) : String? {
-        val resolver = contentResolver
-        val mime = MimeTypeMap.getSingleton()
-        return mime.getExtensionFromMimeType(resolver.getType(uri))
-    }
-
     fun save(view : View) {
         //instance creation
 
@@ -206,8 +200,13 @@ class WorkerProfileEdit : AppCompatActivity() {
             val worker = Worker(name, surname,
                 age, country, city, skills, languages, educational_experiences, profile_image_url, bio, main_profession)
 
-            m_db_ref.child("workers").child(m_auth.currentUser?.uid!!).setValue(worker)
+            val worker_values = worker.toMap()
+            val worker_key = m_auth.currentUser?.uid!!
+            val worker_updates = hashMapOf<String, Any>(
+                "/workers/$worker_key" to worker_values
+            )
 
+            m_db_ref.updateChildren(worker_updates)
 
             //fragment switch
             intent = Intent(this, MainActivity::class.java)
@@ -219,7 +218,7 @@ class WorkerProfileEdit : AppCompatActivity() {
     }
 
     fun cancel(view : View) {
-        //TODO
+        finish() //torna all'activity main
     }
 
 
