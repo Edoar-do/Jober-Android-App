@@ -54,11 +54,11 @@ class MainActivity : AppCompatActivity() {
             adapter.addFragment(ChatFragment(), "Chats")
 
             if(user_type.equals("worker")) {
-                println("SONO UN WORKER ########################################################")
+                //println("SONO UN WORKER ########################################################")
                 adapter.addFragment(WorkerOptionsFragment(), "Options")
                 adapter.addFragment(WorkerProfileFragment(), "WorkerProfile")
             } else if(user_type.equals("company")) {
-                println("SONO UNA COMPANY ########################################################")
+                //println("SONO UNA COMPANY ########################################################")
                 adapter.addFragment(CompanyOptionsFragment(), "Options")
                 adapter.addFragment(CompanyProfileFragment(), "CompanyProfile")
             }
@@ -66,8 +66,10 @@ class MainActivity : AppCompatActivity() {
             vpViewPager.adapter = adapter
 
 //        setCurrentFragment(adapter.getItemByTitle("Offers"))
-            println("starting fragment:" + adapter.getIndexByTitle(starting_fragment!!)!!)
+            //println("starting fragment:" + adapter.getIndexByTitle(starting_fragment!!)!!)
             vpViewPager.setCurrentItem(adapter.getIndexByTitle(starting_fragment!!)!!)
+
+            bottomNavigationView.setSelectedItemId(R.id.options_item)
 
             bottomNavigationView.setOnNavigationItemSelectedListener {
                 when(it.itemId){
@@ -79,7 +81,7 @@ class MainActivity : AppCompatActivity() {
                 true
             }
 
-            bottomNavigationView.setSelectedItemId(R.id.options_item)
+
         }.addOnFailureListener{
             Toast.makeText(this, "Something went wrong...", Toast.LENGTH_LONG)
             finish()

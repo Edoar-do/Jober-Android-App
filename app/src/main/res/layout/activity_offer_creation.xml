@@ -9,7 +9,6 @@
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintBottom_toTopOf="@id/bottom_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,32 +18,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center">
-
-
-            <ImageView
-                android:id="@+id/iv_profile"
-                android:layout_width="180dp"
-                android:layout_height="180dp"
-                android:layout_marginTop="24dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/user_profile_placeholder" />
-
-            <TextView
-                android:id="@+id/change_photo_link"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:onClick="photoPicker"
-                android:text="@string/change_photo_string"
-                android:textColor="@color/main_blue"
-                android:textColorLink="@color/main_blue"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/iv_profile" />
+            android:gravity="center"
+            android:orientation="vertical">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -53,7 +28,7 @@
                 app:boxStrokeWidthFocused="0dp">
 
                 <EditText
-                    android:id="@+id/edt_name"
+                    android:id="@+id/edt_position"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_marginLeft="16dp"
@@ -62,12 +37,13 @@
                     android:autofillHints=""
                     android:background="@drawable/custom_input_field"
                     android:ems="10"
-                    android:hint="company name"
                     android:gravity="bottom"
+                    android:hint="Position"
                     android:inputType="text"
                     android:padding="12dp"
                     android:textColorHint="#757575"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.496"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/change_photo_link" />
 
@@ -75,12 +51,12 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 app:boxStrokeWidth="0dp"
                 app:boxStrokeWidthFocused="0dp">
 
                 <EditText
-                    android:id="@+id/edt_sector"
+                    android:id="@+id/edt_location"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_marginLeft="16dp"
@@ -89,8 +65,8 @@
                     android:autofillHints=""
                     android:background="@drawable/custom_input_field"
                     android:ems="10"
-                    android:hint="sector"
                     android:gravity="bottom"
+                    android:hint="Location"
                     android:inputType="text"
                     android:padding="12dp"
                     android:textColorHint="#757575"
@@ -100,18 +76,6 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <View
-                android:id="@+id/divider"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="25dp"
-                android:layout_marginEnd="16dp"
-                android:background="?android:attr/listDivider"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edt_sector" />
-
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -119,66 +83,26 @@
                 app:boxStrokeWidthFocused="0dp">
 
                 <EditText
-                    android:id="@+id/edt_country"
+                    android:id="@+id/edt_job_description"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="25dp"
-                    android:layout_marginRight="16dp"
-                    android:autofillHints=""
-                    android:background="@drawable/custom_input_field"
-                    android:ems="10"
-                    android:hint="@string/country_string"
-                    android:gravity="bottom"
-                    android:inputType="text"
-                    android:padding="12dp"
-                    android:textColorHint="#757575"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/divider" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:boxStrokeWidth="0dp"
-                app:boxStrokeWidthFocused="0dp">
-
-                <EditText
-                    android:id="@+id/edt_city"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
+                    android:layout_height="150dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="16dp"
                     android:autofillHints=""
                     android:background="@drawable/custom_input_field"
                     android:ems="10"
-                    android:hint="@string/city_string"
-                    android:inputType="text"
-                    android:gravity="bottom"
-                    android:padding="12dp"
+                    android:gravity="top"
+                    android:hint="Job description"
+                    android:inputType="textMultiLine"
+                    android:paddingTop="25dp"
                     android:textColorHint="#757575"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/edt_country" />
+                    app:layout_constraintTop_toBottomOf="@+id/edt_bio" />
+
 
             </com.google.android.material.textfield.TextInputLayout>
-
-            <View
-                android:id="@+id/divider2"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="25dp"
-                android:layout_marginEnd="16dp"
-                android:background="?android:attr/listDivider"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edt_city" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -187,23 +111,78 @@
                 app:boxStrokeWidthFocused="0dp">
 
                 <EditText
-                    android:id="@+id/edt_description"
+                    android:id="@+id/edt_skills_required"
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
                     android:layout_marginLeft="16dp"
-                    android:layout_marginTop="25dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginRight="16dp"
                     android:autofillHints=""
                     android:background="@drawable/custom_input_field"
                     android:ems="10"
                     android:gravity="top"
-                    android:hint="description"
+                    android:hint="Skills required"
                     android:inputType="textMultiLine"
                     android:paddingTop="25dp"
                     android:textColorHint="#757575"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/divider2" />
+                    app:layout_constraintTop_toBottomOf="@+id/edt_bio" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp">
+
+                <EditText
+                    android:id="@+id/edt_languages_required"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="16dp"
+                    android:autofillHints=""
+                    android:background="@drawable/custom_input_field"
+                    android:ems="10"
+                    android:gravity="top"
+                    android:hint="Languages required"
+                    android:inputType="textMultiLine"
+                    android:paddingTop="25dp"
+                    android:textColorHint="#757575"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edt_skills" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp">
+
+                <EditText
+                    android:id="@+id/edt_edu_exp_required"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="16dp"
+                    android:autofillHints=""
+                    android:background="@drawable/custom_input_field"
+                    android:ems="10"
+                    android:gravity="top"
+                    android:hint="Educational experiences required"
+                    android:inputType="textMultiLine"
+                    android:paddingTop="25dp"
+                    android:textColorHint="#757575"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.062"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edt_languages" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -218,26 +197,15 @@
 
         <Button
             android:id="@+id/btn_save_company"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:onClick="save"
             android:text="@string/save_string"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/btn_cancel"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/btn_cancel"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:backgroundTint="@color/darker_gray"
-            android:text="@android:string/cancel"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btn_save_company"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

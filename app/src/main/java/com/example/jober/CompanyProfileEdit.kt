@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import com.example.jober.model.Company
-import com.example.jober.model.Worker
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -39,8 +38,9 @@ class CompanyProfileEdit : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_company_profile_edit)
 
-        btn_save = findViewById(R.id.btn_save_worker)
+        btn_save = findViewById(R.id.btn_save_company)
         btn_cancel = findViewById(R.id.btn_cancel)
         edt_name = findViewById(R.id.edt_name)
         edt_sector = findViewById(R.id.edt_sector)
@@ -68,7 +68,7 @@ class CompanyProfileEdit : AppCompatActivity() {
             edt_city.setText(company.city)
             edt_description.setText(company.description)
 
-            var profile_image_ref = storage_ref.child("images/worker_profile/$company_id")
+            var profile_image_ref = storage_ref.child("images/company_profile/$company_id")
 
             var local_file = File.createTempFile("tempImage", "jpg")
             profile_image_ref.getFile(local_file).addOnSuccessListener {
@@ -119,11 +119,11 @@ class CompanyProfileEdit : AppCompatActivity() {
     }
 
     fun save(view : View?){
-        val company_name = edt_name.toString()
-        val sector = edt_sector.toString()
-        val country = edt_country.toString()
-        val city = edt_city.toString()
-        val description = edt_description.toString()
+        val company_name = edt_name.text.toString()
+        val sector = edt_sector.text.toString()
+        val country = edt_country.text.toString()
+        val city = edt_city.text.toString()
+        val description = edt_description.text.toString()
         var profile_image_url : String? = ""
 
         var error_present = false

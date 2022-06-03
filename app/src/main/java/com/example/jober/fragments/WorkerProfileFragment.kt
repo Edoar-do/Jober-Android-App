@@ -2,14 +2,12 @@ package com.example.tablayout.fragments
 
 import android.content.Intent
 import android.graphics.BitmapFactory
-import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import com.example.jober.Login
 import com.example.jober.MainActivity
 import com.example.jober.R
 import com.example.jober.WorkerProfileEdit
@@ -106,14 +104,6 @@ class WorkerProfileFragment : Fragment() {
             Toast.makeText(context, "Something went wrong...", Toast.LENGTH_LONG)
             (activity as MainActivity).setFragmentByTitle("Options")
         }
-
-
-
-
-
-
-
-
 
         btn_edit.setOnClickListener {
             var intent = Intent(activity, WorkerProfileEdit::class.java)

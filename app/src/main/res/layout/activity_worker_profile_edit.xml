@@ -14,11 +14,14 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.979"
         tools:ignore="SpeakableTextPresentCheck">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/iv_profile"
@@ -29,217 +32,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/user_profile_placeholder" />
-
-            <EditText
-                android:id="@+id/edt_name"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="16dp"
-                android:autofillHints=""
-                android:background="@drawable/custom_input_field"
-                android:ems="10"
-                android:hint="@string/name_string"
-                android:inputType="text"
-                android:padding="12dp"
-                android:textColorHint="#757575"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.496"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/change_photo_link" />
-
-            <EditText
-                android:id="@+id/edt_sector"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="16dp"
-                android:autofillHints=""
-                android:background="@drawable/custom_input_field"
-                android:ems="10"
-                android:hint="@string/surname_string"
-                android:inputType="text"
-                android:padding="12dp"
-                android:textColorHint="#757575"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edt_name" />
-
-            <EditText
-                android:id="@+id/edt_age"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="16dp"
-                android:autofillHints=""
-                android:background="@drawable/custom_input_field"
-                android:ems="10"
-                android:hint="@string/age_string"
-                android:inputType="text"
-                android:padding="12dp"
-                android:textColorHint="#757575"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edt_sector" />
-
-            <EditText
-                android:id="@+id/edt_country"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="25dp"
-                android:layout_marginRight="16dp"
-                android:autofillHints=""
-                android:background="@drawable/custom_input_field"
-                android:ems="10"
-                android:hint="@string/country_string"
-                android:inputType="text"
-                android:padding="12dp"
-                android:textColorHint="#757575"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/divider" />
-
-            <EditText
-                android:id="@+id/edt_city"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="16dp"
-                android:autofillHints=""
-                android:background="@drawable/custom_input_field"
-                android:ems="10"
-                android:hint="@string/city_string"
-                android:inputType="text"
-                android:padding="12dp"
-                android:textColorHint="#757575"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edt_country" />
-
-            <EditText
-                android:id="@+id/edt_main_profession"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="25dp"
-                android:layout_marginRight="16dp"
-                android:autofillHints=""
-                android:background="@drawable/custom_input_field"
-                android:ems="10"
-                android:hint="@string/main_profession_string"
-                android:inputType="text"
-                android:padding="12dp"
-                android:textColorHint="#757575"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/divider2" />
-
-            <EditText
-                android:id="@+id/edt_description"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="16dp"
-                android:autofillHints=""
-                android:background="@drawable/custom_input_field"
-                android:ems="10"
-                android:gravity="top"
-                android:hint="@string/bio_string"
-                android:inputType="textMultiLine"
-                android:padding="12dp"
-                android:textColorHint="#757575"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edt_main_profession" />
-
-            <EditText
-                android:id="@+id/edt_skills"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="16dp"
-                android:autofillHints=""
-                android:background="@drawable/custom_input_field"
-                android:ems="10"
-                android:gravity="top"
-                android:hint="@string/skills_string"
-                android:inputType="textMultiLine"
-                android:padding="12dp"
-                android:textColorHint="#757575"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edt_description" />
-
-            <EditText
-                android:id="@+id/edt_languages"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="16dp"
-                android:autofillHints=""
-                android:background="@drawable/custom_input_field"
-                android:ems="10"
-                android:gravity="top"
-                android:hint="@string/languages_string"
-                android:inputType="textMultiLine"
-                android:padding="12dp"
-                android:textColorHint="#757575"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edt_skills" />
-
-            <EditText
-                android:id="@+id/edt_educational_experiences"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="16dp"
-                android:autofillHints=""
-                android:background="@drawable/custom_input_field"
-                android:ems="10"
-                android:gravity="top"
-                android:hint="@string/educational_experience_string"
-                android:inputType="textMultiLine"
-                android:padding="12dp"
-                android:textColorHint="#757575"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.062"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edt_languages" />
-
-            <View
-                android:id="@+id/divider"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="25dp"
-                android:layout_marginEnd="16dp"
-                android:background="?android:attr/listDivider"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edt_age" />
-
-            <View
-                android:id="@+id/divider2"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="25dp"
-                android:layout_marginEnd="16dp"
-                android:background="?android:attr/listDivider"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edt_city" />
 
             <TextView
                 android:id="@+id/change_photo_link"
@@ -254,7 +46,304 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/iv_profile" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp">
+
+                <EditText
+                    android:id="@+id/edt_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="16dp"
+                    android:autofillHints=""
+                    android:background="@drawable/custom_input_field"
+                    android:ems="10"
+                    android:gravity="bottom"
+                    android:hint="@string/name_string"
+                    android:inputType="text"
+                    android:padding="12dp"
+                    android:textColorHint="#757575"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.496"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/change_photo_link" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp">
+
+                <EditText
+                    android:id="@+id/edt_surname"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="16dp"
+                    android:autofillHints=""
+                    android:background="@drawable/custom_input_field"
+                    android:ems="10"
+                    android:gravity="bottom"
+                    android:hint="@string/surname_string"
+                    android:inputType="text"
+                    android:padding="12dp"
+                    android:textColorHint="#757575"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edt_name" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp">
+
+                <EditText
+                    android:id="@+id/edt_age"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="16dp"
+                    android:autofillHints=""
+                    android:background="@drawable/custom_input_field"
+                    android:ems="10"
+                    android:gravity="bottom"
+                    android:hint="@string/age_string"
+                    android:inputType="text"
+                    android:padding="12dp"
+                    android:textColorHint="#757575"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edt_surname" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginEnd="16dp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edt_age" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp">
+
+                <EditText
+                    android:id="@+id/edt_country"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginRight="16dp"
+                    android:autofillHints=""
+                    android:background="@drawable/custom_input_field"
+                    android:ems="10"
+                    android:gravity="bottom"
+                    android:hint="@string/country_string"
+                    android:inputType="text"
+                    android:padding="12dp"
+                    android:textColorHint="#757575"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/divider" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp">
+
+                <EditText
+                    android:id="@+id/edt_city"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="16dp"
+                    android:autofillHints=""
+                    android:background="@drawable/custom_input_field"
+                    android:ems="10"
+                    android:gravity="bottom"
+                    android:hint="@string/city_string"
+                    android:inputType="text"
+                    android:padding="12dp"
+                    android:textColorHint="#757575"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edt_country" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <View
+                android:id="@+id/divider2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginEnd="16dp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edt_city" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp">
+
+                <EditText
+                    android:id="@+id/edt_main_profession"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginRight="16dp"
+                    android:autofillHints=""
+                    android:background="@drawable/custom_input_field"
+                    android:ems="10"
+                    android:gravity="bottom"
+                    android:hint="@string/main_profession_string"
+                    android:inputType="text"
+                    android:padding="12dp"
+                    android:textColorHint="#757575"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/divider2" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp">
+
+                <EditText
+                    android:id="@+id/edt_bio"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="16dp"
+                    android:autofillHints=""
+                    android:background="@drawable/custom_input_field"
+                    android:ems="10"
+                    android:gravity="top"
+                    android:hint="@string/bio_string"
+                    android:inputType="textMultiLine"
+                    android:paddingTop="25dp"
+                    android:textColorHint="#757575"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edt_main_profession" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp">
+
+                <EditText
+                    android:id="@+id/edt_skills"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="16dp"
+                    android:autofillHints=""
+                    android:background="@drawable/custom_input_field"
+                    android:ems="10"
+                    android:gravity="top"
+                    android:hint="@string/skills_string"
+                    android:inputType="textMultiLine"
+                    android:paddingTop="25dp"
+                    android:textColorHint="#757575"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edt_bio" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp">
+
+                <EditText
+                    android:id="@+id/edt_languages"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="16dp"
+                    android:autofillHints=""
+                    android:background="@drawable/custom_input_field"
+                    android:ems="10"
+                    android:gravity="top"
+                    android:hint="@string/languages_string"
+                    android:inputType="textMultiLine"
+                    android:paddingTop="25dp"
+                    android:textColorHint="#757575"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edt_skills" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp">
+
+                <EditText
+                    android:id="@+id/edt_educational_experiences"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="16dp"
+                    android:autofillHints=""
+                    android:background="@drawable/custom_input_field"
+                    android:ems="10"
+                    android:gravity="top"
+                    android:hint="@string/educational_experience_string"
+                    android:inputType="textMultiLine"
+                    android:paddingTop="25dp"
+                    android:textColorHint="#757575"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.062"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edt_languages" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
     </ScrollView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -264,7 +353,7 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <Button
-            android:id="@+id/btn_save_worker"
+            android:id="@+id/btn_save_company"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
@@ -283,7 +372,7 @@
             android:backgroundTint="@color/darker_gray"
             android:text="@android:string/cancel"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btn_save_worker"
+            app:layout_constraintEnd_toStartOf="@+id/btn_save_company"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>

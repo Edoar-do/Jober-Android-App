@@ -6,7 +6,6 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.webkit.MimeTypeMap
 import android.widget.*
 import com.example.jober.model.Worker
 import com.google.firebase.auth.FirebaseAuth
@@ -52,16 +51,16 @@ class WorkerProfileEdit : AppCompatActivity() {
         database = Firebase.database("https://jober-290f2-default-rtdb.europe-west1.firebasedatabase.app")
         m_db_ref = database.getReference()
 
-        btn_save = findViewById(R.id.btn_save_worker)
+        btn_save = findViewById(R.id.btn_save_company)
         btn_cancel = findViewById(R.id.btn_cancel)
 
         edt_name = findViewById(R.id.edt_name)
-        edt_surname = findViewById(R.id.edt_sector)
+        edt_surname = findViewById(R.id.edt_surname)
         edt_age = findViewById(R.id.edt_age)
         edt_country = findViewById(R.id.edt_country)
         edt_city = findViewById(R.id.edt_city)
         edt_main_profession = findViewById(R.id.edt_main_profession)
-        edt_bio = findViewById(R.id.edt_description)
+        edt_bio = findViewById(R.id.edt_bio)
         edt_skills = findViewById(R.id.edt_skills)
         edt_languages = findViewById(R.id.edt_languages)
         edt_educational_experiences = findViewById(R.id.edt_educational_experiences)

@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.View
 import android.webkit.MimeTypeMap
 import android.widget.*
-import com.example.jober.model.UserSettings
 import com.example.jober.model.Worker
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
@@ -49,7 +48,7 @@ class WorkerProfileCreation : AppCompatActivity() {
         m_db_ref = database.getReference()
 
 
-        btn_save = findViewById(R.id.btn_save_worker)
+        btn_save = findViewById(R.id.btn_save_company)
         edt_name = findViewById(R.id.edt_name)
         edt_surname = findViewById(R.id.edt_sector)
         edt_age = findViewById(R.id.edt_age)
