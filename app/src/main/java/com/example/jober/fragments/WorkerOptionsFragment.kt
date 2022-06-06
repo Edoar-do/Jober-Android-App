@@ -1,4 +1,4 @@
-package com.example.tablayout.fragments
+package com.example.jober.fragments
 
 import android.graphics.BitmapFactory
 import android.os.Bundle

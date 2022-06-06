@@ -24,7 +24,7 @@ class OfferAdapter(val context: Context, val offerList: ArrayList<Offer>, val co
         parent: ViewGroup,
         viewType: Int
     ): OfferAdapter.OfferViewHolder {
-        val view: View = LayoutInflater.from(context).inflate(R.layout.offer_row, parent, false)
+        val view: View = LayoutInflater.from(parent.context).inflate(R.layout.offer_row, parent, false)
         return OfferViewHolder(view)
     }
 
@@ -37,6 +37,9 @@ class OfferAdapter(val context: Context, val offerList: ArrayList<Offer>, val co
         holder.tv_position.text = current_offer.position
         holder.tv_location.text = current_offer.location
         holder.iv_company_logo.setImageBitmap(current_company_logo)
+
+        holder.itemView.setOnClickListener {
+        }
     }
 
     override fun getItemCount(): Int {

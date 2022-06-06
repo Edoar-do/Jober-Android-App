@@ -1,4 +1,4 @@
-package com.example.tablayout.fragments
+package com.example.jober.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
