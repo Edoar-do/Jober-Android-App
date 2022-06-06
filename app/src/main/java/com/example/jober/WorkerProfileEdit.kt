@@ -36,10 +36,12 @@ class WorkerProfileEdit : AppCompatActivity() {
     lateinit var change_photo_link : TextView
     lateinit var m_db_ref: DatabaseReference
     lateinit var m_auth: FirebaseAuth
-    lateinit var image_uri : Uri
+    lateinit var image_uri_local : Uri
     lateinit var storage_ref : StorageReference
     lateinit var database : FirebaseDatabase
     lateinit var worker : Worker
+
+    var image_path_db : String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,7 +68,8 @@ class WorkerProfileEdit : AppCompatActivity() {
         edt_educational_experiences = findViewById(R.id.edt_educational_experiences)
         iv_profile = findViewById(R.id.iv_profile)
         change_photo_link = findViewById(R.id.change_photo_link)
-        image_uri = Uri.EMPTY
+        image_uri_local = Uri.EMPTY
+
 
 
         var worker_id = m_auth.currentUser?.uid!!
@@ -83,17 +86,18 @@ class WorkerProfileEdit : AppCompatActivity() {
             edt_skills.setText(worker.skills)
             edt_languages.setText(worker.languages)
             edt_educational_experiences.setText(worker.educational_experiences)
+            image_path_db = worker.img_profile_url
 
-            var profile_image_ref = storage_ref.child("images/worker_profile/$worker_id")
+            if (image_path_db != null) {
+                var profile_image_ref = storage_ref.child(image_path_db!!)
 
-            var local_file = File.createTempFile("tempImage", "jpg")
-            profile_image_ref.getFile(local_file).addOnSuccessListener {
-                val bitmap = BitmapFactory.decodeFile(local_file.absolutePath)
-                iv_profile.setImageBitmap(bitmap)
+                var local_file = File.createTempFile("tempImage", "jpg")
+                profile_image_ref.getFile(local_file).addOnSuccessListener {
+                    val bitmap = BitmapFactory.decodeFile(local_file.absolutePath)
+                    iv_profile.setImageBitmap(bitmap)
+                }
             }
         }
-
-
 
         btn_save.setOnClickListener {
             save(it)
@@ -117,29 +121,12 @@ class WorkerProfileEdit : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         if(requestCode == 2 && resultCode == RESULT_OK && data != null){
-            image_uri = data.data!!
-            iv_profile.setImageURI(image_uri)
+            image_uri_local = data.data!!
+            iv_profile.setImageURI(image_uri_local)
         }
-    }
-
-    fun uploadImageToFirebase(image_uri : Uri) : String?{
-        var profile_pic_url : String? = null
-        val file_ref = storage_ref.child("images/worker_profile/" + m_auth.currentUser?.uid!!)
-        file_ref.putFile(image_uri).addOnSuccessListener{
-            file_ref.downloadUrl.addOnSuccessListener {
-                profile_pic_url = it.toString()
-            }.addOnFailureListener{
-                Toast.makeText(this, "Failure in Dowloading URL", Toast.LENGTH_LONG)
-            }
-        }.addOnFailureListener{
-            Toast.makeText(this, "Failure Input File", Toast.LENGTH_LONG)
-        }
-        return profile_pic_url
     }
 
     fun save(view : View) {
-        //instance creation
-
         val name = edt_name.text.toString()
         val surname = edt_surname.text.toString()
         var age = 0
@@ -150,7 +137,6 @@ class WorkerProfileEdit : AppCompatActivity() {
         val skills = edt_skills.text.toString()
         val languages = edt_languages.text.toString()
         val educational_experiences = edt_educational_experiences.text.toString()
-        var profile_image_url : String? = ""
 
         var error_present = false
 
@@ -168,7 +154,13 @@ class WorkerProfileEdit : AppCompatActivity() {
             edt_age.error = "Please enter your age"
             error_present = true
         }else {
-            age = edt_age.text.toString().toInt();
+            var age_string = edt_age.text.toString()
+            if (age_string.toIntOrNull() != null) {
+                age = edt_age.text.toString().toInt();
+            }else {
+                edt_age.error = "The age must be an number"
+                error_present = true
+            }
         }
 
         if (bio.isEmpty()) {
@@ -192,26 +184,47 @@ class WorkerProfileEdit : AppCompatActivity() {
         }
 
         if (!error_present) {
-            if(image_uri != Uri.EMPTY) {
-                profile_image_url = uploadImageToFirebase(image_uri)
+            if(image_uri_local != Uri.EMPTY) {
+                image_path_db = "images/worker_profile/" + m_auth.currentUser?.uid!! + "_" + System.currentTimeMillis().toString()
+                val file_ref = storage_ref.child(image_path_db!!)
+                file_ref.putFile(image_uri_local).addOnSuccessListener {
+                    val worker = Worker(name, surname,
+                        age, country, city, skills, languages, educational_experiences, image_path_db, bio, main_profession)
+
+                    val worker_values = worker.toMap()
+                    val worker_key = m_auth.currentUser?.uid!!
+                    val worker_updates = hashMapOf<String, Any>(
+                        "/workers/$worker_key" to worker_values
+                    )
+                    m_db_ref.updateChildren(worker_updates)
+                    //fragment switch
+                    intent = Intent(this, MainActivity::class.java)
+                    intent.putExtra("fragment", "WorkerProfile")    // specifichiamo il destination fragment
+                    finish()
+                    startActivity(intent)
+
+                }.addOnFailureListener{
+                    Toast.makeText(this, "Failure Input File", Toast.LENGTH_LONG)
+                }
+            }else {
+                val worker = Worker(name, surname,
+                    age, country, city, skills, languages, educational_experiences, image_path_db, bio, main_profession)
+
+                val worker_values = worker.toMap()
+                val worker_key = m_auth.currentUser?.uid!!
+                val worker_updates = hashMapOf<String, Any>(
+                    "/workers/$worker_key" to worker_values
+                )
+                m_db_ref.updateChildren(worker_updates)
+                //fragment switch
+                intent = Intent(this, MainActivity::class.java)
+                intent.putExtra("fragment", "WorkerProfile")    // specifichiamo il destination fragment
+                finish()
+                startActivity(intent)
             }
 
-            val worker = Worker(name, surname,
-                age, country, city, skills, languages, educational_experiences, profile_image_url, bio, main_profession)
 
-            val worker_values = worker.toMap()
-            val worker_key = m_auth.currentUser?.uid!!
-            val worker_updates = hashMapOf<String, Any>(
-                "/workers/$worker_key" to worker_values
-            )
 
-            m_db_ref.updateChildren(worker_updates)
-
-            //fragment switch
-            intent = Intent(this, MainActivity::class.java)
-            intent.putExtra("fragment", "WorkerProfile")    // specifichiamo il destination fragment
-            finish()
-            startActivity(intent)
         }
 
     }
@@ -219,6 +232,7 @@ class WorkerProfileEdit : AppCompatActivity() {
     fun cancel(view : View) {
         finish() //torna all'activity main
     }
+
 
 
 }

@@ -33,9 +33,11 @@ class WorkerProfileCreation : AppCompatActivity() {
     lateinit var change_photo_link : TextView
     lateinit var m_db_ref: DatabaseReference
     lateinit var m_auth: FirebaseAuth
-    lateinit var image_uri : Uri
     lateinit var storage_ref : StorageReference
     lateinit var database : FirebaseDatabase
+
+    lateinit var image_uri_local : Uri
+    var image_path_db : String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,7 +63,7 @@ class WorkerProfileCreation : AppCompatActivity() {
         edt_educational_experiences = findViewById(R.id.edt_educational_experiences)
         iv_profile = findViewById(R.id.iv_profile)
         change_photo_link = findViewById(R.id.change_photo_link)
-        image_uri = Uri.EMPTY
+        image_uri_local = Uri.EMPTY
     }
 
     fun photoPicker(view: View){
@@ -75,35 +77,21 @@ class WorkerProfileCreation : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         if(requestCode == 2 && resultCode == RESULT_OK && data != null){
-            image_uri = data.data!!
-            iv_profile.setImageURI(image_uri)
+            image_uri_local = data.data!!
+            iv_profile.setImageURI(image_uri_local)
         }
     }
 
-    fun uploadImageToFirebase(image_uri : Uri) : String?{
-        var profile_pic_url : String? = null
-        val file_ref = storage_ref.child("images/worker_profile/" + m_auth.currentUser?.uid!!)
-        file_ref.putFile(image_uri).addOnSuccessListener{
-            file_ref.downloadUrl.addOnSuccessListener {
-                profile_pic_url = it.toString()
-            }.addOnFailureListener{
-                Toast.makeText(this, "Failure in Dowloading URL", Toast.LENGTH_LONG)
-            }
-        }.addOnFailureListener{
+    fun uploadImageToFirebase(image_uri : Uri){
+        image_path_db = "images/worker_profile/" + m_auth.currentUser?.uid!! + "_" + System.currentTimeMillis().toString()
+        val file_ref = storage_ref.child(image_path_db!!)
+        file_ref.putFile(image_uri).addOnFailureListener{
             Toast.makeText(this, "Failure Input File", Toast.LENGTH_LONG)
         }
-        return profile_pic_url
-    }
-
-    fun getFileExtension(uri : Uri) : String? {
-        val resolver = contentResolver
-        val mime = MimeTypeMap.getSingleton()
-        return mime.getExtensionFromMimeType(resolver.getType(uri))
     }
 
     fun save(view : View) {
         //instance creation
-
         val name = edt_name.text.toString()
         val surname = edt_surname.text.toString()
         val bio = edt_bio.text.toString()
@@ -114,7 +102,6 @@ class WorkerProfileCreation : AppCompatActivity() {
         val skills = edt_skills.text.toString()
         val languages = edt_languages.text.toString()
         val educational_experiences = edt_educational_experiences.text.toString()
-        var profile_image_url : String? = ""
 
         var error_present = false
 
@@ -162,21 +149,38 @@ class WorkerProfileCreation : AppCompatActivity() {
         }
 
         if (!error_present) {
-            if(image_uri != Uri.EMPTY) {
-                profile_image_url = uploadImageToFirebase(image_uri)
+            if(image_uri_local != Uri.EMPTY) {
+                image_path_db = "images/worker_profile/" + m_auth.currentUser?.uid!! + "_" + System.currentTimeMillis().toString()
+                val file_ref = storage_ref.child(image_path_db!!)
+                file_ref.putFile(image_uri_local).addOnSuccessListener {
+                    val worker = Worker(name, surname,
+                        age, country, city, skills, languages, educational_experiences, image_path_db, bio, main_profession)
+
+
+                    m_db_ref.child("workers").child(m_auth.currentUser?.uid!!).setValue(worker)
+
+                    //fragment switch
+                    intent = Intent(this, MainActivity::class.java)
+                    intent.putExtra("fragment", "WorkerProfile")    // specifichiamo il destination fragment
+                    finish()
+                    startActivity(intent)
+                }.addOnFailureListener{
+                    Toast.makeText(this, "Failure Input File", Toast.LENGTH_LONG)
+                }
+            }else {
+                val worker = Worker(name, surname,
+                    age, country, city, skills, languages, educational_experiences, image_path_db, bio, main_profession)
+
+
+                m_db_ref.child("workers").child(m_auth.currentUser?.uid!!).setValue(worker)
+
+                //fragment switch
+                intent = Intent(this, MainActivity::class.java)
+                intent.putExtra("fragment", "WorkerProfile")    // specifichiamo il destination fragment
+                finish()
+                startActivity(intent)
             }
 
-            val worker = Worker(name, surname,
-                age, country, city, skills, languages, educational_experiences, profile_image_url, bio, main_profession)
-
-
-            m_db_ref.child("workers").child(m_auth.currentUser?.uid!!).setValue(worker)
-
-            //fragment switch
-            intent = Intent(this, MainActivity::class.java)
-            intent.putExtra("fragment", "WorkerProfile")    // specifichiamo il destination fragment
-            finish()
-            startActivity(intent)
         }
 
 

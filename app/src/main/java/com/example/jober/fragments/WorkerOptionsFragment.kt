@@ -8,11 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.Toast
 import com.example.jober.MainActivity
 import com.example.jober.R
+import com.example.jober.model.Worker
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
@@ -29,6 +30,7 @@ class WorkerOptionsFragment : Fragment() {
     lateinit var m_auth: FirebaseAuth
     lateinit var storage_ref : StorageReference
     lateinit var database : FirebaseDatabase
+    lateinit var worker : Worker
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,13 +65,29 @@ class WorkerOptionsFragment : Fragment() {
             (activity as MainActivity).setFragmentByTitle("WorkerProfile")
         }
 
-        var user_id = m_auth.currentUser?.uid!!
-        var profile_image_ref = storage_ref.child("images/worker_profile/$user_id")
 
-        var local_file = File.createTempFile("tempImage", "jpg")
-        profile_image_ref.getFile(local_file).addOnSuccessListener {
-            val bitmap = BitmapFactory.decodeFile(local_file.absolutePath)
-            iv_profile.setImageBitmap(bitmap)
+        var worker_id = m_auth.currentUser?.uid!!
+
+        var worker_event_listener = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                worker = snapshot.getValue(Worker::class.java)!!
+
+                if (worker.img_profile_url != null) {
+                    var profile_image_ref = storage_ref.child(worker.img_profile_url!!)
+
+                    var local_file = File.createTempFile("tempImage", "jpg")
+                    profile_image_ref.getFile(local_file).addOnSuccessListener {
+                        val bitmap = BitmapFactory.decodeFile(local_file.absolutePath)
+                        iv_profile.setImageBitmap(bitmap)
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(context, "Something went wrong...", Toast.LENGTH_LONG)
+                (activity as MainActivity).setFragmentByTitle("Options")
+            }
         }
+        m_db_ref.child("workers").child(worker_id).addValueEventListener(worker_event_listener)
     }
 }

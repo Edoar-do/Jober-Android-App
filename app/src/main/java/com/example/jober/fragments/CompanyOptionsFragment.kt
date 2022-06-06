@@ -1,5 +1,6 @@
 package com.example.tablayout.fragments
 
+import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,11 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.Toast
 import com.example.jober.MainActivity
+import com.example.jober.OfferCreation
 import com.example.jober.R
+import com.example.jober.model.Company
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
@@ -30,6 +33,8 @@ class CompanyOptionsFragment : Fragment() {
     lateinit var m_auth: FirebaseAuth
     lateinit var storage_ref : StorageReference
     lateinit var database : FirebaseDatabase
+    lateinit var company : Company
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,16 +71,37 @@ class CompanyOptionsFragment : Fragment() {
         }
 
         //aggiungere listener per new offer
+        btn_new_offer.setOnClickListener {
+            var intent = Intent(activity, OfferCreation::class.java)
+            startActivity(intent)
+        }
 
         //aggiungere listener per company offers
 
-        var user_id = m_auth.currentUser?.uid!!
-        var profile_image_ref = storage_ref.child("images/company_profile/$user_id")
 
-        var local_file = File.createTempFile("tempImage", "jpg")
-        profile_image_ref.getFile(local_file).addOnSuccessListener {
-            val bitmap = BitmapFactory.decodeFile(local_file.absolutePath)
-            iv_profile.setImageBitmap(bitmap)
+        var company_id = m_auth.currentUser?.uid!!
+
+        val company_value_listener = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                company = snapshot.getValue(Company::class.java)!!
+
+                if (company.img_profile_url != null) {
+                    var profile_image_ref = storage_ref.child(company.img_profile_url!!)
+
+                    var local_file = File.createTempFile("tempImage", "jpg")
+                    profile_image_ref.getFile(local_file).addOnSuccessListener {
+                        val bitmap = BitmapFactory.decodeFile(local_file.absolutePath)
+                        iv_profile.setImageBitmap(bitmap)
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(context, "Something went wrong...", Toast.LENGTH_LONG)
+                (activity as MainActivity).setFragmentByTitle("Options")
+            }
         }
+
+        m_db_ref.child("companies").child(company_id).addValueEventListener(company_value_listener)
     }
 }

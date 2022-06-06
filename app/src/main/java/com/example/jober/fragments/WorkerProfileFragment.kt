@@ -13,8 +13,7 @@ import com.example.jober.R
 import com.example.jober.WorkerProfileEdit
 import com.example.jober.model.Worker
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
@@ -78,32 +77,39 @@ class WorkerProfileFragment : Fragment() {
 
 
         var worker_id = m_auth.currentUser?.uid!!
-        m_db_ref.child("workers").child(worker_id).get().addOnSuccessListener {
-            worker = it.getValue(Worker::class.java)!!
 
-            tv_name.text = worker.name
-            tv_surname.text = worker.surname
-            tv_age.text = worker.age.toString()
-            tv_country.text = worker.country
-            tv_city.text = worker.city
-            tv_main_profession.text = worker.main_profession
-            tv_bio.text = worker.bio
-            tv_skills.text = worker.skills
-            tv_languages.text = worker.languages
-            tv_educational_experiences.text = worker.educational_experiences
+        var worker_event_listener = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                worker = snapshot.getValue(Worker::class.java)!!
 
-            var profile_image_ref = storage_ref.child("images/worker_profile/$worker_id")
+                tv_name.text = worker.name
+                tv_surname.text = worker.surname
+                tv_age.text = worker.age.toString()
+                tv_country.text = worker.country
+                tv_city.text = worker.city
+                tv_main_profession.text = worker.main_profession
+                tv_bio.text = worker.bio
+                tv_skills.text = worker.skills
+                tv_languages.text = worker.languages
+                tv_educational_experiences.text = worker.educational_experiences
 
-            var local_file = File.createTempFile("tempImage", "jpg")
-            profile_image_ref.getFile(local_file).addOnSuccessListener {
-                val bitmap = BitmapFactory.decodeFile(local_file.absolutePath)
-                iv_profile.setImageBitmap(bitmap)
+                if (worker.img_profile_url != null) {
+                    var profile_image_ref = storage_ref.child(worker.img_profile_url!!)
+
+                    var local_file = File.createTempFile("tempImage", "jpg")
+                    profile_image_ref.getFile(local_file).addOnSuccessListener {
+                        val bitmap = BitmapFactory.decodeFile(local_file.absolutePath)
+                        iv_profile.setImageBitmap(bitmap)
+                    }
+                }
             }
 
-        }.addOnFailureListener{
-            Toast.makeText(context, "Something went wrong...", Toast.LENGTH_LONG)
-            (activity as MainActivity).setFragmentByTitle("Options")
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(context, "Something went wrong...", Toast.LENGTH_LONG)
+                (activity as MainActivity).setFragmentByTitle("Options")
+            }
         }
+        m_db_ref.child("workers").child(worker_id).addValueEventListener(worker_event_listener)
 
         btn_edit.setOnClickListener {
             var intent = Intent(activity, WorkerProfileEdit::class.java)

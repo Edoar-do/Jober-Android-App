@@ -9,7 +9,7 @@ class Company {
     var country: String? = null
     var city: String? = null
     var description: String? = null
-    var company_logo_url: String? = null
+    var img_profile_url: String? = null
 
     constructor(){}
 
@@ -19,14 +19,14 @@ class Company {
         country: String?,
         city: String?,
         description: String?,
-        company_logo_url: String?
+        img_profile_url: String?
     ) {
         this.company_name = company_name
         this.sector = sector
         this.country = country
         this.city = city
         this.description = description
-        this.company_logo_url = company_logo_url
+        this.img_profile_url = img_profile_url
     }
 
     @Exclude
@@ -37,7 +37,7 @@ class Company {
             "country" to country,
             "city" to city,
             "description" to description,
-            "company_logo_url" to company_logo_url
+            "img_profile_url" to img_profile_url
         )
     }
 

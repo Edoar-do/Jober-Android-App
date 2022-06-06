@@ -12,11 +12,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.example.jober.*
+import com.example.jober.R
 import com.example.jober.model.Company
-import com.example.jober.model.Worker
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
@@ -69,27 +68,35 @@ class CompanyProfileFragment : Fragment() {
         m_db_ref = database.getReference()
 
         var company_id = m_auth.currentUser?.uid!!
-        m_db_ref.child("companies").child(company_id).get().addOnSuccessListener {
-            company = it.getValue(Company::class.java)!!
 
-            tv_company_name.text = company.company_name
-            tv_sector.text = company.sector
-            tv_country.text = company.country
-            tv_city.text = company.city
-            tv_description.text = company.description
+        val company_value_listener = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                company = snapshot.getValue(Company::class.java)!!
 
-            var profile_image_ref = storage_ref.child("images/company_profile/$company_id")
+                tv_company_name.text = company.company_name
+                tv_sector.text = company.sector
+                tv_country.text = company.country
+                tv_city.text = company.city
+                tv_description.text = company.description
 
-            var local_file = File.createTempFile("tempImage", "jpg")
-            profile_image_ref.getFile(local_file).addOnSuccessListener {
-                val bitmap = BitmapFactory.decodeFile(local_file.absolutePath)
-                iv_profile.setImageBitmap(bitmap)
+                if (company.img_profile_url != null) {
+                    var profile_image_ref = storage_ref.child(company.img_profile_url!!)
+
+                    var local_file = File.createTempFile("tempImage", "jpg")
+                    profile_image_ref.getFile(local_file).addOnSuccessListener {
+                        val bitmap = BitmapFactory.decodeFile(local_file.absolutePath)
+                        iv_profile.setImageBitmap(bitmap)
+                    }
+                }
             }
 
-        }.addOnFailureListener{
-            Toast.makeText(context, "Something went wrong...", Toast.LENGTH_LONG)
-            (activity as MainActivity).setFragmentByTitle("Options")
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(context, "Something went wrong...", Toast.LENGTH_LONG)
+                (activity as MainActivity).setFragmentByTitle("Options")
+            }
         }
+
+        m_db_ref.child("companies").child(company_id).addValueEventListener(company_value_listener)
 
         btn_edit.setOnClickListener {
             var intent = Intent(activity, CompanyProfileEdit::class.java)

@@ -29,11 +29,14 @@ class CompanyProfileEdit : AppCompatActivity() {
     lateinit var change_photo_link : TextView
     lateinit var m_db_ref: DatabaseReference
     lateinit var m_auth: FirebaseAuth
-    lateinit var image_uri : Uri
+    lateinit var image_uri_local : Uri
     lateinit var storage_ref : StorageReference
     lateinit var database : FirebaseDatabase
     lateinit var company : Company
     lateinit var iv_profile : ImageView
+
+    var image_path_db : String? = null
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,7 +51,7 @@ class CompanyProfileEdit : AppCompatActivity() {
         edt_city = findViewById(R.id.edt_city)
         edt_description = findViewById(R.id.edt_description)
         change_photo_link = findViewById(R.id.change_photo_link)
-        image_uri = Uri.EMPTY
+        image_uri_local = Uri.EMPTY
         iv_profile = findViewById(R.id.iv_profile)
 
         m_auth = FirebaseAuth.getInstance()
@@ -67,19 +70,21 @@ class CompanyProfileEdit : AppCompatActivity() {
             edt_country.setText(company.country)
             edt_city.setText(company.city)
             edt_description.setText(company.description)
+            image_path_db = company.img_profile_url
 
-            var profile_image_ref = storage_ref.child("images/company_profile/$company_id")
+            if (image_path_db != null) {
+                var profile_image_ref = storage_ref.child(company.img_profile_url!!)
 
-            var local_file = File.createTempFile("tempImage", "jpg")
-            profile_image_ref.getFile(local_file).addOnSuccessListener {
-                val bitmap = BitmapFactory.decodeFile(local_file.absolutePath)
-                iv_profile.setImageBitmap(bitmap)
+                var local_file = File.createTempFile("tempImage", "jpg")
+                profile_image_ref.getFile(local_file).addOnSuccessListener {
+                    val bitmap = BitmapFactory.decodeFile(local_file.absolutePath)
+                    iv_profile.setImageBitmap(bitmap)
+                }
             }
         }
 
         btn_save.setOnClickListener {
             save(it)
-            finish()
         }
 
         btn_cancel.setOnClickListener {
@@ -98,24 +103,9 @@ class CompanyProfileEdit : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         if(requestCode == 2 && resultCode == RESULT_OK && data != null){
-            image_uri = data.data!!
-            iv_profile.setImageURI(image_uri)
+            image_uri_local = data.data!!
+            iv_profile.setImageURI(image_uri_local)
         }
-    }
-
-    fun uploadImageToFirebase(image_uri : Uri) : String?{
-        var profile_pic_url : String? = null
-        val file_ref = storage_ref.child("images/company_profile/" + m_auth.currentUser?.uid!!)
-        file_ref.putFile(image_uri).addOnSuccessListener{
-            file_ref.downloadUrl.addOnSuccessListener {
-                profile_pic_url = it.toString()
-            }.addOnFailureListener{
-                Toast.makeText(this, "Failure in Dowloading URL", Toast.LENGTH_LONG)
-            }
-        }.addOnFailureListener{
-            Toast.makeText(this, "Failure Input File", Toast.LENGTH_LONG)
-        }
-        return profile_pic_url
     }
 
     fun save(view : View?){
@@ -124,7 +114,6 @@ class CompanyProfileEdit : AppCompatActivity() {
         val country = edt_country.text.toString()
         val city = edt_city.text.toString()
         val description = edt_description.text.toString()
-        var profile_image_url : String? = ""
 
         var error_present = false
 
@@ -150,25 +139,45 @@ class CompanyProfileEdit : AppCompatActivity() {
         }
 
         if (!error_present) {
-            if(image_uri != Uri.EMPTY) {
-                profile_image_url = uploadImageToFirebase(image_uri)
+            if(image_uri_local != Uri.EMPTY) {
+                image_path_db = "images/company_profile/" + m_auth.currentUser?.uid!! + "_" + System.currentTimeMillis().toString()
+                val file_ref = storage_ref.child(image_path_db!!)
+                file_ref.putFile(image_uri_local).addOnSuccessListener {
+                    val company = Company(company_name, sector, country, city, description, image_path_db)
+
+                    val company_values = company.toMap()
+                    val company_key = m_auth.currentUser?.uid!!
+                    val company_updates = hashMapOf<String, Any>(
+                        "/companies/$company_key" to company_values
+                    )
+
+                    m_db_ref.updateChildren(company_updates)
+
+                    //fragment switch
+                    intent = Intent(this, MainActivity::class.java)
+                    intent.putExtra("fragment", "CompanyProfile")    // specifichiamo il destination fragment
+                    finish()
+                    startActivity(intent)
+                }.addOnFailureListener{
+                    Toast.makeText(this, "Failure Input File", Toast.LENGTH_LONG)
+                }
+            }else {
+                println("$$$$$$$$$$$$$$$$$$$$$$$$ non ho cambiato l'immagine")
+                val company = Company(company_name, sector, country, city, description, image_path_db)
+                val company_values = company.toMap()
+                val company_key = m_auth.currentUser?.uid!!
+                val company_updates = hashMapOf<String, Any>(
+                    "/companies/$company_key" to company_values
+                )
+
+                m_db_ref.updateChildren(company_updates)
+
+                //fragment switch
+                intent = Intent(this, MainActivity::class.java)
+                intent.putExtra("fragment", "CompanyProfile")    // specifichiamo il destination fragment
+                finish()
+                startActivity(intent)
             }
-
-            val company = Company(company_name, sector, country, city, description, profile_image_url)
-
-            val company_values = company.toMap()
-            val company_key = m_auth.currentUser?.uid!!
-            val company_updates = hashMapOf<String, Any>(
-                "/companies/$company_key" to company_values
-            )
-
-            m_db_ref.updateChildren(company_updates)
-
-            //fragment switch
-            intent = Intent(this, MainActivity::class.java)
-            intent.putExtra("fragment", "CompanyProfile")    // specifichiamo il destination fragment
-            finish()
-            startActivity(intent)
         }
 
 

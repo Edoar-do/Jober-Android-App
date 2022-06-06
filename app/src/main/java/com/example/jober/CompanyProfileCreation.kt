@@ -28,9 +28,10 @@ class CompanyProfileCreation : AppCompatActivity() {
     lateinit var change_photo_link : TextView
     lateinit var m_db_ref: DatabaseReference
     lateinit var m_auth: FirebaseAuth
-    lateinit var image_uri : Uri
+    lateinit var image_uri_local : Uri
     lateinit var storage_ref : StorageReference
     lateinit var database : FirebaseDatabase
+    var image_path_db : String? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,7 +52,7 @@ class CompanyProfileCreation : AppCompatActivity() {
         edt_description = findViewById(R.id.edt_description)
         iv_profile = findViewById(R.id.iv_profile)
         change_photo_link = findViewById(R.id.change_photo_link)
-        image_uri = Uri.EMPTY
+        image_uri_local = Uri.EMPTY
     }
 
 
@@ -66,32 +67,10 @@ class CompanyProfileCreation : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         if(requestCode == 2 && resultCode == RESULT_OK && data != null){
-            image_uri = data.data!!
-            iv_profile.setImageURI(image_uri)
+            image_uri_local = data.data!!
+            iv_profile.setImageURI(image_uri_local)
         }
     }
-
-    fun uploadImageToFirebase(image_uri : Uri) : String?{
-        var profile_pic_url : String? = null
-        val file_ref = storage_ref.child("images/company_profile/" + m_auth.currentUser?.uid!!)
-        file_ref.putFile(image_uri).addOnSuccessListener{
-            file_ref.downloadUrl.addOnSuccessListener {
-                profile_pic_url = it.toString()
-            }.addOnFailureListener{
-                Toast.makeText(this, "Failure in Dowloading URL", Toast.LENGTH_LONG)
-            }
-        }.addOnFailureListener{
-            Toast.makeText(this, "Failure Input File", Toast.LENGTH_LONG)
-        }
-        return profile_pic_url
-    }
-
-    fun getFileExtension(uri : Uri) : String? {
-        val resolver = contentResolver
-        val mime = MimeTypeMap.getSingleton()
-        return mime.getExtensionFromMimeType(resolver.getType(uri))
-    }
-
 
     fun save(view : View) {
         //instance creation
@@ -100,20 +79,59 @@ class CompanyProfileCreation : AppCompatActivity() {
         val country = edt_country.text.toString()
         val city = edt_city.text.toString()
         val description = edt_description.text.toString()
-        var profile_image_url : String? = ""
 
-        if(image_uri != Uri.EMPTY) {
-            profile_image_url = uploadImageToFirebase(image_uri)
+        var error_present = false
+
+        if (name.isEmpty()) {
+            edt_name.error = "Please enter a name"
+            error_present = true
+        }
+        if (sector.isEmpty()) {
+            edt_sector.error = "Please enter a sector"
+            error_present = true
+        }
+        if (country.isEmpty()) {
+            edt_country.error = "Please enter a country"
+            error_present = true
+        }
+        if (city.isEmpty()) {
+            edt_city.error = "Please enter a city"
+            error_present = true
+        }
+        if (description.isEmpty()) {
+            edt_description.error = "Please enter a description"
+            error_present = true
         }
 
-        val company = Company(name, sector, country, city, description, profile_image_url)
+        if (!error_present) {
+            if(image_uri_local != Uri.EMPTY) {
+                image_path_db = "images/company_profile/" + m_auth.currentUser?.uid!! + "_" + System.currentTimeMillis().toString()
+                val file_ref = storage_ref.child(image_path_db!!)
+                file_ref.putFile(image_uri_local).addOnSuccessListener {
 
-        m_db_ref.child("companies").child(m_auth.currentUser?.uid!!).setValue(company)
+                    val company = Company(name, sector, country, city, description, image_path_db)
 
-        //fragment switch
-        intent = Intent(this, MainActivity::class.java)
-        intent.putExtra("fragment", "CompanyProfile")    // specifichiamo il destination fragment
-        finish()
-        startActivity(intent)
+                    m_db_ref.child("companies").child(m_auth.currentUser?.uid!!).setValue(company)
+
+                    //fragment switch
+                    intent = Intent(this, MainActivity::class.java)
+                    intent.putExtra("fragment", "CompanyProfile")    // specifichiamo il destination fragment
+                    finish()
+                    startActivity(intent)
+                }
+            }else {
+                val company = Company(name, sector, country, city, description, image_path_db)
+
+                m_db_ref.child("companies").child(m_auth.currentUser?.uid!!).setValue(company)
+
+                //fragment switch
+                intent = Intent(this, MainActivity::class.java)
+                intent.putExtra("fragment", "CompanyProfile")    // specifichiamo il destination fragment
+                finish()
+                startActivity(intent)
+            }
+        }
+
+
     }
 }

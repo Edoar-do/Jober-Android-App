@@ -13,7 +13,7 @@ class Worker {
     var skills : String? = null
     var languages : String? = null
     var educational_experiences : String? = null
-    var profile_image_url : String? = null
+    var img_profile_url : String? = null
     var bio : String? = null
     var main_profession : String? = null
 
@@ -27,7 +27,7 @@ class Worker {
         skills: String?,
         languages: String?,
         educational_experiences: String?,
-        profile_image_url: String?,
+        img_profile_url: String?,
         bio: String?,
         main_profession: String?
     ) {
@@ -39,7 +39,7 @@ class Worker {
         this.skills = skills
         this.languages = languages
         this.educational_experiences = educational_experiences
-        this.profile_image_url = profile_image_url
+        this.img_profile_url = img_profile_url
         this.bio = bio
         this.main_profession = main_profession
     }
@@ -57,7 +57,7 @@ class Worker {
             "educational_experiences" to educational_experiences,
             "bio" to bio,
             "main_profession" to main_profession,
-            "profile_image_url" to profile_image_url
+            "img_profile_url" to img_profile_url
         )
     }
 

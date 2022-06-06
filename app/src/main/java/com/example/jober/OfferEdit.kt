@@ -1,10 +1,12 @@
 package com.example.jober
 
 import android.content.Intent
+import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.*
+import com.example.jober.model.Company
 import com.example.jober.model.Offer
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
@@ -12,10 +14,12 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
+import java.io.File
 
-class OfferCreation : AppCompatActivity() {
+class OfferEdit : AppCompatActivity() {
 
     lateinit var btn_save : Button
+    lateinit var btn_cancel : Button
     lateinit var edt_position : EditText
     lateinit var edt_location : EditText
     lateinit var edt_job_description : EditText
@@ -27,9 +31,13 @@ class OfferCreation : AppCompatActivity() {
     lateinit var storage_ref : StorageReference
     lateinit var database : FirebaseDatabase
 
+
+    lateinit var offer : Offer
+    lateinit var offer_id : String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_offer_creation)
+        setContentView(R.layout.activity_offer_edit)
 
         m_auth = FirebaseAuth.getInstance()
         database = Firebase.database("https://jober-290f2-default-rtdb.europe-west1.firebasedatabase.app")
@@ -37,12 +45,38 @@ class OfferCreation : AppCompatActivity() {
 
 
         btn_save = findViewById(R.id.btn_save_company)
+        btn_cancel = findViewById(R.id.btn_cancel)
         edt_position = findViewById(R.id.edt_position)
         edt_location = findViewById(R.id.edt_location)
         edt_job_description = findViewById(R.id.edt_job_description)
         edt_languages_required = findViewById(R.id.edt_languages_required)
         edt_edu_exp_required = findViewById(R.id.edt_edu_exp_required)
         edt_skills_required = findViewById(R.id.edt_skills_required)
+
+
+        offer_id = intent.getStringExtra("offer_id").toString()
+
+        m_db_ref.child("offers").child(offer_id).get().addOnSuccessListener {
+            offer = it.getValue(Offer::class.java)!!
+
+            edt_job_description.setText(offer.job_description)
+            edt_position.setText(offer.position)
+            edt_location.setText(offer.location)
+            edt_skills_required.setText(offer.skills_required)
+            edt_languages_required.setText(offer.languages_required)
+            edt_edu_exp_required.setText(offer.edu_exp_required)
+
+        }.addOnFailureListener{
+            Toast.makeText(this, "Something went wrong...", Toast.LENGTH_LONG)
+            finish()
+        }
+        btn_save.setOnClickListener {
+            save(it)
+        }
+
+        btn_cancel.setOnClickListener {
+            finish()
+        }
     }
 
 
@@ -95,14 +129,14 @@ class OfferCreation : AppCompatActivity() {
                 job_description, skills_required, languages_required, edu_exp_required)
 
 
-            val offer_id = m_auth.currentUser?.uid!! + "_" + System.currentTimeMillis()
-            m_db_ref.child("offers").child(offer_id).setValue(offer)
+            val offer_values = offer.toMap()
+            val offer_updates = hashMapOf<String, Any>(
+                "/offers/$offer_id" to offer_values
+            )
 
-            //fragment switch
-            intent = Intent(this, OfferDescription::class.java)
-            intent.putExtra("offer_id", offer_id)    // specifichiamo il destination fragment
+            m_db_ref.updateChildren(offer_updates)
+
             finish()
-            startActivity(intent)
         }
 
 
