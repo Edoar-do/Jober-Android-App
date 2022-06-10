@@ -1,5 +1,6 @@
 package com.example.jober.fragments
 
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
@@ -11,6 +12,7 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.jober.OfferDescription
 import com.example.jober.R
 import com.example.jober.adapters.OfferAdapter
 import com.example.jober.model.Company
@@ -43,24 +45,23 @@ class OffersFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        offer_list = ArrayList()
+        company_logos = ArrayList()
+        company_names = ArrayList()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
 
         val view : View = inflater.inflate(R.layout.fragment_offers, container, false)
-        offer_list = ArrayList()
-        company_logos = ArrayList()
-        company_names = ArrayList()
 
         offer_adapter = OfferAdapter(view.context, offer_list, company_logos, company_names)
 
         offer_recycler_view = view.findViewById(R.id.recyclerview)
         println("############################# this is the recyclerview: " + offer_recycler_view)
-        offer_recycler_view.apply {
-            layoutManager = LinearLayoutManager(view.context, LinearLayoutManager.VERTICAL, false)
-            adapter = offer_adapter
-        }
+        offer_recycler_view.layoutManager = LinearLayoutManager(view.context)
+        offer_recycler_view.adapter = offer_adapter
+
         return view
     }
 
@@ -101,23 +102,28 @@ class OffersFragment : Fragment() {
                             profile_image_ref.getFile(local_file).addOnSuccessListener {
                                 company_logo = BitmapFactory.decodeFile(local_file.absolutePath)
                                 offer_list.add(current_offer)
+                                println("####################### data added to offer list, elements: ")
+                                for (element in offer_list) {
+                                    println("### " + element.position + " ###")
+                                }
                                 company_logos.add(company_logo!!)
                                 company_names.add(company_name!!)
                                 offer_adapter.notifyDataSetChanged()
+                                println("################################## the data changed, adapter has been notified")
                             }
                         }else {
                             company_logo = BitmapFactory.decodeResource(resources, R.drawable.user_profile_placeholder)
                             offer_list.add(current_offer)
                             company_logos.add(company_logo!!)
                             company_names.add(company_name!!)
-                            offer_adapter.notifyDataSetChanged()
                             println("#############################################" + offer_adapter.company_logos.size)
+                            offer_adapter.notifyDataSetChanged()
+                            println("################################## the data changed, adapter has been notified")
                         }
 
                     }
 
                 }
-
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -125,12 +131,7 @@ class OffersFragment : Fragment() {
             }
 
         })
-
-
-
-
-
-
     }
+
 
 }

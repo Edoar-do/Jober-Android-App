@@ -1,13 +1,16 @@
 package com.example.jober.adapters
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.example.jober.OfferDescription
 import com.example.jober.R
 import com.example.jober.model.Offer
 
@@ -18,6 +21,12 @@ class OfferAdapter(val context: Context, val offerList: ArrayList<Offer>, val co
         val tv_position = itemView.findViewById<TextView>(R.id.tv_position)
         val tv_location = itemView.findViewById<TextView>(R.id.tv_location)
         val iv_company_logo = itemView.findViewById<ImageView>(R.id.iv_company_logo)
+
+        init {
+            itemView.setOnClickListener {
+
+            }
+        }
     }
 
     override fun onCreateViewHolder(
@@ -45,6 +54,9 @@ class OfferAdapter(val context: Context, val offerList: ArrayList<Offer>, val co
         println("#################################### location on the field: " + holder.tv_location.text)
 
         holder.itemView.setOnClickListener {
+            val intent = Intent(context, OfferDescription()::class.java)
+            intent.putExtra("offer_id", current_offer.id)
+            context.startActivity(intent)
         }
     }
 

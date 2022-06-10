@@ -125,7 +125,7 @@ class OfferEdit : AppCompatActivity() {
         val company_id = m_auth.currentUser?.uid!!
 
         if (!error_present) {
-            val offer = Offer(company_id, position, location,
+            val offer = Offer(offer_id, company_id, position, location,
                 job_description, skills_required, languages_required, edu_exp_required)
 
 

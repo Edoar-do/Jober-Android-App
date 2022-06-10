@@ -23,9 +23,9 @@
             android:layout_weight="95"
             android:background="@drawable/custom_input_field"
             android:ems="10"
+            android:hint="search..."
             android:inputType="textPersonName"
             android:padding="12dp"
-            android:text="Name"
             android:textColorHint="#757575" />
 
         <Button
@@ -39,5 +39,5 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 </LinearLayout>

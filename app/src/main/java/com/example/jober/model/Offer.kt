@@ -4,6 +4,7 @@ import com.google.firebase.database.Exclude
 
 class Offer {
 
+    var id: String? = null
     var company_id: String? = null
     var position: String? = null
     var location: String? = null
@@ -14,6 +15,7 @@ class Offer {
 
     constructor(){}
     constructor(
+        id : String?,
         company_id: String?,
         position: String?,
         location: String?,
@@ -22,6 +24,7 @@ class Offer {
         languages_required: String?,
         edu_exp_required: String?
     ) {
+        this.id = id
         this.company_id = company_id
         this.position = position
         this.location = location
@@ -35,6 +38,7 @@ class Offer {
     @Exclude
     fun toMap(): Map<String, Any?>{
         return mapOf(
+            "id" to id,
             "company_id" to company_id,
             "position" to position,
             "location" to location,

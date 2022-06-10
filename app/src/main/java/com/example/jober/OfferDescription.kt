@@ -57,12 +57,31 @@ class OfferDescription : AppCompatActivity() {
 
         m_auth = FirebaseAuth.getInstance()
         storage_ref = FirebaseStorage.getInstance().getReference()
-        database = Firebase.database("https://jober-290f2-default-rtdb.europe-west1.firebasedatabase.app")
+        database =
+            Firebase.database("https://jober-290f2-default-rtdb.europe-west1.firebasedatabase.app")
         m_db_ref = database.getReference()
 
         offer_id = intent.getStringExtra("offer_id").toString()
 
-//        var company_id = m_auth.currentUser?.uid!!
+        // get references to buttons 'view applicants', 'apply', 'cancel application'
+        // get user type
+
+        // if usertype == company :
+        //      if offer.company == this.company :
+        //          button.visible = true
+        //          button.text = show applicants
+        //          button.onclick = fun show applicants
+        //          pencil_mod.visible = true
+        // else :
+        //      button.visible = true
+        //      if worker is already applied to this offer:
+        //          button.text = cancel application
+        //          button.onclick = fun cancel application
+        //      else:
+        //          button.text = apply
+        //          button.onclick = fun apply
+
+
 
         val offer_event_listener = object : ValueEventListener {
 
