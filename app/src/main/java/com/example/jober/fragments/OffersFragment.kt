@@ -61,8 +61,8 @@ class OffersFragment : Fragment() {
         database = Firebase.database("https://jober-290f2-default-rtdb.europe-west1.firebasedatabase.app")
         m_db_ref = database.getReference()
 
-        edt_search = view?.findViewById(R.id.edt_search)
-        btn_search = view?.findViewById(R.id.btn_search)
+        edt_search = view.findViewById(R.id.edt_search)
+        btn_search = view.findViewById(R.id.btn_search)
 
         offer_list = ArrayList()
         company_logos = ArrayList()
@@ -70,9 +70,10 @@ class OffersFragment : Fragment() {
 
         offer_adapter = OfferAdapter(view.context, offer_list, company_logos, company_names)
 
-        offer_recycler_view = view?.findViewById(R.id.recyclerview)
+        offer_recycler_view = view.findViewById(R.id.recyclerview)
+        println("############################# this is the recyclerview: " + offer_recycler_view)
         offer_recycler_view.apply {
-            layoutManager = LinearLayoutManager(activity)
+            layoutManager = LinearLayoutManager(view.context, LinearLayoutManager.VERTICAL, false)
             adapter = offer_adapter
         }
 

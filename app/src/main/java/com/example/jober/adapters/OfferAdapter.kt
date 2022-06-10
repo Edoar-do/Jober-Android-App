@@ -23,26 +23,33 @@ class OfferAdapter(val context: Context, val offerList: ArrayList<Offer>, val co
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): OfferAdapter.OfferViewHolder {
+    ): OfferViewHolder {
         val view: View = LayoutInflater.from(parent.context).inflate(R.layout.offer_row, parent, false)
         return OfferViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: OfferAdapter.OfferViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: OfferViewHolder, position: Int) {
         val current_offer = offerList[position]
         val current_company_logo = company_logos[position]
         val current_company_name = company_names[position]
+
+        println("#################################### sono all'interno dell'onbindViewHolder")
+        println("#################################### current company name: " + current_company_name)
+        println("#################################### current position: " + current_offer.position)
+        println("#################################### current location: " + current_offer.location)
 
         holder.tv_company_name.text = current_company_name
         holder.tv_position.text = current_offer.position
         holder.tv_location.text = current_offer.location
         holder.iv_company_logo.setImageBitmap(current_company_logo)
+        println("#################################### location on the field: " + holder.tv_location.text)
 
         holder.itemView.setOnClickListener {
         }
     }
 
     override fun getItemCount(): Int {
+        println("################################ questa e' la lunghezza delle liste: " + offerList.size)
         return offerList.size
     }
 
