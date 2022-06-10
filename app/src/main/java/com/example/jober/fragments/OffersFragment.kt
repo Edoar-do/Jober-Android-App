@@ -45,25 +45,10 @@ class OffersFragment : Fragment() {
 
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_offers, container, false)
-    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        m_auth = FirebaseAuth.getInstance()
-        storage_ref = FirebaseStorage.getInstance().getReference()
-        database = Firebase.database("https://jober-290f2-default-rtdb.europe-west1.firebasedatabase.app")
-        m_db_ref = database.getReference()
-
-        edt_search = view.findViewById(R.id.edt_search)
-        btn_search = view.findViewById(R.id.btn_search)
-
+        val view : View = inflater.inflate(R.layout.fragment_offers, container, false)
         offer_list = ArrayList()
         company_logos = ArrayList()
         company_names = ArrayList()
@@ -76,7 +61,19 @@ class OffersFragment : Fragment() {
             layoutManager = LinearLayoutManager(view.context, LinearLayoutManager.VERTICAL, false)
             adapter = offer_adapter
         }
+        return view
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        m_auth = FirebaseAuth.getInstance()
+        storage_ref = FirebaseStorage.getInstance().getReference()
+        database = Firebase.database("https://jober-290f2-default-rtdb.europe-west1.firebasedatabase.app")
+        m_db_ref = database.getReference()
+
+        edt_search = view.findViewById(R.id.edt_search)
+        btn_search = view.findViewById(R.id.btn_search)
 
         m_db_ref.child("offers").addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
