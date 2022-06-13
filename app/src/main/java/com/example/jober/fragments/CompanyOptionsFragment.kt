@@ -77,6 +77,9 @@ class CompanyOptionsFragment : Fragment() {
         }
 
         //aggiungere listener per company offers
+        btn_company_offers.setOnClickListener {
+            (activity as MainActivity).setFragmentByTitle("CompanyOffers")
+        }
 
 
         var company_id = m_auth.currentUser?.uid!!

@@ -3,9 +3,13 @@ package com.example.jober
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MotionEvent
 import android.widget.Toast
+import androidx.constraintlayout.motion.widget.OnSwipe
 import androidx.viewpager.widget.ViewPager
+import com.example.jober.adapters.CustomViewPager
 import com.example.jober.fragments.*
+import com.example.jober.model.Application
 import com.example.jober.model.UserSettings
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
@@ -21,7 +25,7 @@ import com.google.firebase.storage.StorageReference
 class MainActivity : AppCompatActivity() {
 
     private lateinit var bottomNavigationView: BottomNavigationView
-    private lateinit var vpViewPager: ViewPager
+    private lateinit var vpViewPager: CustomViewPager
 
     private lateinit var mAuth : FirebaseAuth
     private lateinit var m_db_ref: DatabaseReference
@@ -40,6 +44,8 @@ class MainActivity : AppCompatActivity() {
         database = Firebase.database("https://jober-290f2-default-rtdb.europe-west1.firebasedatabase.app")
         m_db_ref = database.getReference()
 
+
+
         var user_type : String? = null
 
         m_db_ref.child("userSettings").child(mAuth.currentUser?.uid!!).get().addOnSuccessListener {
@@ -56,10 +62,12 @@ class MainActivity : AppCompatActivity() {
                 //println("SONO UN WORKER ########################################################")
                 adapter.addFragment(WorkerOptionsFragment(), "Options")
                 adapter.addFragment(WorkerProfileFragment(), "WorkerProfile")
+                adapter.addFragment(WorkerApplicationsFragment(), "WorkerApplications")
             } else if(user_type.equals("company")) {
                 //println("SONO UNA COMPANY ########################################################")
                 adapter.addFragment(CompanyOptionsFragment(), "Options")
                 adapter.addFragment(CompanyProfileFragment(), "CompanyProfile")
+                adapter.addFragment(CompanyOffersFragment(), "CompanyOffers")
             }
 
             vpViewPager.adapter = adapter

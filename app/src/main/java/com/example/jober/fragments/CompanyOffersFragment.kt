@@ -1,6 +1,5 @@
 package com.example.jober.fragments
 
-import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
@@ -12,9 +11,8 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.jober.OfferDescription
 import com.example.jober.R
-import com.example.jober.adapters.OfferAdapter
+import com.example.jober.adapters.CompanyOfferAdapter
 import com.example.jober.model.Company
 import com.example.jober.model.Offer
 import com.google.firebase.auth.FirebaseAuth
@@ -25,7 +23,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import java.io.File
 
-class OffersFragment : Fragment() {
+class CompanyOffersFragment : Fragment() {
 
     lateinit var edt_search : EditText
     lateinit var btn_search : Button
@@ -35,7 +33,7 @@ class OffersFragment : Fragment() {
     lateinit var company_logos : ArrayList<Bitmap>
     lateinit var company_names : ArrayList<String>
 
-    lateinit var offer_adapter : OfferAdapter
+    lateinit var offer_adapter : CompanyOfferAdapter
 
     lateinit var m_db_ref: DatabaseReference
     lateinit var m_auth: FirebaseAuth
@@ -55,7 +53,7 @@ class OffersFragment : Fragment() {
 
         val view : View = inflater.inflate(R.layout.fragment_offers, container, false)
 
-        offer_adapter = OfferAdapter(view.context, offer_list, company_logos, company_names)
+        offer_adapter = CompanyOfferAdapter(view.context, offer_list, company_logos, company_names)
 
         offer_recycler_view = view.findViewById(R.id.recyclerview)
 //        println("############################# this is the recyclerview: " + offer_recycler_view)
@@ -76,7 +74,9 @@ class OffersFragment : Fragment() {
         edt_search = view.findViewById(R.id.edt_search)
         btn_search = view.findViewById(R.id.btn_search)
 
-        m_db_ref.child("offers").orderByChild("created_at").addValueEventListener(object : ValueEventListener{
+        val user_id = m_auth.currentUser?.uid!!
+
+        m_db_ref.child("offers").orderByKey().startAt(user_id).endAt(user_id + "\uf8ff").addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 offer_list.clear()
                 company_logos.clear()

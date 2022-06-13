@@ -65,6 +65,10 @@ class WorkerOptionsFragment : Fragment() {
             (activity as MainActivity).setFragmentByTitle("WorkerProfile")
         }
 
+        btn_applications.setOnClickListener {
+            (activity as MainActivity).setFragmentByTitle("WorkerApplications")
+        }
+
 
         var worker_id = m_auth.currentUser?.uid!!
 

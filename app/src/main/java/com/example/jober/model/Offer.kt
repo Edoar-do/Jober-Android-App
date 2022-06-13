@@ -12,6 +12,7 @@ class Offer {
     var skills_required: String? = null
     var languages_required: String? = null
     var edu_exp_required: String? = null
+    var created_at : Long? = null
 
     constructor(){}
     constructor(
@@ -22,7 +23,8 @@ class Offer {
         job_description: String?,
         skills_required: String?,
         languages_required: String?,
-        edu_exp_required: String?
+        edu_exp_required: String?,
+        created_at : Long?
     ) {
         this.id = id
         this.company_id = company_id
@@ -32,6 +34,7 @@ class Offer {
         this.skills_required = skills_required
         this.languages_required = languages_required
         this.edu_exp_required = edu_exp_required
+        this.created_at = created_at
     }
 
 
@@ -46,6 +49,7 @@ class Offer {
             "skills_required" to skills_required,
             "languages_required" to languages_required,
             "edu_exp_required" to edu_exp_required,
+            "created_at" to created_at
         )
     }
 }

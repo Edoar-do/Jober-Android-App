@@ -14,7 +14,7 @@ import com.example.jober.OfferDescription
 import com.example.jober.R
 import com.example.jober.model.Offer
 
-class OfferAdapter(val context: Context, val offerList: ArrayList<Offer>, val company_logos: ArrayList<Bitmap>, val company_names: ArrayList<String>): RecyclerView.Adapter<OfferAdapter.OfferViewHolder>() {
+class CompanyOfferAdapter(val context: Context, val offerList: ArrayList<Offer>, val company_logos: ArrayList<Bitmap>, val company_names: ArrayList<String>): RecyclerView.Adapter<CompanyOfferAdapter.OfferViewHolder>() {
 
     class OfferViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         val tv_company_name = itemView.findViewById<TextView>(R.id.tv_company_name)
@@ -52,6 +52,7 @@ class OfferAdapter(val context: Context, val offerList: ArrayList<Offer>, val co
             intent.putExtra("offer_id", current_offer.id)
             context.startActivity(intent)
         }
+
     }
 
     override fun getItemCount(): Int {

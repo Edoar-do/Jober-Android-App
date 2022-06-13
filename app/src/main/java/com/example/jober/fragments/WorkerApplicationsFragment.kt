@@ -1,6 +1,5 @@
 package com.example.jober.fragments
 
-import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
@@ -12,9 +11,9 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.jober.OfferDescription
 import com.example.jober.R
-import com.example.jober.adapters.OfferAdapter
+import com.example.jober.adapters.CompanyOfferAdapter
+import com.example.jober.model.Application
 import com.example.jober.model.Company
 import com.example.jober.model.Offer
 import com.google.firebase.auth.FirebaseAuth
@@ -25,7 +24,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import java.io.File
 
-class OffersFragment : Fragment() {
+class WorkerApplicationsFragment : Fragment() {
 
     lateinit var edt_search : EditText
     lateinit var btn_search : Button
@@ -35,7 +34,7 @@ class OffersFragment : Fragment() {
     lateinit var company_logos : ArrayList<Bitmap>
     lateinit var company_names : ArrayList<String>
 
-    lateinit var offer_adapter : OfferAdapter
+    lateinit var offer_adapter : CompanyOfferAdapter
 
     lateinit var m_db_ref: DatabaseReference
     lateinit var m_auth: FirebaseAuth
@@ -55,7 +54,7 @@ class OffersFragment : Fragment() {
 
         val view : View = inflater.inflate(R.layout.fragment_offers, container, false)
 
-        offer_adapter = OfferAdapter(view.context, offer_list, company_logos, company_names)
+        offer_adapter = CompanyOfferAdapter(view.context, offer_list, company_logos, company_names)
 
         offer_recycler_view = view.findViewById(R.id.recyclerview)
 //        println("############################# this is the recyclerview: " + offer_recycler_view)
@@ -76,53 +75,58 @@ class OffersFragment : Fragment() {
         edt_search = view.findViewById(R.id.edt_search)
         btn_search = view.findViewById(R.id.btn_search)
 
-        m_db_ref.child("offers").orderByChild("created_at").addValueEventListener(object : ValueEventListener{
+        val user_id = m_auth.currentUser?.uid!!
+
+        m_db_ref.child("applications").orderByKey().startAt(user_id).endAt(user_id + "\uf8ff").addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 offer_list.clear()
                 company_logos.clear()
                 company_names.clear()
 
                 for (postSnapshot in snapshot.children) {
-                    val current_offer = postSnapshot.getValue(Offer::class.java)
+                    val application = postSnapshot.getValue(Application::class.java)
+                    val offer_id = application!!.offer_id
 
-                    val company_id = current_offer!!.company_id
-                    var company_name : String? = null
-                    var company_logo_url : String? = null
-                    var company_logo : Bitmap? = null
+                    m_db_ref.child("offers").child(offer_id!!).get().addOnCompleteListener {
+                        val current_offer = it.result.getValue(Offer::class.java)
 
-                    m_db_ref.child("companies").child(company_id!!).get().addOnSuccessListener {
-                        val company = it.getValue(Company::class.java)
-                        company_name = company?.company_name
-                        company_logo_url = company?.img_profile_url
+                        val company_id = current_offer!!.company_id
+                        var company_name : String? = null
+                        var company_logo_url : String? = null
+                        var company_logo : Bitmap? = null
 
-                        if (company_logo_url != null) {
-                            var profile_image_ref = storage_ref.child(company_logo_url!!)
+                        m_db_ref.child("companies").child(company_id!!).get().addOnSuccessListener {
+                            val company = it.getValue(Company::class.java)
+                            company_name = company?.company_name
+                            company_logo_url = company?.img_profile_url
 
-                            var local_file = File.createTempFile("tempImage", "jpg")
-                            profile_image_ref.getFile(local_file).addOnSuccessListener {
-                                company_logo = BitmapFactory.decodeFile(local_file.absolutePath)
-                                offer_list.add(current_offer)
+                            if (company_logo_url != null) {
+                                var profile_image_ref = storage_ref.child(company_logo_url!!)
+
+                                var local_file = File.createTempFile("tempImage", "jpg")
+                                profile_image_ref.getFile(local_file).addOnSuccessListener {
+                                    company_logo = BitmapFactory.decodeFile(local_file.absolutePath)
+                                    offer_list.add(current_offer)
 //                                println("####################### data added to offer list, elements: ")
-                                for (element in offer_list) {
-                                    println("### " + element.position + " ###")
+                                    for (element in offer_list) {
+                                        println("### " + element.position + " ###")
+                                    }
+                                    company_logos.add(company_logo!!)
+                                    company_names.add(company_name!!)
+                                    offer_adapter.notifyDataSetChanged()
+//                                println("################################## the data changed, adapter has been notified")
                                 }
+                            }else {
+                                company_logo = BitmapFactory.decodeResource(resources, R.drawable.user_profile_placeholder)
+                                offer_list.add(current_offer)
                                 company_logos.add(company_logo!!)
                                 company_names.add(company_name!!)
-                                offer_adapter.notifyDataSetChanged()
-//                                println("################################## the data changed, adapter has been notified")
-                            }
-                        }else {
-                            company_logo = BitmapFactory.decodeResource(resources, R.drawable.user_profile_placeholder)
-                            offer_list.add(current_offer)
-                            company_logos.add(company_logo!!)
-                            company_names.add(company_name!!)
 //                            println("#############################################" + offer_adapter.company_logos.size)
-                            offer_adapter.notifyDataSetChanged()
+                                offer_adapter.notifyDataSetChanged()
 //                            println("################################## the data changed, adapter has been notified")
+                            }
                         }
-
                     }
-
                 }
             }
 

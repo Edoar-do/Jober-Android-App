@@ -30,6 +30,7 @@ class OfferEdit : AppCompatActivity() {
     lateinit var m_auth: FirebaseAuth
     lateinit var storage_ref : StorageReference
     lateinit var database : FirebaseDatabase
+    var create_at : Long? = null
 
 
     lateinit var offer : Offer
@@ -65,6 +66,7 @@ class OfferEdit : AppCompatActivity() {
             edt_skills_required.setText(offer.skills_required)
             edt_languages_required.setText(offer.languages_required)
             edt_edu_exp_required.setText(offer.edu_exp_required)
+            create_at = offer.created_at
 
         }.addOnFailureListener{
             Toast.makeText(this, "Something went wrong...", Toast.LENGTH_LONG)
@@ -126,7 +128,7 @@ class OfferEdit : AppCompatActivity() {
 
         if (!error_present) {
             val offer = Offer(offer_id, company_id, position, location,
-                job_description, skills_required, languages_required, edu_exp_required)
+                job_description, skills_required, languages_required, edu_exp_required, create_at)
 
 
             val offer_values = offer.toMap()
