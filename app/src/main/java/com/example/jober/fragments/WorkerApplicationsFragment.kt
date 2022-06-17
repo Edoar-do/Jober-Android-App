@@ -52,7 +52,7 @@ class WorkerApplicationsFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
 
-        val view : View = inflater.inflate(R.layout.fragment_offers, container, false)
+        val view : View = inflater.inflate(R.layout.fragment_recycler_view, container, false)
 
         offer_adapter = CompanyOfferAdapter(view.context, offer_list, company_logos, company_names)
 

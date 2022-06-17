@@ -68,6 +68,7 @@ class MainActivity : AppCompatActivity() {
                 adapter.addFragment(CompanyOptionsFragment(), "Options")
                 adapter.addFragment(CompanyProfileFragment(), "CompanyProfile")
                 adapter.addFragment(CompanyOffersFragment(), "CompanyOffers")
+                adapter.addFragment(OfferApplicantsFragment(), "OfferApplicants")
             }
 
             vpViewPager.adapter = adapter
@@ -76,7 +77,8 @@ class MainActivity : AppCompatActivity() {
             //println("starting fragment:" + adapter.getIndexByTitle(starting_fragment!!)!!)
             vpViewPager.setCurrentItem(adapter.getIndexByTitle(starting_fragment!!)!!)
 
-            bottomNavigationView.setSelectedItemId(R.id.options_item)
+//            bottomNavigationView.setSelectedItemId(R.id.options_item)
+            print("############################# CHIAMATO ONCREATE DELLA MAIN ACTIVITY")
 
             bottomNavigationView.setOnNavigationItemSelectedListener {
                 when(it.itemId){
@@ -104,6 +106,10 @@ class MainActivity : AppCompatActivity() {
 
     fun setFragmentByTitle(title: String) {
         vpViewPager.setCurrentItem((vpViewPager.adapter as ViewPagerAdapter).getIndexByTitle(title)!!)
+    }
+
+    fun setBottomNavigationItem(item : Int) {
+        bottomNavigationView.setSelectedItemId(item)
     }
 
 /*    private fun setCurrentFragment(fragment:Fragment?)=

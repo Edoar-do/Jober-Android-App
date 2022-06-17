@@ -1,6 +1,5 @@
 package com.example.jober.fragments
 
-import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
@@ -12,7 +11,6 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.jober.OfferDescription
 import com.example.jober.R
 import com.example.jober.adapters.OfferAdapter
 import com.example.jober.model.Company
@@ -53,7 +51,7 @@ class OffersFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
 
-        val view : View = inflater.inflate(R.layout.fragment_offers, container, false)
+        val view : View = inflater.inflate(R.layout.fragment_recycler_view, container, false)
 
         offer_adapter = OfferAdapter(view.context, offer_list, company_logos, company_names)
 

@@ -220,7 +220,10 @@ class OfferDescription : AppCompatActivity() {
     }
 
     private fun show_applicants(offerId: String) {
-
+        val intent = Intent(this@OfferDescription, MainActivity::class.java)
+        intent.putExtra("fragment", "OfferApplicants")
+        intent.putExtra("offer_id", offerId)
+        startActivity(intent)
     }
 
 
