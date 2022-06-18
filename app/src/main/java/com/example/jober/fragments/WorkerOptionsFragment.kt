@@ -62,11 +62,11 @@ class WorkerOptionsFragment : Fragment() {
         }
 
         btn_profile.setOnClickListener {
-            (activity as MainActivity).setFragmentByTitle("WorkerProfile")
+            (activity as MainActivity).setFragmentByTitle("WorkerProfile", null)
         }
 
         btn_applications.setOnClickListener {
-            (activity as MainActivity).setFragmentByTitle("WorkerApplications")
+            (activity as MainActivity).setFragmentByTitle("WorkerApplications", null)
         }
 
 
@@ -89,7 +89,7 @@ class WorkerOptionsFragment : Fragment() {
 
             override fun onCancelled(error: DatabaseError) {
                 Toast.makeText(context, "Something went wrong...", Toast.LENGTH_LONG)
-                (activity as MainActivity).setFragmentByTitle("Options")
+                (activity as MainActivity).setFragmentByTitle("Options", null)
             }
         }
         m_db_ref.child("workers").child(worker_id).addValueEventListener(worker_event_listener)

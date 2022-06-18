@@ -106,7 +106,7 @@ class WorkerProfileFragment : Fragment() {
 
             override fun onCancelled(error: DatabaseError) {
                 Toast.makeText(context, "Something went wrong...", Toast.LENGTH_LONG)
-                (activity as MainActivity).setFragmentByTitle("Options")
+                (activity as MainActivity).setFragmentByTitle("Options", null)
             }
         }
         m_db_ref.child("workers").child(worker_id).addValueEventListener(worker_event_listener)

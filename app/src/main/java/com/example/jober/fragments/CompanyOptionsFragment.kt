@@ -67,7 +67,7 @@ class CompanyOptionsFragment : Fragment() {
         }
 
         btn_company_profile.setOnClickListener {
-            (activity as MainActivity).setFragmentByTitle("CompanyProfile")
+            (activity as MainActivity).setFragmentByTitle("CompanyProfile", null)
         }
 
         //aggiungere listener per new offer
@@ -78,7 +78,7 @@ class CompanyOptionsFragment : Fragment() {
 
         //aggiungere listener per company offers
         btn_company_offers.setOnClickListener {
-            (activity as MainActivity).setFragmentByTitle("CompanyOffers")
+            (activity as MainActivity).setFragmentByTitle("CompanyOffers", null)
         }
 
 
@@ -101,7 +101,7 @@ class CompanyOptionsFragment : Fragment() {
 
             override fun onCancelled(error: DatabaseError) {
                 Toast.makeText(context, "Something went wrong...", Toast.LENGTH_LONG)
-                (activity as MainActivity).setFragmentByTitle("Options")
+                (activity as MainActivity).setFragmentByTitle("Options", null)
             }
         }
 

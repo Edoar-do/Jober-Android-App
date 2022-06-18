@@ -1,23 +1,15 @@
-package com.example.jober.fragments
+package com.example.jober
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.jober.MainActivity
-import com.example.jober.R
-import com.example.jober.adapters.CompanyOfferAdapter
 import com.example.jober.adapters.OfferApplicantAdapter
 import com.example.jober.model.Application
-import com.example.jober.model.Company
-import com.example.jober.model.Offer
 import com.example.jober.model.Worker
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -27,7 +19,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import java.io.File
 
-class OfferApplicantsFragment : Fragment() {
+class OfferApplicants : AppCompatActivity() {
 
     lateinit var edt_search : EditText
     lateinit var btn_search : Button
@@ -45,44 +37,35 @@ class OfferApplicantsFragment : Fragment() {
 
     var offer_id : String? = null
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.fragment_recycler_view)
 
         worker_list = ArrayList()
         worker_pics = ArrayList()
-    }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
+        applicant_adapter = OfferApplicantAdapter(this, worker_list, worker_pics)
 
-        val view : View = inflater.inflate(R.layout.fragment_recycler_view, container, false)
-
-        applicant_adapter = OfferApplicantAdapter(view.context, worker_list, worker_pics)
-
-        applicants_recycler_view = view.findViewById(R.id.recyclerview)
+        applicants_recycler_view = findViewById(R.id.recyclerview)
 //        println("############################# this is the recyclerview: " + offer_recycler_view)
-        applicants_recycler_view.layoutManager = LinearLayoutManager(view.context)
+        applicants_recycler_view.layoutManager = LinearLayoutManager(this)
         applicants_recycler_view.adapter = applicant_adapter
 
-        return view
-    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        offer_id = (activity as MainActivity).intent.getStringExtra("offer_id")
+        offer_id = intent.getStringExtra("offer_id")
 
         m_auth = FirebaseAuth.getInstance()
         storage_ref = FirebaseStorage.getInstance().getReference()
         database = Firebase.database("https://jober-290f2-default-rtdb.europe-west1.firebasedatabase.app")
         m_db_ref = database.getReference()
 
-        edt_search = view.findViewById(R.id.edt_search)
-        btn_search = view.findViewById(R.id.btn_search)
+        edt_search = findViewById(R.id.edt_search)
+        btn_search = findViewById(R.id.btn_search)
 
         val user_id = m_auth.currentUser?.uid!!
 
-        m_db_ref.child("applications").addValueEventListener(object : ValueEventListener{
+        m_db_ref.child("applications").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 worker_list.clear()
                 worker_pics.clear()
@@ -110,18 +93,18 @@ class OfferApplicantsFragment : Fragment() {
                                 profile_image_ref.getFile(local_file).addOnSuccessListener {
                                     applicant_profile_pic = BitmapFactory.decodeFile(local_file.absolutePath)
                                     worker_list.add(applicant!!)
-    //                                println("####################### data added to offer list, elements: ")
+                                    //                                println("####################### data added to offer list, elements: ")
                                     worker_pics.add(applicant_profile_pic!!)
                                     applicant_adapter.notifyDataSetChanged()
-    //                                println("################################## the data changed, adapter has been notified")
+                                    //                                println("################################## the data changed, adapter has been notified")
                                 }
                             }else {
                                 applicant_profile_pic = BitmapFactory.decodeResource(resources, R.drawable.user_profile_placeholder)
                                 worker_list.add(applicant!!)
                                 worker_pics.add(applicant_profile_pic!!)
-    //                            println("#############################################" + offer_adapter.company_logos.size)
+                                //                            println("#############################################" + offer_adapter.company_logos.size)
                                 applicant_adapter.notifyDataSetChanged()
-    //                            println("################################## the data changed, adapter has been notified")
+                                //                            println("################################## the data changed, adapter has been notified")
                             }
                         }
                     }
@@ -133,7 +116,6 @@ class OfferApplicantsFragment : Fragment() {
             }
 
         })
+
     }
-
-
 }

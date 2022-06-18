@@ -92,7 +92,7 @@ class CompanyProfileFragment : Fragment() {
 
             override fun onCancelled(error: DatabaseError) {
                 Toast.makeText(context, "Something went wrong...", Toast.LENGTH_LONG)
-                (activity as MainActivity).setFragmentByTitle("Options")
+                (activity as MainActivity).setFragmentByTitle("Options", null)
             }
         }
 
