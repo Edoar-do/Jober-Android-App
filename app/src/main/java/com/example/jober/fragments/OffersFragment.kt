@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.jober.R
@@ -28,6 +29,7 @@ class OffersFragment : Fragment() {
     lateinit var edt_search : EditText
     lateinit var btn_search : Button
     lateinit var offer_recycler_view : RecyclerView
+    lateinit var search_view : SearchView
 
     lateinit var offer_list : ArrayList<Offer>
     lateinit var company_logos : ArrayList<Bitmap>
@@ -71,8 +73,21 @@ class OffersFragment : Fragment() {
         database = Firebase.database("https://jober-290f2-default-rtdb.europe-west1.firebasedatabase.app")
         m_db_ref = database.getReference()
 
-        edt_search = view.findViewById(R.id.edt_search)
-        btn_search = view.findViewById(R.id.btn_search)
+//        edt_search = view.findViewById(R.id.edt_search)
+//        btn_search = view.findViewById(R.id.btn_search)
+        search_view = view.findViewById(R.id.searchView)
+        search_view.clearFocus()
+        search_view.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(p0: String?): Boolean {
+                filterList(p0)
+                return true
+            }
+
+        })
 
         m_db_ref.child("offers").orderByChild("created_at").addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -129,6 +144,29 @@ class OffersFragment : Fragment() {
             }
 
         })
+    }
+
+    private fun filterList(search_text : String?) {
+        var offers_filtered_list = ArrayList<Offer>()
+        var company_names_filtered_list = ArrayList<String>()
+        var company_logos_filtered_list = ArrayList<Bitmap>()
+        val list_of_words = search_text!!.split(" ")
+
+        for (i in offer_list.indices) {
+            var to_get = true
+            for (word in list_of_words) {
+                if (!offer_list.get(i).position!!.contains(word, true) && !company_names.get(i).contains(word, true)) {
+                    to_get = false
+                }
+            }
+            if (to_get) {
+                offers_filtered_list.add(offer_list.get(i))
+                company_names_filtered_list.add(company_names.get(i))
+                company_logos_filtered_list.add(company_logos.get(i))
+            }
+        }
+
+        offer_adapter.setFilteredLists(offers_filtered_list, company_names_filtered_list, company_logos_filtered_list)
     }
 
 

@@ -43,13 +43,14 @@
                     android:layout_marginBottom="36dp"
                     android:backgroundTint="@color/white"
                     android:elevation="20dp"
-                    android:padding="13dp"
-                    android:tint="@color/black"
+                    android:foregroundTintMode="add"
+                    android:padding="12dp"
+                    android:scaleType="fitCenter"
                     app:layout_constraintBottom_toBottomOf="@+id/iv_profile"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toEndOf="@+id/iv_profile"
-                    app:srcCompat="@android:drawable/ic_menu_edit" />
+                    app:srcCompat="@drawable/ic_edit" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout

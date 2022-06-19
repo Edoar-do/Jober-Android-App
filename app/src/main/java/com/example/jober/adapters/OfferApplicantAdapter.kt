@@ -14,12 +14,19 @@ import com.example.jober.R
 import com.example.jober.model.Offer
 import com.example.jober.model.Worker
 
-class OfferApplicantAdapter(val context: Context, val workerList: ArrayList<Worker>, val workerPics: ArrayList<Bitmap>): RecyclerView.Adapter<OfferApplicantAdapter.OfferViewHolder>() {
+class OfferApplicantAdapter(val context: Context, var workerList: ArrayList<Worker>, var workerPics: ArrayList<Bitmap>): RecyclerView.Adapter<OfferApplicantAdapter.OfferViewHolder>() {
 
     class OfferViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         val tv_applicant_name = itemView.findViewById<TextView>(R.id.tv_applicant_name)
         val tv_applicant_profession = itemView.findViewById<TextView>(R.id.tv_applicant_profession)
         val iv_applicant_profile = itemView.findViewById<ImageView>(R.id.iv_applicant_profile)
+    }
+
+    fun setFilteredLists(workers_filtered_list : ArrayList<Worker>, worker_pics_filtered_list : ArrayList<Bitmap>) {
+        this.workerList = workers_filtered_list
+        this.workerPics = worker_pics_filtered_list
+
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(

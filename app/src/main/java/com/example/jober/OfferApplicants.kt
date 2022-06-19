@@ -6,10 +6,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.jober.adapters.OfferApplicantAdapter
 import com.example.jober.model.Application
+import com.example.jober.model.Offer
 import com.example.jober.model.Worker
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -24,6 +26,7 @@ class OfferApplicants : AppCompatActivity() {
     lateinit var edt_search : EditText
     lateinit var btn_search : Button
     lateinit var applicants_recycler_view : RecyclerView
+    lateinit var search_view : SearchView
 
     lateinit var worker_list : ArrayList<Worker>
     lateinit var worker_pics : ArrayList<Bitmap>
@@ -60,8 +63,21 @@ class OfferApplicants : AppCompatActivity() {
         database = Firebase.database("https://jober-290f2-default-rtdb.europe-west1.firebasedatabase.app")
         m_db_ref = database.getReference()
 
-        edt_search = findViewById(R.id.edt_search)
-        btn_search = findViewById(R.id.btn_search)
+//        edt_search = findViewById(R.id.edt_search)
+//        btn_search = findViewById(R.id.btn_search)
+        search_view = findViewById(R.id.searchView)
+        search_view.clearFocus()
+        search_view.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(p0: String?): Boolean {
+                filterList(p0)
+                return true
+            }
+
+        })
 
         val user_id = m_auth.currentUser?.uid!!
 
@@ -117,5 +133,27 @@ class OfferApplicants : AppCompatActivity() {
 
         })
 
+    }
+
+
+    private fun filterList(search_text : String?) {
+        var workers_filtered_list = ArrayList<Worker>()
+        var worker_pics_filtered_list = ArrayList<Bitmap>()
+        val list_of_words = search_text!!.split(" ")
+
+        for (i in worker_list.indices) {
+            var to_get = true
+            for (word in list_of_words) {
+                if (!worker_list.get(i).name!!.contains(word, true) && !worker_list.get(i).main_profession!!.contains(word, true)) {
+                    to_get = false
+                }
+            }
+            if (to_get) {
+                workers_filtered_list.add(worker_list.get(i))
+                worker_pics_filtered_list.add(worker_pics.get(i))
+            }
+        }
+
+        applicant_adapter.setFilteredLists(workers_filtered_list, worker_pics_filtered_list)
     }
 }

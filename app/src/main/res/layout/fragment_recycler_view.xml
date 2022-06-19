@@ -7,33 +7,42 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:padding="10dp"-->
+<!--        android:weightSum="100">-->
+
+<!--        <EditText-->
+<!--            android:id="@+id/edt_search"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginEnd="10dp"-->
+<!--            android:layout_weight="95"-->
+<!--            android:background="@drawable/custom_input_field"-->
+<!--            android:ems="10"-->
+<!--            android:hint="search..."-->
+<!--            android:inputType="textPersonName"-->
+<!--            android:padding="12dp"-->
+<!--            android:textColorHint="#757575" />-->
+
+<!--        <Button-->
+<!--            android:id="@+id/btn_search"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="5"-->
+<!--            android:text="Search" />-->
+<!--    </LinearLayout>-->
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchView"
+        android:layout_margin="8dp"
+        app:queryHint="Search..."
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="10dp"
-        android:weightSum="100">
-
-        <EditText
-            android:id="@+id/edt_search"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:layout_weight="95"
-            android:background="@drawable/custom_input_field"
-            android:ems="10"
-            android:hint="search..."
-            android:inputType="textPersonName"
-            android:padding="12dp"
-            android:textColorHint="#757575" />
-
-        <Button
-            android:id="@+id/btn_search"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="5"
-            android:text="Search" />
-    </LinearLayout>
+        app:iconifiedByDefault="false"
+        android:background="@drawable/search_view"
+        android:layout_height="wrap_content"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview"
