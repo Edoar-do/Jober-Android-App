@@ -8,8 +8,8 @@
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toTopOf="@id/bottom_layout"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,8 +19,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
 
 
             <ImageView
@@ -62,8 +62,8 @@
                     android:autofillHints=""
                     android:background="@drawable/custom_input_field"
                     android:ems="10"
-                    android:hint="company name"
                     android:gravity="bottom"
+                    android:hint="company name"
                     android:inputType="text"
                     android:padding="12dp"
                     android:textColorHint="#757575"
@@ -89,8 +89,8 @@
                     android:autofillHints=""
                     android:background="@drawable/custom_input_field"
                     android:ems="10"
-                    android:hint="sector"
                     android:gravity="bottom"
+                    android:hint="sector"
                     android:inputType="text"
                     android:padding="12dp"
                     android:textColorHint="#757575"
@@ -128,8 +128,8 @@
                     android:autofillHints=""
                     android:background="@drawable/custom_input_field"
                     android:ems="10"
-                    android:hint="@string/country_string"
                     android:gravity="bottom"
+                    android:hint="@string/country_string"
                     android:inputType="text"
                     android:padding="12dp"
                     android:textColorHint="#757575"
@@ -156,9 +156,9 @@
                     android:autofillHints=""
                     android:background="@drawable/custom_input_field"
                     android:ems="10"
+                    android:gravity="bottom"
                     android:hint="@string/city_string"
                     android:inputType="text"
-                    android:gravity="bottom"
                     android:padding="12dp"
                     android:textColorHint="#757575"
                     app:layout_constraintEnd_toEndOf="parent"

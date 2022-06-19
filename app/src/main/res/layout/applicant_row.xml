@@ -23,12 +23,14 @@
 
             <ImageView
                 android:id="@+id/iv_applicant_profile"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="95dp"
+                android:layout_height="95dp"
                 android:layout_marginStart="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 app:srcCompat="@drawable/user_profile_placeholder" />
 
             <TextView
@@ -36,7 +38,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="25dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="30dp"
                 android:text="TextView"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/iv_applicant_profile"
@@ -46,10 +48,8 @@
                 android:id="@+id/tv_applicant_profession"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginTop="15dp"
                 android:text="TextView"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/tv_applicant_name"
                 app:layout_constraintTop_toBottomOf="@+id/tv_applicant_name" />
 

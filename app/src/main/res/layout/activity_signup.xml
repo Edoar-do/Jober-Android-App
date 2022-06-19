@@ -43,7 +43,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_logo" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/tv_signin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="88dp"

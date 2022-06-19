@@ -32,7 +32,21 @@ class Login : AppCompatActivity() {
             val email = edt_email.text.toString()
             val password = edt_password.text.toString()
 
-            login(email, password)
+
+            var error_present = false
+
+            if (email.isEmpty()) {
+                edt_email.error = "Please enter your email"
+                error_present = true
+            }
+            if (password.isEmpty()) {
+                edt_password.error = "Please enter your password"
+                error_present = true
+            }
+
+            if (!error_present) {
+                login(email, password)
+            }
         }
 
 

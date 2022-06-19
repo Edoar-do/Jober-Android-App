@@ -8,7 +8,7 @@
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@id/bottom_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -151,8 +151,8 @@
                 android:id="@+id/change_photo_link"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="photoPicker"
                 android:layout_marginTop="10dp"
+                android:onClick="photoPicker"
                 android:text="@string/change_photo_string"
                 android:textColor="@color/main_blue"
                 android:textColorLink="@color/main_blue"

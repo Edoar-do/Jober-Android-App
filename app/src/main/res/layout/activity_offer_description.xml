@@ -32,7 +32,7 @@
                     android:elevation="20dp"
                     android:padding="12dp"
                     android:scaleType="fitCenter"
-                    android:tint="#970B0B"
+                    app:tint="#970B0B"
                     app:layout_constraintBottom_toBottomOf="@+id/iv_logo"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
@@ -63,7 +63,7 @@
                     android:elevation="20dp"
                     android:padding="13dp"
                     android:scaleType="fitCenter"
-                    android:tint="@android:color/black"
+                    app:tint="@android:color/black"
                     app:layout_constraintBottom_toBottomOf="@+id/iv_logo"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
@@ -71,6 +71,7 @@
                     app:srcCompat="@android:drawable/ic_menu_edit"
                     tools:ignore="SpeakableTextPresentCheck" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             <LinearLayout
                 android:id="@+id/linearLayout2"
@@ -90,6 +91,7 @@
                 <TextView
                     android:id="@+id/tv_company_name"
                     android:layout_width="0dp"
+                    android:paddingStart="16dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="70" />
             </LinearLayout>
@@ -112,6 +114,7 @@
                 <TextView
                     android:id="@+id/tv_company_sector"
                     android:layout_width="0dp"
+                    android:paddingStart="16dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="70" />
 
@@ -142,6 +145,7 @@
                 <TextView
                     android:id="@+id/tv_position"
                     android:layout_width="0dp"
+                    android:paddingStart="16dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="70" />
             </LinearLayout>
@@ -163,6 +167,7 @@
                 <TextView
                     android:id="@+id/tv_location"
                     android:layout_width="0dp"
+                    android:paddingStart="16dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="70" />
             </LinearLayout>
@@ -184,6 +189,7 @@
                 <TextView
                     android:id="@+id/tv_job_description"
                     android:layout_width="0dp"
+                    android:paddingStart="16dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="70" />
 
@@ -213,6 +219,7 @@
                 <TextView
                     android:id="@+id/tv_skills_required"
                     android:layout_width="0dp"
+                    android:paddingStart="16dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="70" />
             </LinearLayout>
@@ -234,6 +241,7 @@
                 <TextView
                     android:id="@+id/tv_languages_required"
                     android:layout_width="0dp"
+                    android:paddingStart="16dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="70" />
             </LinearLayout>
@@ -255,6 +263,7 @@
                 <TextView
                     android:id="@+id/tv_edu_exp_required"
                     android:layout_width="0dp"
+                    android:paddingStart="16dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="70" />
             </LinearLayout>

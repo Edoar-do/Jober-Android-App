@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.*
 import com.example.jober.model.UserSettings
 import com.google.firebase.auth.FirebaseAuth
@@ -25,6 +26,7 @@ class SignUp : AppCompatActivity() {
     private lateinit var radioGroup: RadioGroup
     private lateinit var m_db_ref: DatabaseReference
     private lateinit var database : FirebaseDatabase
+    private lateinit var tv_signin : TextView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,6 +39,7 @@ class SignUp : AppCompatActivity() {
         radioGroup = findViewById(R.id.radioGroup)
         radio_btn_company = findViewById(R.id.radio_btn_company)
         radio_btn_worker = findViewById(R.id.radio_btn_worker)
+        tv_signin = findViewById(R.id.tv_signin)
 
         mAuth = FirebaseAuth.getInstance()
         database = Firebase.database("https://jober-290f2-default-rtdb.europe-west1.firebasedatabase.app")
@@ -46,12 +49,30 @@ class SignUp : AppCompatActivity() {
         radio_btn_worker.isChecked = true
         radio_btn_company.isChecked = false
 
+        tv_signin.setOnClickListener {
+            goToLogin(it)
+        }
+
 
         btn_sign_up.setOnClickListener {
             val email = edt_email.text.toString()
             val password = edt_password.text.toString()
 
-            signup(email, password)
+
+            var error_present = false
+
+            if (email.isEmpty()) {
+                edt_email.error = "Please enter your email"
+                error_present = true
+            }
+            if (password.isEmpty()) {
+                edt_password.error = "Please enter a password"
+                error_present = true
+            }
+
+            if (!error_present) {
+                signup(email, password)
+            }
         }
     }
 
@@ -82,5 +103,12 @@ class SignUp : AppCompatActivity() {
                         Toast.LENGTH_SHORT).show()
                 }
             }
+    }
+
+
+    fun goToLogin(v : View) {
+        val intent : Intent = Intent(this, Login::class.java)
+        finish()
+        startActivity(intent)
     }
 }
