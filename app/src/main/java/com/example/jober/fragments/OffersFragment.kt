@@ -91,9 +91,11 @@ class OffersFragment : Fragment() {
 
         m_db_ref.child("offers").orderByChild("created_at").addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
+                print("################################## ON DATA CHANGED CALLED")
                 offer_list.clear()
                 company_logos.clear()
                 company_names.clear()
+//                offer_adapter.setFilteredLists(offer_list, company_names, company_logos)
 
                 for (postSnapshot in snapshot.children) {
                     val current_offer = postSnapshot.getValue(Offer::class.java)
@@ -115,28 +117,22 @@ class OffersFragment : Fragment() {
                             profile_image_ref.getFile(local_file).addOnSuccessListener {
                                 company_logo = BitmapFactory.decodeFile(local_file.absolutePath)
                                 offer_list.add(current_offer)
-//                                println("####################### data added to offer list, elements: ")
-                                for (element in offer_list) {
-                                    println("### " + element.position + " ###")
-                                }
                                 company_logos.add(company_logo!!)
                                 company_names.add(company_name!!)
-                                offer_adapter.notifyDataSetChanged()
-//                                println("################################## the data changed, adapter has been notified")
+                                offer_adapter.notifyItemInserted(offer_list.size-1)
                             }
                         }else {
                             company_logo = BitmapFactory.decodeResource(resources, R.drawable.user_profile_placeholder)
                             offer_list.add(current_offer)
                             company_logos.add(company_logo!!)
                             company_names.add(company_name!!)
-//                            println("#############################################" + offer_adapter.company_logos.size)
-                            offer_adapter.notifyDataSetChanged()
-//                            println("################################## the data changed, adapter has been notified")
+                            offer_adapter.notifyItemInserted(offer_list.size-1)
                         }
 
                     }
 
                 }
+
             }
 
             override fun onCancelled(error: DatabaseError) {

@@ -41,6 +41,8 @@ class CompanyOffersFragment : Fragment() {
     lateinit var m_auth: FirebaseAuth
     lateinit var storage_ref : StorageReference
     lateinit var database : FirebaseDatabase
+    lateinit var user_id : String
+    lateinit var valueEventListener: ValueEventListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,27 +85,36 @@ class CompanyOffersFragment : Fragment() {
             }
 
             override fun onQueryTextChange(p0: String?): Boolean {
-                filterList(p0)
+                if (p0.isNullOrEmpty()) {
+                    offer_adapter.setFilteredLists(offer_list, company_names, company_logos)
+                } else {
+                    filterList(p0)
+                }
+                offer_adapter.notifyDataSetChanged()
                 return true
             }
 
         })
 
-        val user_id = m_auth.currentUser?.uid!!
 
-        m_db_ref.child("offers").orderByKey().startAt(user_id).endAt(user_id + "\uf8ff").addValueEventListener(object : ValueEventListener{
+        user_id = m_auth.currentUser?.uid!!
+
+        valueEventListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
+                print("### company on data changed")
                 offer_list.clear()
                 company_logos.clear()
                 company_names.clear()
+                offer_adapter.setFilteredLists(offer_list, company_names, company_logos)
+                offer_adapter.notifyDataSetChanged()
 
                 for (postSnapshot in snapshot.children) {
                     val current_offer = postSnapshot.getValue(Offer::class.java)
 
                     val company_id = current_offer!!.company_id
-                    var company_name : String? = null
-                    var company_logo_url : String? = null
-                    var company_logo : Bitmap? = null
+                    var company_name: String? = null
+                    var company_logo_url: String? = null
+                    var company_logo: Bitmap? = null
 
                     m_db_ref.child("companies").child(company_id!!).get().addOnSuccessListener {
                         val company = it.getValue(Company::class.java)
@@ -117,36 +128,46 @@ class CompanyOffersFragment : Fragment() {
                             profile_image_ref.getFile(local_file).addOnSuccessListener {
                                 company_logo = BitmapFactory.decodeFile(local_file.absolutePath)
                                 offer_list.add(current_offer)
-//                                println("####################### data added to offer list, elements: ")
-                                for (element in offer_list) {
-                                    println("### " + element.position + " ###")
-                                }
                                 company_logos.add(company_logo!!)
                                 company_names.add(company_name!!)
-                                offer_adapter.notifyDataSetChanged()
+                                offer_adapter.notifyItemInserted(offer_list.size)
 //                                println("################################## the data changed, adapter has been notified")
                             }
-                        }else {
-                            company_logo = BitmapFactory.decodeResource(resources, R.drawable.user_profile_placeholder)
+                        } else {
+                            company_logo = BitmapFactory.decodeResource(
+                                resources,
+                                R.drawable.user_profile_placeholder
+                            )
                             offer_list.add(current_offer)
                             company_logos.add(company_logo!!)
                             company_names.add(company_name!!)
 //                            println("#############################################" + offer_adapter.company_logos.size)
-                            offer_adapter.notifyDataSetChanged()
+                            offer_adapter.notifyItemInserted(offer_list.size)
 //                            println("################################## the data changed, adapter has been notified")
                         }
 
                     }
 
                 }
+
             }
 
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
+        }
 
-        })
+        m_db_ref.child("offers").orderByKey().startAt(user_id).endAt(user_id + "\uf8ff").addValueEventListener(valueEventListener)
+
+
     }
+
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        m_db_ref.child("offers").orderByKey().startAt(user_id).endAt(user_id + "\uf8ff").removeEventListener(valueEventListener)
+    }
+
 
     private fun filterList(search_text : String?) {
         var offers_filtered_list = ArrayList<Offer>()

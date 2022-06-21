@@ -26,8 +26,6 @@ class CompanyOfferAdapter(val context: Context, var offerList: ArrayList<Offer>,
         this.offerList = offers_filtered_list
         this.company_names = company_names_filtered_list
         this.company_logos = company_logos_filtered_list
-
-        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(

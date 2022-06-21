@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.jober.OfferDescription
 import com.example.jober.R
 import com.example.jober.model.Offer
+import java.util.*
+import kotlin.collections.ArrayList
 
 class OfferAdapter(val context: Context, var offerList: ArrayList<Offer>, var company_logos: ArrayList<Bitmap>, var company_names: ArrayList<String>): RecyclerView.Adapter<OfferAdapter.OfferViewHolder>() {
 
