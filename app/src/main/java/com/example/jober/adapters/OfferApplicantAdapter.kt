@@ -8,13 +8,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.example.jober.OfferDescription
-import com.example.jober.R
+import com.example.jober.*
+import com.example.jober.model.Application
 import com.example.jober.model.Offer
 import com.example.jober.model.Worker
 
-class OfferApplicantAdapter(val context: Context, var workerList: ArrayList<Worker>, var workerPics: ArrayList<Bitmap>): RecyclerView.Adapter<OfferApplicantAdapter.OfferViewHolder>() {
+class OfferApplicantAdapter(val context: Context, var workerList: ArrayList<Worker>, var workerPics: ArrayList<Bitmap>,
+    var application_list : ArrayList<Application>): RecyclerView.Adapter<OfferApplicantAdapter.OfferViewHolder>() {
 
     class OfferViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         val tv_applicant_name = itemView.findViewById<TextView>(R.id.tv_applicant_name)
@@ -22,11 +24,11 @@ class OfferApplicantAdapter(val context: Context, var workerList: ArrayList<Work
         val iv_applicant_profile = itemView.findViewById<ImageView>(R.id.iv_applicant_profile)
     }
 
-    fun setFilteredLists(workers_filtered_list : ArrayList<Worker>, worker_pics_filtered_list : ArrayList<Bitmap>) {
+    fun setFilteredLists(workers_filtered_list : ArrayList<Worker>, worker_pics_filtered_list : ArrayList<Bitmap>,
+        application_filtered_list : ArrayList<Application>) {
         this.workerList = workers_filtered_list
         this.workerPics = worker_pics_filtered_list
-
-        notifyDataSetChanged()
+        this.application_list = application_filtered_list
     }
 
     override fun onCreateViewHolder(
@@ -40,22 +42,22 @@ class OfferApplicantAdapter(val context: Context, var workerList: ArrayList<Work
     override fun onBindViewHolder(holder: OfferViewHolder, position: Int) {
         val current_applicant = workerList[position]
         val current_applicant_pic = workerPics[position]
+        val current_application = application_list[position]
 
         holder.tv_applicant_name.text = current_applicant.name
         holder.tv_applicant_profession.text = current_applicant.main_profession
         holder.iv_applicant_profile.setImageBitmap(current_applicant_pic)
 
         holder.itemView.setOnClickListener {
-            // TODO open worker profile, remember to pass application id
-//            val intent = Intent(context, OfferDescription()::class.java)
-//            intent.putExtra("offer_id", current_applicant.id)
-//            context.startActivity(intent)
+            val intent : Intent = Intent(context, ApplicantProfile::class.java)
+            intent.putExtra("application_id", current_application.application_id)
+            intent.putExtra("worker", current_applicant)
+            context.startActivity(intent)
         }
 
     }
 
     override fun getItemCount(): Int {
-//        println("################################ questa e' la lunghezza delle liste: " + offerList.size)
         return workerList.size
     }
 

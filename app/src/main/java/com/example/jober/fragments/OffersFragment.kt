@@ -42,6 +42,8 @@ class OffersFragment : Fragment() {
     lateinit var storage_ref : StorageReference
     lateinit var database : FirebaseDatabase
 
+    lateinit var valueEventListener : ValueEventListener
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -83,19 +85,26 @@ class OffersFragment : Fragment() {
             }
 
             override fun onQueryTextChange(p0: String?): Boolean {
-                filterList(p0)
+                if (p0.isNullOrEmpty()) {
+                    offer_adapter.setFilteredLists(offer_list, company_names, company_logos)
+                } else {
+                    filterList(p0)
+                }
+                offer_adapter.notifyDataSetChanged()
                 return true
             }
 
         })
 
-        m_db_ref.child("offers").orderByChild("created_at").addValueEventListener(object : ValueEventListener{
+
+        valueEventListener = object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 print("################################## ON DATA CHANGED CALLED")
                 offer_list.clear()
                 company_logos.clear()
                 company_names.clear()
-//                offer_adapter.setFilteredLists(offer_list, company_names, company_logos)
+                offer_adapter.setFilteredLists(offer_list, company_names, company_logos)
+                offer_adapter.notifyDataSetChanged()
 
                 for (postSnapshot in snapshot.children) {
                     val current_offer = postSnapshot.getValue(Offer::class.java)
@@ -128,18 +137,17 @@ class OffersFragment : Fragment() {
                             company_names.add(company_name!!)
                             offer_adapter.notifyItemInserted(offer_list.size-1)
                         }
-
                     }
-
                 }
-
             }
 
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
 
-        })
+        }
+
+        m_db_ref.child("offers").orderByChild("created_at").addValueEventListener(valueEventListener)
     }
 
     private fun filterList(search_text : String?) {
@@ -163,6 +171,11 @@ class OffersFragment : Fragment() {
         }
 
         offer_adapter.setFilteredLists(offers_filtered_list, company_names_filtered_list, company_logos_filtered_list)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        m_db_ref.child("offers").orderByChild("created_at").removeEventListener(valueEventListener)
     }
 
 

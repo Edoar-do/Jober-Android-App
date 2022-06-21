@@ -23,6 +23,7 @@ import java.io.File
 class WorkerProfileFragment : Fragment() {
 
     lateinit var btn_edit : ImageButton
+    lateinit var btn_contact : Button
     lateinit var tv_name : TextView
     lateinit var tv_surname : TextView
     lateinit var tv_age : TextView
@@ -34,6 +35,7 @@ class WorkerProfileFragment : Fragment() {
     lateinit var tv_languages : TextView
     lateinit var tv_educational_experiences : TextView
     lateinit var iv_profile : ImageView
+
     lateinit var m_db_ref: DatabaseReference
     lateinit var m_auth: FirebaseAuth
     lateinit var storage_ref : StorageReference
@@ -74,6 +76,9 @@ class WorkerProfileFragment : Fragment() {
         tv_languages = view?.findViewById(R.id.tv_languages)
         tv_educational_experiences = view?.findViewById(R.id.tv_educational_experiences)
         iv_profile = view?.findViewById(R.id.iv_profile)
+        btn_contact = view?.findViewById(R.id.btn_contact)
+
+        btn_contact.visibility = View.GONE
 
 
         var worker_id = m_auth.currentUser?.uid!!

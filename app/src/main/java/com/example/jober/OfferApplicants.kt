@@ -30,6 +30,7 @@ class OfferApplicants : AppCompatActivity() {
 
     lateinit var worker_list : ArrayList<Worker>
     lateinit var worker_pics : ArrayList<Bitmap>
+    lateinit var application_list : ArrayList<Application>
 
     lateinit var applicant_adapter : OfferApplicantAdapter
 
@@ -37,6 +38,8 @@ class OfferApplicants : AppCompatActivity() {
     lateinit var m_auth: FirebaseAuth
     lateinit var storage_ref : StorageReference
     lateinit var database : FirebaseDatabase
+
+    lateinit var valueEventListener: ValueEventListener
 
     var offer_id : String? = null
 
@@ -47,11 +50,11 @@ class OfferApplicants : AppCompatActivity() {
 
         worker_list = ArrayList()
         worker_pics = ArrayList()
+        application_list = ArrayList()
 
-        applicant_adapter = OfferApplicantAdapter(this, worker_list, worker_pics)
+        applicant_adapter = OfferApplicantAdapter(this, worker_list, worker_pics, application_list)
 
         applicants_recycler_view = findViewById(R.id.recyclerview)
-//        println("############################# this is the recyclerview: " + offer_recycler_view)
         applicants_recycler_view.layoutManager = LinearLayoutManager(this)
         applicants_recycler_view.adapter = applicant_adapter
 
@@ -63,8 +66,6 @@ class OfferApplicants : AppCompatActivity() {
         database = Firebase.database("https://jober-290f2-default-rtdb.europe-west1.firebasedatabase.app")
         m_db_ref = database.getReference()
 
-//        edt_search = findViewById(R.id.edt_search)
-//        btn_search = findViewById(R.id.btn_search)
         search_view = findViewById(R.id.searchView)
         search_view.clearFocus()
         search_view.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -73,7 +74,12 @@ class OfferApplicants : AppCompatActivity() {
             }
 
             override fun onQueryTextChange(p0: String?): Boolean {
-                filterList(p0)
+                if(p0.isNullOrEmpty()){
+                    applicant_adapter.setFilteredLists(worker_list, worker_pics, application_list)
+                }else{
+                    filterList(p0)
+                }
+                applicant_adapter.notifyDataSetChanged()
                 return true
             }
 
@@ -81,10 +87,12 @@ class OfferApplicants : AppCompatActivity() {
 
         val user_id = m_auth.currentUser?.uid!!
 
-        m_db_ref.child("applications").addValueEventListener(object : ValueEventListener {
+
+        valueEventListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 worker_list.clear()
                 worker_pics.clear()
+                application_list.clear()
 
                 for (applicationSnapshot in snapshot.children) {
 
@@ -109,18 +117,16 @@ class OfferApplicants : AppCompatActivity() {
                                 profile_image_ref.getFile(local_file).addOnSuccessListener {
                                     applicant_profile_pic = BitmapFactory.decodeFile(local_file.absolutePath)
                                     worker_list.add(applicant!!)
-                                    //                                println("####################### data added to offer list, elements: ")
                                     worker_pics.add(applicant_profile_pic!!)
-                                    applicant_adapter.notifyDataSetChanged()
-                                    //                                println("################################## the data changed, adapter has been notified")
-                                }
+                                    application_list.add(current_application)
+                                    applicant_adapter.notifyItemInserted(worker_list.size-1)
+                                    }
                             }else {
                                 applicant_profile_pic = BitmapFactory.decodeResource(resources, R.drawable.user_profile_placeholder)
                                 worker_list.add(applicant!!)
                                 worker_pics.add(applicant_profile_pic!!)
-                                //                            println("#############################################" + offer_adapter.company_logos.size)
-                                applicant_adapter.notifyDataSetChanged()
-                                //                            println("################################## the data changed, adapter has been notified")
+                                application_list.add(current_application)
+                                applicant_adapter.notifyItemInserted(worker_list.size-1)
                             }
                         }
                     }
@@ -131,8 +137,14 @@ class OfferApplicants : AppCompatActivity() {
                 TODO("Not yet implemented")
             }
 
-        })
+        }
 
+        m_db_ref.child("applications").addValueEventListener(valueEventListener)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        m_db_ref.child("applications").removeEventListener(valueEventListener)
     }
 
 
@@ -154,6 +166,6 @@ class OfferApplicants : AppCompatActivity() {
             }
         }
 
-        applicant_adapter.setFilteredLists(workers_filtered_list, worker_pics_filtered_list)
+        applicant_adapter.setFilteredLists(workers_filtered_list, worker_pics_filtered_list, application_list)
     }
 }

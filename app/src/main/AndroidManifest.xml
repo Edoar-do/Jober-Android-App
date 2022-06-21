@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Jober">
         <activity
+            android:name=".SingleChat"
+            android:exported="false" />
+        <activity
+            android:name=".ApplicantProfile"
+            android:exported="false" />
+        <activity
             android:name=".OfferApplicants"
             android:exported="false" />
         <activity

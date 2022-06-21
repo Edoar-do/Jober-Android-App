@@ -10,7 +10,10 @@
     <ScrollView
         android:id="@+id/scrollView3"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/bottom_layout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="SpeakableTextPresentCheck">
 
         <LinearLayout
@@ -82,15 +85,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="20dp"
-                android:weightSum="100"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:weightSum="100">
 
                 <TextView
                     android:id="@+id/lbl_sector"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:paddingStart="16dp"
                     android:layout_weight="30"
+                    android:paddingStart="16dp"
                     android:text="Surname:" />
 
                 <TextView
@@ -107,15 +110,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="20dp"
-                android:weightSum="100"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:weightSum="100">
 
                 <TextView
                     android:id="@+id/lbl_age"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:paddingStart="16dp"
                     android:layout_weight="30"
+                    android:paddingStart="16dp"
                     android:text="Age:" />
 
                 <TextView
@@ -139,15 +142,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="25dp"
-                android:weightSum="100"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:weightSum="100">
 
                 <TextView
                     android:id="@+id/lbl_country"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:paddingStart="16dp"
                     android:layout_weight="30"
+                    android:paddingStart="16dp"
                     android:text="Country:" />
 
                 <TextView
@@ -162,15 +165,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="20dp"
-                android:weightSum="100"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:weightSum="100">
 
                 <TextView
                     android:id="@+id/lbl_city"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:paddingStart="16dp"
                     android:layout_weight="30"
+                    android:paddingStart="16dp"
                     android:text="City:" />
 
                 <TextView
@@ -191,15 +194,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="20dp"
-                android:weightSum="100"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:weightSum="100">
 
                 <TextView
                     android:id="@+id/lbl_description"
                     android:layout_width="0dp"
-                    android:paddingStart="16dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="30"
+                    android:paddingStart="16dp"
                     android:text="Main profession:" />
 
                 <TextView
@@ -214,15 +217,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="20dp"
-                android:weightSum="100"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:weightSum="100">
 
                 <TextView
                     android:id="@+id/lbl_bio"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:paddingStart="16dp"
                     android:layout_weight="30"
+                    android:paddingStart="16dp"
                     android:text="Bio:" />
 
                 <TextView
@@ -243,15 +246,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="20dp"
-                android:weightSum="100"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:weightSum="100">
 
                 <TextView
                     android:id="@+id/lbl_skills"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:paddingStart="16dp"
                     android:layout_weight="30"
+                    android:paddingStart="16dp"
                     android:text="Skills:" />
 
                 <TextView
@@ -272,15 +275,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="20dp"
-                android:weightSum="100"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:weightSum="100">
 
                 <TextView
                     android:id="@+id/lbl_languages"
                     android:layout_width="0dp"
-                    android:paddingStart="16dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="30"
+                    android:paddingStart="16dp"
                     android:text="Languages:" />
 
                 <TextView
@@ -299,20 +302,19 @@
                 android:background="?android:attr/listDivider" />
 
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="20dp"
-                android:weightSum="100"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:weightSum="100">
 
                 <TextView
                     android:id="@+id/lbl_educational_experiences"
                     android:layout_width="0dp"
-                    android:paddingStart="16dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="30"
+                    android:paddingStart="16dp"
                     android:text="Educational experiences:" />
 
                 <TextView
@@ -325,5 +327,23 @@
 
         </LinearLayout>
     </ScrollView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <Button
+            android:id="@+id/btn_contact"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="35dp"
+            android:text="Contact"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

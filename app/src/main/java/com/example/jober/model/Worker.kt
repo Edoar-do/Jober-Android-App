@@ -1,8 +1,9 @@
 package com.example.jober.model
 
 import com.google.firebase.database.Exclude
+import java.io.Serializable
 
-class Worker {
+class Worker : Serializable {
 
 
     var name : String? = null
