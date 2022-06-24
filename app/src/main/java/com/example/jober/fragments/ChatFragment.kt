@@ -65,12 +65,13 @@ class ChatFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val user_id = (m_auth.currentUser?.uid!!)
 
         m_auth = FirebaseAuth.getInstance()
         storage_ref = FirebaseStorage.getInstance().getReference()
         database = Firebase.database("https://jober-290f2-default-rtdb.europe-west1.firebasedatabase.app")
         m_db_ref = database.getReference()
+
+        val user_id = (m_auth.currentUser?.uid!!)
 
         search_view = view.findViewById(R.id.searchView)
         search_view.clearFocus()
