@@ -32,6 +32,8 @@ class SignUp : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
+        supportActionBar!!.title = "Jober - Sign Up"
+
 
         edt_email = findViewById(R.id.edt_email)
         edt_password = findViewById(R.id.edt_password)

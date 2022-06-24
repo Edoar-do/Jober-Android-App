@@ -42,6 +42,7 @@ class CompanyProfileEdit : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_company_profile_edit)
+        supportActionBar!!.title = "Jober - Edit Profile"
 
         btn_save = findViewById(R.id.btn_save_company)
         btn_cancel = findViewById(R.id.btn_cancel)

@@ -50,6 +50,7 @@ class OfferDescription : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_offer_description)
+        supportActionBar!!.title = "Jober - Offer Details"
 
         btn_delete = findViewById(R.id.btn_delete)
         btn_edit = findViewById(R.id.btn_edit)
@@ -86,6 +87,10 @@ class OfferDescription : AppCompatActivity() {
                         }
                     }
                 }
+
+                //rimuovere tutti gli eventi associati alla offer rimossa
+
+                //rimuovere tutte le chat associate alla offer rimossa
 
                 dialog.cancel()
                 finish()

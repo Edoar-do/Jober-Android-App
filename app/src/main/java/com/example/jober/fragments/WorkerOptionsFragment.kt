@@ -41,6 +41,7 @@ class WorkerOptionsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        (activity as MainActivity).supportActionBar!!.title = "Jober - Worker Options"
         return inflater.inflate(R.layout.fragment_worker_options, container, false)
     }
 

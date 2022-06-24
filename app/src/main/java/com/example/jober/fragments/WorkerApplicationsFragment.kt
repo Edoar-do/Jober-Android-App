@@ -12,6 +12,7 @@ import android.widget.EditText
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.jober.MainActivity
 import com.example.jober.R
 import com.example.jober.adapters.CompanyOfferAdapter
 import com.example.jober.model.Application
@@ -37,11 +38,14 @@ class WorkerApplicationsFragment : Fragment() {
     lateinit var company_names : ArrayList<String>
 
     lateinit var offer_adapter : CompanyOfferAdapter
+    lateinit var user_id : String
 
     lateinit var m_db_ref: DatabaseReference
     lateinit var m_auth: FirebaseAuth
     lateinit var storage_ref : StorageReference
     lateinit var database : FirebaseDatabase
+
+    lateinit var valueEventListener : ValueEventListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,11 +59,11 @@ class WorkerApplicationsFragment : Fragment() {
         // Inflate the layout for this fragment
 
         val view : View = inflater.inflate(R.layout.fragment_recycler_view, container, false)
+        (activity as MainActivity).supportActionBar!!.title = "Jober - My Applications"
 
         offer_adapter = CompanyOfferAdapter(view.context, offer_list, company_logos, company_names)
 
         offer_recycler_view = view.findViewById(R.id.recyclerview)
-//        println("############################# this is the recyclerview: " + offer_recycler_view)
         offer_recycler_view.layoutManager = LinearLayoutManager(view.context)
         offer_recycler_view.adapter = offer_adapter
 
@@ -74,8 +78,6 @@ class WorkerApplicationsFragment : Fragment() {
         database = Firebase.database("https://jober-290f2-default-rtdb.europe-west1.firebasedatabase.app")
         m_db_ref = database.getReference()
 
-//        edt_search = view.findViewById(R.id.edt_search)
-//        btn_search = view.findViewById(R.id.btn_search)
         search_view = view.findViewById(R.id.searchView)
         search_view.clearFocus()
         search_view.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -84,19 +86,27 @@ class WorkerApplicationsFragment : Fragment() {
             }
 
             override fun onQueryTextChange(p0: String?): Boolean {
-                filterList(p0)
+                if (p0.isNullOrEmpty()) {
+                    offer_adapter.setFilteredLists(offer_list, company_names, company_logos)
+                } else {
+                    filterList(p0)
+                }
+                offer_adapter.notifyDataSetChanged()
                 return true
             }
 
         })
 
-        val user_id = m_auth.currentUser?.uid!!
+       user_id = m_auth.currentUser?.uid!!
 
-        m_db_ref.child("applications").orderByKey().startAt(user_id).endAt(user_id + "\uf8ff").addValueEventListener(object : ValueEventListener{
+
+        valueEventListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 offer_list.clear()
                 company_logos.clear()
                 company_names.clear()
+                offer_adapter.setFilteredLists(offer_list, company_names, company_logos)
+                offer_adapter.notifyDataSetChanged()
 
                 for (postSnapshot in snapshot.children) {
                     val application = postSnapshot.getValue(Application::class.java)
@@ -122,23 +132,16 @@ class WorkerApplicationsFragment : Fragment() {
                                 profile_image_ref.getFile(local_file).addOnSuccessListener {
                                     company_logo = BitmapFactory.decodeFile(local_file.absolutePath)
                                     offer_list.add(current_offer)
-//                                println("####################### data added to offer list, elements: ")
-                                    for (element in offer_list) {
-                                        println("### " + element.position + " ###")
-                                    }
                                     company_logos.add(company_logo!!)
                                     company_names.add(company_name!!)
-                                    offer_adapter.notifyDataSetChanged()
-//                                println("################################## the data changed, adapter has been notified")
+                                    offer_adapter.notifyItemInserted(offer_list.size-1)
                                 }
                             }else {
                                 company_logo = BitmapFactory.decodeResource(resources, R.drawable.user_profile_placeholder)
                                 offer_list.add(current_offer)
                                 company_logos.add(company_logo!!)
                                 company_names.add(company_name!!)
-//                            println("#############################################" + offer_adapter.company_logos.size)
-                                offer_adapter.notifyDataSetChanged()
-//                            println("################################## the data changed, adapter has been notified")
+                                offer_adapter.notifyItemInserted(offer_list.size-1)
                             }
                         }
                     }
@@ -149,7 +152,9 @@ class WorkerApplicationsFragment : Fragment() {
                 TODO("Not yet implemented")
             }
 
-        })
+        }
+
+        m_db_ref.child("applications").orderByKey().startAt(user_id).endAt(user_id + "\uf8ff").addValueEventListener(valueEventListener)
     }
 
 
@@ -174,6 +179,11 @@ class WorkerApplicationsFragment : Fragment() {
         }
 
         offer_adapter.setFilteredLists(offers_filtered_list, company_names_filtered_list, company_logos_filtered_list)
+    }
+
+    override fun onDestroyView() {
+        m_db_ref.child("applications").orderByKey().startAt(user_id).endAt(user_id + "\uf8ff").removeEventListener(valueEventListener)
+        super.onDestroyView()
     }
 
 

@@ -42,6 +42,7 @@ class WorkerProfileCreation : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_worker_profile_creation)
+        supportActionBar!!.title = "Jober - Profile Creation"
 
         m_auth = FirebaseAuth.getInstance()
         storage_ref = FirebaseStorage.getInstance().getReference()

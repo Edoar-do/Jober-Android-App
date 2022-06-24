@@ -39,6 +39,7 @@ class CompanyProfileCreation : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         this.setContentView(R.layout.activity_company_profile_creation)
+        supportActionBar!!.title = "Jober - Profile Creation"
 
         m_auth = FirebaseAuth.getInstance()
         storage_ref = FirebaseStorage.getInstance().getReference()

@@ -53,6 +53,7 @@ class WorkerProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        (activity as MainActivity).supportActionBar!!.title = "Jober - My Profile"
         return inflater.inflate(R.layout.fragment_worker_profile, container, false)
     }
 

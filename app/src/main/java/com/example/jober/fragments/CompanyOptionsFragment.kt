@@ -45,6 +45,7 @@ class CompanyOptionsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        (activity as MainActivity).supportActionBar!!.title = "Jober - Company Options"
         return inflater.inflate(R.layout.fragment_company_options, container, false)
     }
 

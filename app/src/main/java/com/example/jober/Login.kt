@@ -22,6 +22,7 @@ class Login : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        supportActionBar!!.title = "Jober - Login"
 
         edt_email = findViewById(R.id.edt_email)
         edt_password = findViewById(R.id.edt_password)

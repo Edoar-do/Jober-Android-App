@@ -12,6 +12,7 @@ import android.widget.EditText
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.jober.MainActivity
 import com.example.jober.R
 import com.example.jober.adapters.CompanyOfferAdapter
 import com.example.jober.model.Company
@@ -56,6 +57,7 @@ class CompanyOffersFragment : Fragment() {
         // Inflate the layout for this fragment
 
         val view : View = inflater.inflate(R.layout.fragment_recycler_view, container, false)
+        (activity as MainActivity).supportActionBar!!.title = "Jober - Company Offers"
 
         offer_adapter = CompanyOfferAdapter(view.context, offer_list, company_logos, company_names)
 
@@ -164,8 +166,8 @@ class CompanyOffersFragment : Fragment() {
 
 
     override fun onDestroyView() {
-        super.onDestroyView()
         m_db_ref.child("offers").orderByKey().startAt(user_id).endAt(user_id + "\uf8ff").removeEventListener(valueEventListener)
+        super.onDestroyView()
     }
 
 

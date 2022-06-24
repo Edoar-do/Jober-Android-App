@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.jober.MainActivity
 import com.example.jober.R
 import com.example.jober.adapters.ChatAdapter
 import com.example.jober.model.*
@@ -52,6 +53,7 @@ class ChatFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view : View = inflater.inflate(R.layout.fragment_recycler_view, container, false)
+        (activity as MainActivity).supportActionBar!!.title = "Jober - Chats"
 
         chat_adapter = ChatAdapter(view.context, chat_list, other_pics, other_names, position_list)
 
@@ -84,7 +86,7 @@ class ChatFragment : Fragment() {
                 if (p0.isNullOrEmpty()) {
                     chat_adapter.setFilteredLists(chat_list, other_names, other_pics, position_list)
                 } else {
-                    //filterList(p0)
+                    filterList(p0)
                 }
                 chat_adapter.notifyDataSetChanged()
                 return true
@@ -98,6 +100,8 @@ class ChatFragment : Fragment() {
                 other_names.clear()
                 other_pics.clear()
                 position_list.clear()
+                chat_adapter.setFilteredLists(chat_list, other_names, other_pics, position_list)
+                chat_adapter.notifyDataSetChanged()
 
                 for (chatSnapshot in snapshot.children) {
                     val current_chat = chatSnapshot.getValue(Chat::class.java)
@@ -221,6 +225,36 @@ class ChatFragment : Fragment() {
         }
 
         m_db_ref.child("chats").addValueEventListener(valueEventListener)
+    }
+
+    override fun onDestroy() {
+        m_db_ref.child("chats").removeEventListener(valueEventListener)
+        super.onDestroy()
+    }
+
+    private fun filterList(search_text : String?) {
+        var chats_filtered_list = ArrayList<String>()
+        var other_names_filtered_list = ArrayList<String>()
+        var other_pics_filtered_list = ArrayList<Bitmap>()
+        var positions_filtered_list = ArrayList<String>()
+        val list_of_words = search_text!!.split(" ")
+
+        for (i in chat_list.indices) {
+            var to_get = true
+            for (word in list_of_words) {
+                if (!other_names.get(i).contains(word, true) && !position_list.get(i).contains(word, true)) {
+                    to_get = false
+                }
+            }
+            if (to_get) {
+                chats_filtered_list.add(chat_list.get(i))
+                other_names_filtered_list.add(other_names.get(i))
+                other_pics_filtered_list.add(other_pics.get(i))
+                positions_filtered_list.add(position_list.get(i))
+            }
+        }
+
+        chat_adapter.setFilteredLists(chats_filtered_list, other_names_filtered_list, other_pics_filtered_list, positions_filtered_list)
     }
 
 }

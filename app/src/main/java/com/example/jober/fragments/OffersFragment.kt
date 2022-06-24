@@ -12,6 +12,7 @@ import android.widget.EditText
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.jober.MainActivity
 import com.example.jober.R
 import com.example.jober.adapters.OfferAdapter
 import com.example.jober.model.Company
@@ -56,6 +57,7 @@ class OffersFragment : Fragment() {
         // Inflate the layout for this fragment
 
         val view : View = inflater.inflate(R.layout.fragment_recycler_view, container, false)
+        (activity as MainActivity).supportActionBar!!.title = "Jober - Offers"
 
         offer_adapter = OfferAdapter(view.context, offer_list, company_logos, company_names)
 
@@ -70,13 +72,14 @@ class OffersFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+        print("########## chiamato on view created ############")
+
         m_auth = FirebaseAuth.getInstance()
         storage_ref = FirebaseStorage.getInstance().getReference()
         database = Firebase.database("https://jober-290f2-default-rtdb.europe-west1.firebasedatabase.app")
         m_db_ref = database.getReference()
 
-//        edt_search = view.findViewById(R.id.edt_search)
-//        btn_search = view.findViewById(R.id.btn_search)
         search_view = view.findViewById(R.id.searchView)
         search_view.clearFocus()
         search_view.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -95,6 +98,7 @@ class OffersFragment : Fragment() {
             }
 
         })
+
 
 
         valueEventListener = object : ValueEventListener{
@@ -174,8 +178,9 @@ class OffersFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         m_db_ref.child("offers").orderByChild("created_at").removeEventListener(valueEventListener)
+        print("################# Ho chiamato on destroy #########################")
+        super.onDestroyView()
     }
 
 

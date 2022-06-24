@@ -47,6 +47,7 @@ class OfferApplicants : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_recycler_view)
+        supportActionBar!!.title = "Jober - Applicants"
 
         worker_list = ArrayList()
         worker_pics = ArrayList()
@@ -65,6 +66,12 @@ class OfferApplicants : AppCompatActivity() {
         storage_ref = FirebaseStorage.getInstance().getReference()
         database = Firebase.database("https://jober-290f2-default-rtdb.europe-west1.firebasedatabase.app")
         m_db_ref = database.getReference()
+
+        m_db_ref.child("offers").child(offer_id!!).child("position").get().addOnSuccessListener {
+            if(it.exists()){
+                supportActionBar!!.subtitle = "for ${it.value.toString()} position"
+            }
+        }
 
         search_view = findViewById(R.id.searchView)
         search_view.clearFocus()

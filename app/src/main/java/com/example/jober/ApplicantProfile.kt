@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import com.example.jober.model.Chat
 import com.example.jober.model.Worker
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
@@ -36,6 +37,7 @@ class ApplicantProfile : AppCompatActivity() {
     lateinit var iv_profile : ImageView
 
     lateinit var worker : Worker
+    lateinit var company_name : String
 
     lateinit var m_db_ref: DatabaseReference
     lateinit var m_auth: FirebaseAuth
@@ -46,7 +48,7 @@ class ApplicantProfile : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_worker_profile)
 
-        val application_id = intent.getStringExtra("application_id")
+        val application_id = intent.getStringExtra("application_id").toString()
         worker = intent.getSerializableExtra("worker") as Worker
 
         m_auth = FirebaseAuth.getInstance()
@@ -67,6 +69,8 @@ class ApplicantProfile : AppCompatActivity() {
         tv_educational_experiences = findViewById(R.id.tv_educational_experiences)
         iv_profile = findViewById(R.id.iv_profile)
         btn_contact = findViewById(R.id.btn_contact)
+
+        supportActionBar!!.title = "Jober - " + worker.name + if (worker.name!!.endsWith("s")) "'" else "'s" + " Profile"
 
         btn_edit.visibility = View.GONE
         tv_name.text = worker.name
@@ -90,14 +94,28 @@ class ApplicantProfile : AppCompatActivity() {
             }
         }
 
-        btn_contact.setOnClickListener{
-            //cambio sulla actvity della singola chat
-            val intent : Intent = Intent(this, SingleChat::class.java)
-            startActivity(intent)
+        m_db_ref.child("companies").child(m_auth.currentUser?.uid!!).child("company_name").get().addOnSuccessListener {
+            company_name = it.value.toString()
         }
 
-
-
-
+        btn_contact.setOnClickListener{
+            //cambio sulla actvity della singola chat
+            m_db_ref.child("chats").child(application_id).get().addOnSuccessListener {
+                if(it.exists()){
+                    val intent : Intent = Intent(this, SingleChat::class.java)
+                    intent.putExtra("chat_id", application_id)
+                    startActivity(intent)
+                }else{
+                    val worker_id = application_id.split("_")[0]
+                    val company_id = application_id.split("_")[1]
+                    val chat = Chat(application_id, application_id, worker_id, company_id)
+                    m_db_ref.child("chats").child(application_id).setValue(chat).addOnSuccessListener {
+                        val intent : Intent = Intent(this, SingleChat::class.java)
+                        intent.putExtra("chat_id", application_id)
+                        startActivity(intent)
+                    }
+                }
+            }
+        }
     }
 }

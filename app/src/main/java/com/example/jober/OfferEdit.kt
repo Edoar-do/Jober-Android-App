@@ -39,6 +39,8 @@ class OfferEdit : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_offer_edit)
+        supportActionBar!!.title = "Jober - Edit Offer"
+
 
         m_auth = FirebaseAuth.getInstance()
         database = Firebase.database("https://jober-290f2-default-rtdb.europe-west1.firebasedatabase.app")

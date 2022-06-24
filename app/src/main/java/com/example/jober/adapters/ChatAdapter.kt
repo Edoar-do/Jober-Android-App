@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.jober.OfferDescription
 import com.example.jober.R
+import com.example.jober.SingleChat
 import com.example.jober.model.Offer
 import java.util.*
 import kotlin.collections.ArrayList
@@ -52,9 +53,9 @@ class ChatAdapter(val context: Context, var chat_ids: ArrayList<String>, var oth
         holder.iv_user_profile.setImageBitmap(current_other_pic)
 
         holder.itemView.setOnClickListener {
-//            val intent = Intent(context, OfferDescription()::class.java)
-//            intent.putExtra("offer_id", current_offer.id)
-//            context.startActivity(intent)
+            val intent = Intent(context, SingleChat::class.java)
+            intent.putExtra("chat_id", current_chat_id)
+            context.startActivity(intent)
         }
     }
 
