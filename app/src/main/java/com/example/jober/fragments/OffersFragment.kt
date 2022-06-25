@@ -3,6 +3,7 @@ package com.example.jober.fragments
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -74,13 +75,14 @@ class OffersFragment : Fragment() {
 
 
         print("########## chiamato on view created ############")
+        Log.i("ciaocomeva", "on view created offers")
 
         m_auth = FirebaseAuth.getInstance()
         storage_ref = FirebaseStorage.getInstance().getReference()
         database = Firebase.database("https://jober-290f2-default-rtdb.europe-west1.firebasedatabase.app")
         m_db_ref = database.getReference()
 
-        search_view = view.findViewById(R.id.searchView)
+        search_view = view.findViewById<SearchView?>(R.id.searchView)
         search_view.clearFocus()
         search_view.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(p0: String?): Boolean {
@@ -163,7 +165,7 @@ class OffersFragment : Fragment() {
         for (i in offer_list.indices) {
             var to_get = true
             for (word in list_of_words) {
-                if (!offer_list.get(i).position!!.contains(word, true) && !company_names.get(i).contains(word, true)) {
+                if (!offer_list.get(i).position!!.contains(word, true) && !company_names.get(i).contains(word, true) && !offer_list.get(i).location!!.contains(word, true)) {
                     to_get = false
                 }
             }
@@ -179,8 +181,13 @@ class OffersFragment : Fragment() {
 
     override fun onDestroyView() {
         m_db_ref.child("offers").orderByChild("created_at").removeEventListener(valueEventListener)
-        print("################# Ho chiamato on destroy #########################")
+        Log.i("ciaocomeva", "on view destroy offers")
         super.onDestroyView()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        search_view.setQuery("", false)
     }
 
 

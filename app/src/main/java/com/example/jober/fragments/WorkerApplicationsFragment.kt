@@ -3,6 +3,8 @@ package com.example.jober.fragments
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Log
+import android.util.Log.DEBUG
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -77,6 +79,8 @@ class WorkerApplicationsFragment : Fragment() {
         storage_ref = FirebaseStorage.getInstance().getReference()
         database = Firebase.database("https://jober-290f2-default-rtdb.europe-west1.firebasedatabase.app")
         m_db_ref = database.getReference()
+
+        Log.i("ciaocomeva", "on view created worker application")
 
         search_view = view.findViewById(R.id.searchView)
         search_view.clearFocus()
@@ -183,8 +187,13 @@ class WorkerApplicationsFragment : Fragment() {
 
     override fun onDestroyView() {
         m_db_ref.child("applications").orderByKey().startAt(user_id).endAt(user_id + "\uf8ff").removeEventListener(valueEventListener)
+        Log.i("ciaocomeva", "on view destroy worker application")
         super.onDestroyView()
     }
 
+    override fun onResume() {
+        super.onResume()
+        search_view.setQuery("", false)
+    }
 
 }

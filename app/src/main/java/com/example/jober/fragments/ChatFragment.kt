@@ -257,4 +257,8 @@ class ChatFragment : Fragment() {
         chat_adapter.setFilteredLists(chats_filtered_list, other_names_filtered_list, other_pics_filtered_list, positions_filtered_list)
     }
 
+    override fun onResume() {
+        super.onResume()
+        search_view.setQuery("", false)
+    }
 }

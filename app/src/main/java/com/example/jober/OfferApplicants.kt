@@ -175,4 +175,9 @@ class OfferApplicants : AppCompatActivity() {
 
         applicant_adapter.setFilteredLists(workers_filtered_list, worker_pics_filtered_list, application_list)
     }
+
+    override fun onResume() {
+        super.onResume()
+        search_view.setQuery("", false)
+    }
 }

@@ -194,4 +194,8 @@ class CompanyOffersFragment : Fragment() {
         offer_adapter.setFilteredLists(offers_filtered_list, company_names_filtered_list, company_logos_filtered_list)
     }
 
+    override fun onResume() {
+        super.onResume()
+        search_view.setQuery("", false)
+    }
 }
