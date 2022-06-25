@@ -2,8 +2,10 @@ package com.example.jober
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.jober.adapters.MessageAdapter
@@ -62,6 +64,8 @@ class SingleChat : AppCompatActivity() {
                 }
 
                 message_adapter.notifyDataSetChanged()
+
+                chat_recycler_view.scrollToPosition(message_list.size-1)
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -101,11 +105,11 @@ class SingleChat : AppCompatActivity() {
 
         send_button.setOnClickListener{
             val message = message_box.text.toString()
-            val message_object = Message(System.currentTimeMillis().toString(), chat_id, user_id, receiver_id, message)
-            m_db_ref.child("chats").child(chat_id).child("messages").push().setValue(message_object)
-            message_box.setText("")
+            if (message.trim().isNotEmpty()) {
+                val message_object = Message(System.currentTimeMillis().toString(), chat_id, user_id, receiver_id, message.trim())
+                m_db_ref.child("chats").child(chat_id).child("messages").push().setValue(message_object)
+                message_box.setText("")
+            }
         }
-
-
     }
 }
