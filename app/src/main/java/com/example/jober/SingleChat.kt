@@ -1,14 +1,18 @@
 package com.example.jober
 
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.jober.adapters.MessageAdapter
+import com.example.jober.model.Event
 import com.example.jober.model.Message
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -16,12 +20,17 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.time.Duration.Companion.hours
+import kotlin.time.Duration.Companion.minutes
 
 class SingleChat : AppCompatActivity() {
 
     private lateinit var chat_recycler_view : RecyclerView
     private lateinit var message_box : EditText
     private lateinit var send_button : ImageView
+    private lateinit var btn_add_event : ImageView
     private lateinit var message_adapter : MessageAdapter
     private lateinit var message_list : ArrayList<Message>
 
@@ -38,6 +47,7 @@ class SingleChat : AppCompatActivity() {
         chat_recycler_view = findViewById(R.id.chatRecyclerView)
         message_box = findViewById(R.id.messageBox)
         send_button = findViewById(R.id.sendButton)
+        btn_add_event = findViewById(R.id.btn_add_event)
 
         message_list = ArrayList()
         message_adapter = MessageAdapter(this, message_list)
@@ -111,5 +121,40 @@ class SingleChat : AppCompatActivity() {
                 message_box.setText("")
             }
         }
+
+        btn_add_event.setOnClickListener {
+            clickDatePicker(chat_id)
+        }
+
+    }
+
+    fun clickDatePicker(chat_id : String) {
+        val myCalendar = Calendar.getInstance()
+        val year = myCalendar.get(Calendar.YEAR)
+        val month = myCalendar.get(Calendar.MONTH)
+        val day = myCalendar.get(Calendar.DAY_OF_MONTH)
+        val hour = myCalendar.get(Calendar.HOUR)
+        val minutes = myCalendar.get(Calendar.MINUTE)
+
+        DatePickerDialog(this,
+            DatePickerDialog.OnDateSetListener {view, selectedyear, selectedmonth, selecteddayofmonth ->
+                val selDate = "$selecteddayofmonth/${selectedmonth+1}/$selectedyear"
+
+                TimePickerDialog(this, TimePickerDialog.OnTimeSetListener { timePicker, selected_hour, selected_minutes ->
+                    // creare l'evento
+                    val event_id = chat_id + "_" + System.currentTimeMillis()
+                    val worker_id = chat_id.split("_")[0]
+                    val company_id = chat_id.split("_")[1]
+                    val date = Date(selectedyear, selectedmonth+1, selecteddayofmonth, selected_hour, selected_minutes)
+                    val event = Event(event_id, chat_id, worker_id, company_id, date, -date.time)
+                    m_db_ref.child("events").child(event_id).setValue(event).addOnSuccessListener {
+                        Toast.makeText(this, "The event has been successfully created", Toast.LENGTH_LONG).show()
+                    }
+                }, hour, minutes,false).show()
+            },
+            year,
+            month,
+            day
+        ).show()
     }
 }

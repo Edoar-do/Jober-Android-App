@@ -180,7 +180,7 @@ class CompanyOffersFragment : Fragment() {
         for (i in offer_list.indices) {
             var to_get = true
             for (word in list_of_words) {
-                if (!offer_list.get(i).position!!.contains(word, true) && !company_names.get(i).contains(word, true)) {
+                if (!offer_list.get(i).position!!.contains(word, true) && !company_names.get(i).contains(word, true) && !offer_list.get(i).location!!.contains(word, true)) {
                     to_get = false
                 }
             }

@@ -107,50 +107,54 @@ class OfferDescription : AppCompatActivity() {
         btn_bottom = findViewById(R.id.btn_bottom)
         // get user type
         val user_id = m_auth.currentUser?.uid!!
-        m_db_ref.child("userSettings").child(user_id).get().addOnSuccessListener {
-            val user_settings = it.getValue(UserSettings::class.java)
-            user_type = user_settings?.user_type!!
 
-            if (user_type.equals("company")) {
-                if (offer.company_id == user_id) {
-                    btn_bottom.visibility = View.VISIBLE
-                    btn_bottom.text = "show applicants"
-                    btn_bottom.setOnClickListener {
-                        show_applicants(offer_id)
-                    }
-                    btn_edit.visibility = View.VISIBLE
-                    btn_delete.visibility = View.VISIBLE
-                } else {
-                    btn_bottom.visibility = View.GONE
-                    btn_edit.visibility = View.GONE
-                    btn_delete.visibility = View.GONE
-                }
-            } else { //user is a worker
-                btn_bottom.visibility = View.VISIBLE
-                btn_edit.visibility = View.GONE
-                btn_delete.visibility = View.GONE
-
-                m_db_ref.child("applications").child(user_id + "_" + offer_id).get().addOnSuccessListener {
-                    if (it.exists()) {  // the worker has already applied to this offer
-                        btn_bottom.text = "withdraw"
-                        btn_bottom.setOnClickListener {
-                            withdraw(user_id, offer_id)
-                        }
-                    } else {    // the worker has not applied to this offer
-                        btn_bottom.text = "apply"
-                        btn_bottom.setOnClickListener{
-                            apply_to_offer(user_id, offer_id)
-                        }
-                    }
-                }
-            }
-        }
 
         val offer_event_listener = object : ValueEventListener {
 
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
                     offer = snapshot.getValue(Offer::class.java)!!
+
+
+                    m_db_ref.child("userSettings").child(user_id).get().addOnSuccessListener {
+                        val user_settings = it.getValue(UserSettings::class.java)
+                        user_type = user_settings?.user_type!!
+
+                        if (user_type.equals("company")) {
+                            if (offer.company_id == user_id) {
+                                btn_bottom.visibility = View.VISIBLE
+                                btn_bottom.text = "show applicants"
+                                btn_bottom.setOnClickListener {
+                                    show_applicants(offer_id)
+                                }
+                                btn_edit.visibility = View.VISIBLE
+                                btn_delete.visibility = View.VISIBLE
+                            } else {
+                                btn_bottom.visibility = View.GONE
+                                btn_edit.visibility = View.GONE
+                                btn_delete.visibility = View.GONE
+                            }
+                        } else { //user is a worker
+                            btn_bottom.visibility = View.VISIBLE
+                            btn_edit.visibility = View.GONE
+                            btn_delete.visibility = View.GONE
+
+                            m_db_ref.child("applications").child(user_id + "_" + offer_id).get().addOnSuccessListener {
+                                if (it.exists()) {  // the worker has already applied to this offer
+                                    btn_bottom.text = "withdraw"
+                                    btn_bottom.setOnClickListener {
+                                        withdraw(user_id, offer_id)
+                                    }
+                                } else {    // the worker has not applied to this offer
+                                    btn_bottom.text = "apply"
+                                    btn_bottom.setOnClickListener{
+                                        apply_to_offer(user_id, offer_id)
+                                    }
+                                }
+                            }
+                        }
+                    }
+
 
                     m_db_ref.child("companies").child(offer.company_id!!).get().addOnSuccessListener {
 
@@ -210,9 +214,18 @@ class OfferDescription : AppCompatActivity() {
         builder.setMessage("Do you really want to withdraw this application?")
         builder.setPositiveButton("withdraw",DialogInterface.OnClickListener{ dialog, id ->
             //chiamata al db per distruggere il record
-            m_db_ref.child("applications").child(userId + "_" + offerId).removeValue().addOnCompleteListener {
+            val application_id = userId + "_" + offerId
+            m_db_ref.child("applications").child(application_id).removeValue().addOnCompleteListener {
                 btn_bottom.text = "apply"
                 btn_bottom.setOnClickListener { apply_to_offer(userId, offerId) }
+            }
+
+            m_db_ref.child("chats").child(application_id).removeValue()
+
+            m_db_ref.child("events").orderByKey().startAt(application_id).endAt(application_id + "\uf8ff").get().addOnSuccessListener {
+                for (snapshot in it.children) {
+                    snapshot.ref.removeValue()
+                }
             }
 
             dialog.cancel()

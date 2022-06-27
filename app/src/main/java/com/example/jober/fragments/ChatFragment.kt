@@ -227,9 +227,9 @@ class ChatFragment : Fragment() {
         m_db_ref.child("chats").addValueEventListener(valueEventListener)
     }
 
-    override fun onDestroy() {
+    override fun onDestroyView() {
         m_db_ref.child("chats").removeEventListener(valueEventListener)
-        super.onDestroy()
+        super.onDestroyView()
     }
 
     private fun filterList(search_text : String?) {

@@ -12,8 +12,8 @@
         android:layout_height="match_parent"
         android:layout_above="@id/linearLayout"
         android:layout_marginBottom="10dp"
-        android:clipToPadding="false"
-        android:background="@color/white" />
+        android:background="@color/white"
+        android:clipToPadding="false" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -40,8 +40,17 @@
             android:id="@+id/sendButton"
             android:layout_width="35dp"
             android:layout_height="35dp"
+            android:layout_gravity="center_vertical"
             android:layout_weight="15"
             android:src="@drawable/ic_send" />
+
+        <ImageView
+            android:id="@+id/btn_add_event"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="5dp"
+            android:layout_weight="85"
+            android:src="@drawable/ic_calendar" />
 
     </LinearLayout>
 

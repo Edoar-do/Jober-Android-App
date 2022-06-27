@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Jober">
         <activity
+            android:name=".EventDetails"
+            android:exported="false" />
+        <activity
             android:name=".SingleChat"
             android:exported="false" />
         <activity
