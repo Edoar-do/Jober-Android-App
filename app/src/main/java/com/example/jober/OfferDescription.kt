@@ -9,10 +9,7 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.example.jober.model.Application
-import com.example.jober.model.Company
-import com.example.jober.model.Offer
-import com.example.jober.model.UserSettings
+import com.example.jober.model.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
@@ -79,6 +76,8 @@ class OfferDescription : AppCompatActivity() {
             builder.setPositiveButton("Delete",DialogInterface.OnClickListener{ dialog, id ->
                 //chiamata al db per distruggere il record
                 m_db_ref.child("offers").child(offer_id).removeValue()
+
+                //rimuovere tutte le application associate alla offer rimossa
                 m_db_ref.child("applications").get().addOnCompleteListener {
                     for (app in it.result.children) {
                         var application = app.getValue(Application::class.java)
@@ -88,9 +87,28 @@ class OfferDescription : AppCompatActivity() {
                     }
                 }
 
-                //rimuovere tutti gli eventi associati alla offer rimossa
-
                 //rimuovere tutte le chat associate alla offer rimossa
+                m_db_ref.child("chats").get().addOnCompleteListener {
+                    for (chat in it.result.children) {
+                        var ch = chat.getValue(Chat::class.java)
+                        if (ch!!.chat_id!!.endsWith(offer_id)) {
+                            chat.ref.removeValue()
+                        }
+                    }
+                }
+
+                //rimuovere tutti gli eventi associati alla offer rimossa
+                m_db_ref.child("events").get().addOnCompleteListener {
+                    for (ev in it.result.children) {
+                        var event = ev.getValue(Event::class.java)
+                        if (event!!.chat_id!!.endsWith(offer_id)) {
+                            ev.ref.removeValue()
+                        }
+                    }
+                }
+
+
+
 
                 dialog.cancel()
                 finish()
