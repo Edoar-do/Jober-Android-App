@@ -27,7 +27,7 @@ class ChatFragment : Fragment() {
     lateinit var chats_recycler_view : RecyclerView
     lateinit var search_view : SearchView
 
-    lateinit var chat_list : ArrayList<String>
+    lateinit var chat_list : ArrayList<Chat>
     lateinit var other_pics: ArrayList<Bitmap>
     lateinit var other_names : ArrayList<String>
     lateinit var position_list : ArrayList<String>
@@ -110,7 +110,7 @@ class ChatFragment : Fragment() {
 
                         m_db_ref.child("userSettings").child(user_id).get().addOnSuccessListener {
                             val type = it.getValue(UserSettings::class.java)?.user_type
-                            if (type.equals("worker")) { //sono una worker e vedo le mie chat con le company
+                            if (type.equals("worker")) { //sono un worker e vedo le mie chat con le company
                                 var position: String? = null
                                 var company_name: String? = null
                                 var company_logo_url: String? = null
@@ -140,24 +140,34 @@ class ChatFragment : Fragment() {
                                                         .addOnSuccessListener {
                                                             company_logo =
                                                                 BitmapFactory.decodeFile(local_file.absolutePath)
-                                                            chat_list.add(chat_id)
-                                                            other_names.add(company_name!!)
-                                                            other_pics.add(company_logo!!)
-                                                            position_list.add(position!!)
-                                                            chat_adapter.notifyItemInserted(
-                                                                chat_list.size - 1
-                                                            )
+
+                                                            var i = 0
+                                                            while (i < chat_list.size && chat_list.get(i).last_update!! > current_chat.last_update!!) {
+                                                                i ++
+                                                            }
+
+                                                            chat_list.add(i, current_chat)
+                                                            other_names.add(i, company_name!!)
+                                                            other_pics.add(i, company_logo!!)
+                                                            position_list.add(i, position!!)
+                                                            chat_adapter.notifyItemInserted(i)
                                                         }
                                                 } else {
                                                     company_logo = BitmapFactory.decodeResource(
                                                         resources,
                                                         R.drawable.user_profile_placeholder
                                                     )
-                                                    chat_list.add(chat_id)
-                                                    other_names.add(company_name!!)
-                                                    other_pics.add(company_logo!!)
-                                                    position_list.add(position!!)
-                                                    chat_adapter.notifyItemInserted(chat_list.size - 1)
+
+                                                    var i = 0
+                                                    while (i < chat_list.size && chat_list.get(i).last_update!! > current_chat.last_update!!) {
+                                                        i ++
+                                                    }
+
+                                                    chat_list.add(i, current_chat)
+                                                    other_names.add(i, company_name!!)
+                                                    other_pics.add(i, company_logo!!)
+                                                    position_list.add(i, position!!)
+                                                    chat_adapter.notifyItemInserted(i)
                                                 }
                                             }
                                     }
@@ -191,24 +201,34 @@ class ChatFragment : Fragment() {
                                                         .addOnSuccessListener {
                                                             worker_logo =
                                                                 BitmapFactory.decodeFile(local_file.absolutePath)
-                                                            chat_list.add(chat_id)
-                                                            other_names.add(worker_name!!)
-                                                            other_pics.add(worker_logo!!)
-                                                            position_list.add(position!!)
-                                                            chat_adapter.notifyItemInserted(
-                                                                chat_list.size - 1
-                                                            )
+
+                                                            var i = 0
+                                                            while (i < chat_list.size && chat_list.get(i).last_update!! > current_chat.last_update!!) {
+                                                                i ++
+                                                            }
+
+                                                            chat_list.add(i, current_chat)
+                                                            other_names.add(i, worker_name!!)
+                                                            other_pics.add(i, worker_logo!!)
+                                                            position_list.add(i, position!!)
+                                                            chat_adapter.notifyItemInserted(i)
                                                         }
                                                 } else {
                                                     worker_logo = BitmapFactory.decodeResource(
                                                         resources,
                                                         R.drawable.user_profile_placeholder
                                                     )
-                                                    chat_list.add(chat_id)
-                                                    other_names.add(worker_name!!)
-                                                    other_pics.add(worker_logo!!)
-                                                    position_list.add(position!!)
-                                                    chat_adapter.notifyItemInserted(chat_list.size - 1)
+
+                                                    var i = 0
+                                                    while (i < chat_list.size && chat_list.get(i).last_update!! > current_chat.last_update!!) {
+                                                        i ++
+                                                    }
+
+                                                    chat_list.add(i, current_chat)
+                                                    other_names.add(i, worker_name!!)
+                                                    other_pics.add(i, worker_logo!!)
+                                                    position_list.add(i, position!!)
+                                                    chat_adapter.notifyItemInserted(i)
                                                 }
                                             }
                                     }
@@ -233,7 +253,7 @@ class ChatFragment : Fragment() {
     }
 
     private fun filterList(search_text : String?) {
-        var chats_filtered_list = ArrayList<String>()
+        var chats_filtered_list = ArrayList<Chat>()
         var other_names_filtered_list = ArrayList<String>()
         var other_pics_filtered_list = ArrayList<Bitmap>()
         var positions_filtered_list = ArrayList<String>()

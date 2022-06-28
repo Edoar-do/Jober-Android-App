@@ -108,7 +108,7 @@ class ApplicantProfile : AppCompatActivity() {
                 }else{
                     val worker_id = application_id.split("_")[0]
                     val company_id = application_id.split("_")[1]
-                    val chat = Chat(application_id, application_id, worker_id, company_id)
+                    val chat = Chat(application_id, application_id, worker_id, company_id, System.currentTimeMillis())
                     m_db_ref.child("chats").child(application_id).setValue(chat).addOnSuccessListener {
                         val intent : Intent = Intent(this, SingleChat::class.java)
                         intent.putExtra("chat_id", application_id)

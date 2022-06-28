@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.jober.adapters.MessageAdapter
 import com.example.jober.model.Event
 import com.example.jober.model.Message
+import com.example.jober.model.UserSettings
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
@@ -58,6 +59,15 @@ class SingleChat : AppCompatActivity() {
         m_db_ref = database.getReference()
 
         val user_id =  m_auth.currentUser?.uid!!
+
+        m_db_ref.child("userSettings").child(user_id).get().addOnSuccessListener {
+            val user_settings = it.getValue(UserSettings::class.java)
+            val user_type = user_settings?.user_type!!
+
+            if (user_type.equals("worker")) {
+                btn_add_event.visibility = View.GONE
+            }
+        }
 
         chat_recycler_view.layoutManager = LinearLayoutManager(this)
         chat_recycler_view.adapter = message_adapter
@@ -117,7 +127,9 @@ class SingleChat : AppCompatActivity() {
             val message = message_box.text.toString()
             if (message.trim().isNotEmpty()) {
                 val message_object = Message(System.currentTimeMillis().toString(), chat_id, user_id, receiver_id, message.trim())
-                m_db_ref.child("chats").child(chat_id).child("messages").push().setValue(message_object)
+                m_db_ref.child("chats").child(chat_id).child("messages").push().setValue(message_object).addOnSuccessListener {
+                    m_db_ref.child("chats").child(chat_id).child("last_update").setValue(System.currentTimeMillis())
+                }
                 message_box.setText("")
             }
         }
@@ -145,8 +157,11 @@ class SingleChat : AppCompatActivity() {
                     val event_id = chat_id + "_" + System.currentTimeMillis()
                     val worker_id = chat_id.split("_")[0]
                     val company_id = chat_id.split("_")[1]
-                    val date = Date(selectedyear, selectedmonth+1, selecteddayofmonth, selected_hour, selected_minutes)
-                    val event = Event(event_id, chat_id, worker_id, company_id, date, -date.time)
+//                    val date = Date(selectedyear, selectedmonth+1, selecteddayofmonth, selected_hour, selected_minutes)
+//                    val event = Event(event_id, chat_id, worker_id, company_id, date, -date.time)
+                    val date = Calendar.getInstance()
+                    date.set(selectedyear, selectedmonth, selecteddayofmonth, selected_hour, selected_minutes)
+                    val event = Event(event_id, chat_id, worker_id, company_id, date.timeInMillis)
                     m_db_ref.child("events").child(event_id).setValue(event).addOnSuccessListener {
                         Toast.makeText(this, "The event has been successfully created", Toast.LENGTH_LONG).show()
                     }

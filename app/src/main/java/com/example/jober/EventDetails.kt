@@ -28,6 +28,8 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import java.io.File
+import java.text.DateFormat
+import java.util.*
 
 class EventDetails : AppCompatActivity() {
 
@@ -79,19 +81,8 @@ class EventDetails : AppCompatActivity() {
 
         val event = intent.getSerializableExtra("event") as Event
 
-
-        var suffix = ""
-        var hour = ""
-
-        if (event.date!!.hours > 13) {
-            suffix = "PM"
-            hour = (event.date!!.hours - 12).toString()
-        } else {
-            suffix = "AM"
-            hour = (event.date!!.hours).toString()
-        }
-
-        tv_date_time.setText("${event.date!!.year}/${event.date!!.month}/${event.date!!.day}  ${hour}:${event.date!!.minutes} ${suffix}")
+        var df = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT)
+        tv_date_time.setText(df.format(event.date_millis!!))
 
         val offer_id = event.chat_id!!.split("_", ignoreCase = true, limit = 2)[1]
 

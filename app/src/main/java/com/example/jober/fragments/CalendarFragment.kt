@@ -106,7 +106,7 @@ class CalendarFragment : Fragment() {
                 for (eventSnapshot in snapshot.children) {
                     val current_event = eventSnapshot.getValue(Event::class.java)
 
-                    if (current_event?.event_id!!.contains(user_id)) {
+                    if (current_event?.event_id!!.contains(user_id) && current_event.date_millis!! > System.currentTimeMillis()) {
 
                         m_db_ref.child("userSettings").child(user_id).get().addOnSuccessListener {
                             val type = it.getValue(UserSettings::class.java)?.user_type
@@ -143,7 +143,7 @@ class CalendarFragment : Fragment() {
                                                                 BitmapFactory.decodeFile(local_file.absolutePath)
 
                                                             var i = 0
-                                                            while (i < event_list.size && event_list.get(i).inverted_date_millis!! > current_event.inverted_date_millis!!) {
+                                                            while (i < event_list.size && event_list.get(i).date_millis!! < current_event.date_millis!!) {
                                                                 i ++
                                                             }
 
@@ -159,7 +159,7 @@ class CalendarFragment : Fragment() {
                                                         R.drawable.user_profile_placeholder
                                                     )
                                                     var i = 0
-                                                    while (i < event_list.size && event_list.get(i).inverted_date_millis!! > current_event.inverted_date_millis!!) {
+                                                    while (i < event_list.size && event_list.get(i).date_millis!! < current_event.date_millis!!) {
                                                         i ++
                                                     }
 
@@ -203,7 +203,7 @@ class CalendarFragment : Fragment() {
                                                                 BitmapFactory.decodeFile(local_file.absolutePath)
 
                                                             var i = 0
-                                                            while (i < event_list.size && event_list.get(i).inverted_date_millis!! > current_event.inverted_date_millis!!) {
+                                                            while (i < event_list.size && event_list.get(i).date_millis!! < current_event.date_millis!!) {
                                                                 i ++
                                                             }
 
@@ -220,7 +220,7 @@ class CalendarFragment : Fragment() {
                                                     )
 
                                                     var i = 0
-                                                    while (i < event_list.size && event_list.get(i).inverted_date_millis!! > current_event.inverted_date_millis!!) {
+                                                    while (i < event_list.size && event_list.get(i).date_millis!! < current_event.date_millis!!) {
                                                         i ++
                                                     }
 
@@ -235,7 +235,6 @@ class CalendarFragment : Fragment() {
                             }
                         }
                     }
-
                 }
             }
 

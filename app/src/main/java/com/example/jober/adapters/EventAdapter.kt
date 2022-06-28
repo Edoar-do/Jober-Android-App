@@ -16,6 +16,7 @@ import com.example.jober.R
 import com.example.jober.SingleChat
 import com.example.jober.model.Event
 import com.example.jober.model.Offer
+import com.google.android.material.timepicker.TimeFormat
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
@@ -57,20 +58,8 @@ class EventAdapter(val context: Context, var events: ArrayList<Event>, var other
         holder.tv_name.text = current_other_name
         holder.tv_position.text = current_position
 
-
-        var suffix = ""
-        var hour = ""
-
-        if (current_event.date!!.hours > 13) {
-            suffix = "PM"
-            hour = (current_event.date!!.hours - 12).toString()
-        } else {
-            suffix = "AM"
-            hour = (current_event.date!!.hours).toString()
-        }
-        val date_string = "${current_event.date!!.year}/${current_event.date!!.month}/${current_event.date!!.date}  ${hour}:${current_event.date!!.minutes} ${suffix}"
-
-        holder.tv_date_time.text = date_string
+        var df = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT)
+        holder.tv_date_time.text = df.format(current_event.date_millis!!)
 
         holder.iv_user_profile.setImageBitmap(current_other_pic)
 

@@ -96,7 +96,7 @@ class OfferCreation : AppCompatActivity() {
             val offer_id = m_auth.currentUser?.uid!! + "_" + timestamp
 
             val offer = Offer(offer_id, company_id, position, location,
-                job_description, skills_required, languages_required, edu_exp_required, timestamp)
+                job_description, skills_required, languages_required, edu_exp_required, -timestamp)
 
 
             m_db_ref.child("offers").child(offer_id).setValue(offer)

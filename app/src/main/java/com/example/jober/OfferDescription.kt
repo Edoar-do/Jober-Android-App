@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.jober.model.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -32,6 +33,7 @@ class OfferDescription : AppCompatActivity() {
     lateinit var iv_logo : ImageView
     lateinit var btn_bottom : Button
     lateinit var btn_delete : ImageButton
+    lateinit var bottom_layout : ConstraintLayout
 
     lateinit var m_db_ref: DatabaseReference
     lateinit var m_auth: FirebaseAuth
@@ -60,6 +62,7 @@ class OfferDescription : AppCompatActivity() {
         tv_languages_required = findViewById(R.id.tv_languages_required)
         tv_edu_exp_required = findViewById(R.id.tv_edu_exp_required)
         iv_logo = findViewById(R.id.iv_logo)
+        bottom_layout = findViewById(R.id.bottom_layout)
 
         m_auth = FirebaseAuth.getInstance()
         storage_ref = FirebaseStorage.getInstance().getReference()
@@ -148,7 +151,7 @@ class OfferDescription : AppCompatActivity() {
                                 btn_edit.visibility = View.VISIBLE
                                 btn_delete.visibility = View.VISIBLE
                             } else {
-                                btn_bottom.visibility = View.GONE
+                                bottom_layout.visibility = View.GONE
                                 btn_edit.visibility = View.GONE
                                 btn_delete.visibility = View.GONE
                             }

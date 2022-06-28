@@ -13,11 +13,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.jober.OfferDescription
 import com.example.jober.R
 import com.example.jober.SingleChat
+import com.example.jober.model.Chat
 import com.example.jober.model.Offer
 import java.util.*
 import kotlin.collections.ArrayList
 
-class ChatAdapter(val context: Context, var chat_ids: ArrayList<String>, var other_pics: ArrayList<Bitmap>,
+class ChatAdapter(val context: Context, var chats: ArrayList<Chat>, var other_pics: ArrayList<Bitmap>,
                   var other_names: ArrayList<String>, var positions: ArrayList<String>): RecyclerView.Adapter<ChatAdapter.ChatViewHolder>() {
 
     class ChatViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
@@ -26,9 +27,9 @@ class ChatAdapter(val context: Context, var chat_ids: ArrayList<String>, var oth
         val iv_user_profile = itemView.findViewById<ImageView>(R.id.iv_user_profile)
     }
 
-    fun setFilteredLists(chats_filtered_list : ArrayList<String>, other_names_filtered_list : ArrayList<String>,
+    fun setFilteredLists(chats_filtered_list : ArrayList<Chat>, other_names_filtered_list : ArrayList<String>,
                          other_pics_filtered_list : ArrayList<Bitmap>, positions_filtered_list : ArrayList<String>) {
-        this.chat_ids = chats_filtered_list
+        this.chats = chats_filtered_list
         this.other_names = other_names_filtered_list
         this.other_pics = other_pics_filtered_list
         this.positions = positions_filtered_list
@@ -43,7 +44,7 @@ class ChatAdapter(val context: Context, var chat_ids: ArrayList<String>, var oth
     }
 
     override fun onBindViewHolder(holder: ChatViewHolder, position: Int) {
-        val current_chat_id = chat_ids[position]
+        val current_chat = chats[position]
         val current_other_pic = other_pics[position]
         val current_other_name = other_names[position]
         val current_position = positions[position]
@@ -54,13 +55,13 @@ class ChatAdapter(val context: Context, var chat_ids: ArrayList<String>, var oth
 
         holder.itemView.setOnClickListener {
             val intent = Intent(context, SingleChat::class.java)
-            intent.putExtra("chat_id", current_chat_id)
+            intent.putExtra("chat_id", current_chat.chat_id)
             context.startActivity(intent)
         }
     }
 
     override fun getItemCount(): Int {
-        return chat_ids.size
+        return chats.size
     }
 
 }

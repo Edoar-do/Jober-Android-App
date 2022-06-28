@@ -102,7 +102,6 @@ class OffersFragment : Fragment() {
         })
 
 
-
         valueEventListener = object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 print("################################## ON DATA CHANGED CALLED")
@@ -131,17 +130,31 @@ class OffersFragment : Fragment() {
                             var local_file = File.createTempFile("tempImage", "jpg")
                             profile_image_ref.getFile(local_file).addOnSuccessListener {
                                 company_logo = BitmapFactory.decodeFile(local_file.absolutePath)
-                                offer_list.add(current_offer)
-                                company_logos.add(company_logo!!)
-                                company_names.add(company_name!!)
-                                offer_adapter.notifyItemInserted(offer_list.size-1)
+
+                                var i = 0
+                                while (i < offer_list.size && offer_list.get(i).created_at!! < current_offer.created_at!!) {
+                                    i ++
+                                }
+
+                                offer_list.add(i, current_offer)
+                                company_logos.add(i, company_logo!!)
+                                company_names.add(i, company_name!!)
+                                offer_adapter.notifyItemInserted(i)
+                                offer_recycler_view.smoothScrollToPosition(0)
                             }
                         }else {
                             company_logo = BitmapFactory.decodeResource(resources, R.drawable.user_profile_placeholder)
-                            offer_list.add(current_offer)
-                            company_logos.add(company_logo!!)
-                            company_names.add(company_name!!)
-                            offer_adapter.notifyItemInserted(offer_list.size-1)
+
+                            var i = 0
+                            while (i < offer_list.size && offer_list.get(i).created_at!! < current_offer.created_at!!) {
+                                i ++
+                            }
+
+                            offer_list.add(i, current_offer)
+                            company_logos.add(i, company_logo!!)
+                            company_names.add(i, company_name!!)
+                            offer_adapter.notifyItemInserted(i)
+                            offer_recycler_view.smoothScrollToPosition(0)
                         }
                     }
                 }
