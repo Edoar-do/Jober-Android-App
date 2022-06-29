@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,8 +24,6 @@ import java.io.File
 
 class OfferApplicants : AppCompatActivity() {
 
-    lateinit var edt_search : EditText
-    lateinit var btn_search : Button
     lateinit var applicants_recycler_view : RecyclerView
     lateinit var search_view : SearchView
 
@@ -92,9 +91,6 @@ class OfferApplicants : AppCompatActivity() {
 
         })
 
-        val user_id = m_auth.currentUser?.uid!!
-
-
         valueEventListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 worker_list.clear()
@@ -141,7 +137,7 @@ class OfferApplicants : AppCompatActivity() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+                Toast.makeText(this@OfferApplicants, "Sorry, there was a problem connecting to the database...", Toast.LENGTH_LONG).show()
             }
 
         }

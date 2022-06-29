@@ -43,7 +43,6 @@ class CompanyProfileCreation : AppCompatActivity() {
 
         m_auth = FirebaseAuth.getInstance()
         storage_ref = FirebaseStorage.getInstance().getReference()
-//        m_db_ref = FirebaseDatabase.getInstance().getReference()
         database = Firebase.database("https://jober-290f2-default-rtdb.europe-west1.firebasedatabase.app")
         m_db_ref = database.getReference()
 
@@ -76,7 +75,6 @@ class CompanyProfileCreation : AppCompatActivity() {
     }
 
     fun save(view : View) {
-        //instance creation
         val name = edt_name.text.toString()
         val sector = edt_sector.text.toString()
         val country = edt_country.text.toString()

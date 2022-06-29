@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,8 +22,6 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.time.Duration.Companion.hours
-import kotlin.time.Duration.Companion.minutes
 
 class SingleChat : AppCompatActivity() {
 
@@ -74,7 +71,7 @@ class SingleChat : AppCompatActivity() {
 
         val chat_id = intent.getStringExtra("chat_id").toString()
 
-        m_db_ref.child("chats").child(chat_id).child("messages").addValueEventListener(object : ValueEventListener{
+        m_db_ref.child("messages").child(chat_id).addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 message_list.clear()
 
@@ -89,7 +86,7 @@ class SingleChat : AppCompatActivity() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+                Toast.makeText(this@SingleChat, "Sorry, there was a problem connecting to the database...", Toast.LENGTH_LONG).show()
             }
 
         })
@@ -127,7 +124,7 @@ class SingleChat : AppCompatActivity() {
             val message = message_box.text.toString()
             if (message.trim().isNotEmpty()) {
                 val message_object = Message(System.currentTimeMillis().toString(), chat_id, user_id, receiver_id, message.trim())
-                m_db_ref.child("chats").child(chat_id).child("messages").push().setValue(message_object).addOnSuccessListener {
+                m_db_ref.child("messages").child(chat_id).push().setValue(message_object).addOnSuccessListener {
                     m_db_ref.child("chats").child(chat_id).child("last_update").setValue(System.currentTimeMillis())
                 }
                 message_box.setText("")
@@ -157,8 +154,6 @@ class SingleChat : AppCompatActivity() {
                     val event_id = chat_id + "_" + System.currentTimeMillis()
                     val worker_id = chat_id.split("_")[0]
                     val company_id = chat_id.split("_")[1]
-//                    val date = Date(selectedyear, selectedmonth+1, selecteddayofmonth, selected_hour, selected_minutes)
-//                    val event = Event(event_id, chat_id, worker_id, company_id, date, -date.time)
                     val date = Calendar.getInstance()
                     date.set(selectedyear, selectedmonth, selecteddayofmonth, selected_hour, selected_minutes)
                     val event = Event(event_id, chat_id, worker_id, company_id, date.timeInMillis)

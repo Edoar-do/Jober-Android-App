@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -27,8 +28,6 @@ import java.io.File
 
 class CompanyOffersFragment : Fragment() {
 
-    lateinit var edt_search : EditText
-    lateinit var btn_search : Button
     lateinit var offer_recycler_view : RecyclerView
     lateinit var search_view : SearchView
 
@@ -62,7 +61,6 @@ class CompanyOffersFragment : Fragment() {
         offer_adapter = CompanyOfferAdapter(view.context, offer_list, company_logos, company_names)
 
         offer_recycler_view = view.findViewById(R.id.recyclerview)
-//        println("############################# this is the recyclerview: " + offer_recycler_view)
         offer_recycler_view.layoutManager = LinearLayoutManager(view.context)
         offer_recycler_view.adapter = offer_adapter
 
@@ -77,8 +75,6 @@ class CompanyOffersFragment : Fragment() {
         database = Firebase.database("https://jober-290f2-default-rtdb.europe-west1.firebasedatabase.app")
         m_db_ref = database.getReference()
 
-//        edt_search = view.findViewById(R.id.edt_search)
-//        btn_search = view.findViewById(R.id.btn_search)
         search_view = view.findViewById(R.id.searchView)
         search_view.clearFocus()
         search_view.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -165,7 +161,7 @@ class CompanyOffersFragment : Fragment() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+                Toast.makeText(activity, "Sorry, there was a problem connecting to the database...", Toast.LENGTH_LONG).show()
             }
         }
 

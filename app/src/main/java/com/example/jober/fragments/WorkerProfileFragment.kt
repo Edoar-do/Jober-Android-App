@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.jober.MainActivity
 import com.example.jober.R
 import com.example.jober.WorkerProfileEdit
@@ -24,6 +25,7 @@ class WorkerProfileFragment : Fragment() {
 
     lateinit var btn_edit : ImageButton
     lateinit var btn_contact : Button
+    lateinit var bottom_layout : ConstraintLayout
     lateinit var tv_name : TextView
     lateinit var tv_surname : TextView
     lateinit var tv_age : TextView
@@ -78,8 +80,10 @@ class WorkerProfileFragment : Fragment() {
         tv_educational_experiences = view?.findViewById(R.id.tv_educational_experiences)
         iv_profile = view?.findViewById(R.id.iv_profile)
         btn_contact = view?.findViewById(R.id.btn_contact)
+        bottom_layout = view?.findViewById(R.id.bottom_layout)
 
         btn_contact.visibility = View.GONE
+        bottom_layout.visibility = View.GONE
 
 
         var worker_id = m_auth.currentUser?.uid!!

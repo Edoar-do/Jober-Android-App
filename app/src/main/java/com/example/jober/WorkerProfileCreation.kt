@@ -46,7 +46,6 @@ class WorkerProfileCreation : AppCompatActivity() {
 
         m_auth = FirebaseAuth.getInstance()
         storage_ref = FirebaseStorage.getInstance().getReference()
-//        m_db_ref = FirebaseDatabase.getInstance().getReference()
         database = Firebase.database("https://jober-290f2-default-rtdb.europe-west1.firebasedatabase.app")
         m_db_ref = database.getReference()
 
@@ -83,13 +82,6 @@ class WorkerProfileCreation : AppCompatActivity() {
         }
     }
 
-    fun uploadImageToFirebase(image_uri : Uri){
-        image_path_db = "images/worker_profile/" + m_auth.currentUser?.uid!! + "_" + System.currentTimeMillis().toString()
-        val file_ref = storage_ref.child(image_path_db!!)
-        file_ref.putFile(image_uri).addOnFailureListener{
-            Toast.makeText(this, "Failure Input File", Toast.LENGTH_LONG)
-        }
-    }
 
     fun save(view : View) {
         //instance creation

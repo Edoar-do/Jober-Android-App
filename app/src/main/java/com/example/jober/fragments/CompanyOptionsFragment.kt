@@ -71,13 +71,11 @@ class CompanyOptionsFragment : Fragment() {
             (activity as MainActivity).setFragmentByTitle("CompanyProfile", null)
         }
 
-        //aggiungere listener per new offer
         btn_new_offer.setOnClickListener {
             var intent = Intent(activity, OfferCreation::class.java)
             startActivity(intent)
         }
 
-        //aggiungere listener per company offers
         btn_company_offers.setOnClickListener {
             (activity as MainActivity).setFragmentByTitle("CompanyOffers", null)
         }

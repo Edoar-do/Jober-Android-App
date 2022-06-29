@@ -49,7 +49,6 @@ class OfferCreation : AppCompatActivity() {
 
     fun save(view : View) {
         //instance creation
-
         val position = edt_position.text.toString()
         val location = edt_location.text.toString()
         val skills_required = edt_skills_required.text.toString()

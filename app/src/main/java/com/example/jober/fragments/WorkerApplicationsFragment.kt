@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -30,8 +31,6 @@ import java.io.File
 
 class WorkerApplicationsFragment : Fragment() {
 
-    lateinit var edt_search : EditText
-    lateinit var btn_search : Button
     lateinit var offer_recycler_view : RecyclerView
     lateinit var search_view : SearchView
 
@@ -79,8 +78,6 @@ class WorkerApplicationsFragment : Fragment() {
         storage_ref = FirebaseStorage.getInstance().getReference()
         database = Firebase.database("https://jober-290f2-default-rtdb.europe-west1.firebasedatabase.app")
         m_db_ref = database.getReference()
-
-        Log.i("ciaocomeva", "on view created worker application")
 
         search_view = view.findViewById(R.id.searchView)
         search_view.clearFocus()
@@ -153,7 +150,7 @@ class WorkerApplicationsFragment : Fragment() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+                Toast.makeText(activity, "Sorry, there was a problem connecting to the database...", Toast.LENGTH_LONG).show()
             }
 
         }

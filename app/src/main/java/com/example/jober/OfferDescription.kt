@@ -124,9 +124,7 @@ class OfferDescription : AppCompatActivity() {
         }
 
 
-        // get references to buttons 'view applicants', 'apply', 'cancel application'
         btn_bottom = findViewById(R.id.btn_bottom)
-        // get user type
         val user_id = m_auth.currentUser?.uid!!
 
 
@@ -261,8 +259,6 @@ class OfferDescription : AppCompatActivity() {
     private fun show_applicants(offerId: String) {
         val intent = Intent(this@OfferDescription, OfferApplicants::class.java)
         intent.putExtra("offer_id", offerId)
-//        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
-//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(intent)
     }
 

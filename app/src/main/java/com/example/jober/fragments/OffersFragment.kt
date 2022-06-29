@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -63,7 +64,6 @@ class OffersFragment : Fragment() {
         offer_adapter = OfferAdapter(view.context, offer_list, company_logos, company_names)
 
         offer_recycler_view = view.findViewById(R.id.recyclerview)
-//        println("############################# this is the recyclerview: " + offer_recycler_view)
         offer_recycler_view.layoutManager = LinearLayoutManager(view.context)
         offer_recycler_view.adapter = offer_adapter
 
@@ -72,10 +72,6 @@ class OffersFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
-        print("########## chiamato on view created ############")
-        Log.i("ciaocomeva", "on view created offers")
 
         m_auth = FirebaseAuth.getInstance()
         storage_ref = FirebaseStorage.getInstance().getReference()
@@ -104,7 +100,6 @@ class OffersFragment : Fragment() {
 
         valueEventListener = object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
-                print("################################## ON DATA CHANGED CALLED")
                 offer_list.clear()
                 company_logos.clear()
                 company_names.clear()
@@ -161,7 +156,7 @@ class OffersFragment : Fragment() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+                Toast.makeText(activity, "Sorry, there was a problem connecting to the database...", Toast.LENGTH_LONG).show()
             }
 
         }

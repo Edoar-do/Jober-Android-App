@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -51,7 +52,6 @@ class CalendarFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
         val view : View = inflater.inflate(R.layout.fragment_recycler_view, container, false)
         (activity as MainActivity).supportActionBar!!.title = "Jober - Events"
 
@@ -239,7 +239,7 @@ class CalendarFragment : Fragment() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+                Toast.makeText(activity, "Sorry, there was a problem connecting to the database...", Toast.LENGTH_LONG).show()
             }
         }
 

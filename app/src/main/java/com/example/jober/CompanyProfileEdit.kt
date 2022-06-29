@@ -60,8 +60,6 @@ class CompanyProfileEdit : AppCompatActivity() {
         database = Firebase.database("https://jober-290f2-default-rtdb.europe-west1.firebasedatabase.app")
         m_db_ref = database.getReference()
 
-        //IMPOSTAZIONI CAMPI DI EDIT A VALORI PESCATI DAL DB
-
         var company_id = m_auth.currentUser?.uid!!
         m_db_ref.child("companies").child(company_id).get().addOnSuccessListener {
             company = it.getValue(Company::class.java)!!

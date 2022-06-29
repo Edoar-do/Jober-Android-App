@@ -99,7 +99,6 @@ class ApplicantProfile : AppCompatActivity() {
         }
 
         btn_contact.setOnClickListener{
-            //cambio sulla actvity della singola chat
             m_db_ref.child("chats").child(application_id).get().addOnSuccessListener {
                 if(it.exists()){
                     val intent : Intent = Intent(this, SingleChat::class.java)

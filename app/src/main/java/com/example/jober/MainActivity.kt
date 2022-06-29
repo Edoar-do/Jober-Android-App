@@ -43,7 +43,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
-//        vpViewPager = findViewById(R.id.vpViewPager)
         flWrapper = findViewById(R.id.flWrapper)
 
         mAuth = FirebaseAuth.getInstance()
@@ -74,8 +73,6 @@ class MainActivity : AppCompatActivity() {
             }
 
             bottomNavigationView.setSelectedItemId(R.id.options_item)
-            print("############################# CHIAMATO ONCREATE DELLA MAIN ACTIVITY")
-
 
             bottomNavigationView.setOnItemSelectedListener {
                 when (it.itemId) {

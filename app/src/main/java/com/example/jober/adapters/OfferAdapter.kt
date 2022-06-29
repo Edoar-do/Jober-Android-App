@@ -44,16 +44,10 @@ class OfferAdapter(val context: Context, var offerList: ArrayList<Offer>, var co
         val current_company_logo = company_logos[position]
         val current_company_name = company_names[position]
 
-//        println("#################################### sono all'interno dell'onbindViewHolder")
-//        println("#################################### current company name: " + current_company_name)
-//        println("#################################### current position: " + current_offer.position)
-//        println("#################################### current location: " + current_offer.location)
-
         holder.tv_company_name.text = current_company_name
         holder.tv_position.text = current_offer.position
         holder.tv_location.text = current_offer.location
         holder.iv_company_logo.setImageBitmap(current_company_logo)
-//        println("#################################### location on the field: " + holder.tv_location.text)
 
         holder.itemView.setOnClickListener {
             val intent = Intent(context, OfferDescription()::class.java)
@@ -63,7 +57,6 @@ class OfferAdapter(val context: Context, var offerList: ArrayList<Offer>, var co
     }
 
     override fun getItemCount(): Int {
-//        println("################################ questa e' la lunghezza delle liste: " + offerList.size)
         return offerList.size
     }
 

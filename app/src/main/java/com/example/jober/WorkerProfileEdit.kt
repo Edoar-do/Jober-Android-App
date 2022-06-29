@@ -48,10 +48,8 @@ class WorkerProfileEdit : AppCompatActivity() {
         setContentView(R.layout.activity_worker_profile_edit)
         supportActionBar!!.title = "Jober - Edit Profile"
 
-
         m_auth = FirebaseAuth.getInstance()
         storage_ref = FirebaseStorage.getInstance().getReference()
-//        m_db_ref = FirebaseDatabase.getInstance().getReference()
         database = Firebase.database("https://jober-290f2-default-rtdb.europe-west1.firebasedatabase.app")
         m_db_ref = database.getReference()
 

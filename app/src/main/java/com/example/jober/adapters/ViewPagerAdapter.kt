@@ -9,18 +9,6 @@ class ViewPagerAdapter() {
     private val mFragmentList = ArrayList<Fragment>()
     private val mFragmentTitleList = ArrayList<String>()
 
-    fun getCount(): Int {
-        return mFragmentList.size
-    }
-
-    fun getItem(position: Int): Fragment {
-        return mFragmentList[position]
-    }
-
-    fun getPageTitle(position: Int): CharSequence? {
-        return mFragmentTitleList[position]
-    }
-
     fun addFragment(fragments: Fragment, title: String) {
         mFragmentList.add(fragments)
         mFragmentTitleList.add(title)
@@ -34,17 +22,4 @@ class ViewPagerAdapter() {
         }
         return null
     }
-
-    fun getIndexByTitle(title : String) : Int? {
-//        for(i in mFragmentList.indices){
-//            println("index $i     , title: " + mFragmentTitleList[i])
-//        }
-        for (i in mFragmentTitleList.indices) {
-            if (mFragmentTitleList[i] == title) {
-                return i
-            }
-        }
-        return 0
-    }
-
 }
