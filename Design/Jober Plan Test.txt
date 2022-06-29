@@ -1,0 +1,32 @@
+First principle expressed in testing guides: build at least a test for each use (sub)case
+0. Login as worker
+1. Worker registration
+2. Worker profile creation (with and without loading profile image)
+3. Worker profile modification 
+4. Worker visualisation of job offers
+5. Worker visualisation of chats with companies
+6. Worker visualisation of next appointments with companies
+7. Worker sending messages to a company in a given chat
+8. Worker visualisation of an appointement details 
+9. Worker visualisation of job offer details
+10. Worker application to a job offer
+11. Worker withdrawing from a job offer
+12. Worker visualisation of his applications and relative job offers
+
+0. Login as a company
+1. Commpany registration
+2. Company profile creation (with and without loading profile images)
+3. Commpany profile modification
+4. Company visualisation of chats with workers
+5. Company sending messages to worker in a given chat
+6. Company visualisation of other companies job offers
+7. Company job offer creation
+8. Company job offer modification
+9. Company visualisation of job offer applicants
+10. Company contacting a job offer applicant
+11. Company setting an appointment with a job offer applicant
+12. Company visualisation of its job offers
+13. Company job offer elimination
+14. Company visualisation of next appointments with workers
+15. Company visualisation of an apppointment details
+
