@@ -29,14 +29,14 @@
         android:id="@+id/edt_email"
         android:layout_width="214dp"
         android:layout_height="48dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="30dp"
         android:autofillHints=""
         android:background="@drawable/custom_input_field"
-        android:padding="12dp"
-        android:textColorHint="#757575"
         android:ems="10"
         android:hint="@string/email_string"
         android:inputType="textEmailAddress"
+        android:padding="12dp"
+        android:textColorHint="#757575"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
@@ -68,7 +68,7 @@
         android:id="@+id/edt_password"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="30dp"
         android:autofillHints=""
         android:background="@drawable/custom_input_field"
         android:ems="10"
@@ -79,6 +79,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edt_email" />
+
+    <EditText
+        android:id="@+id/edt_retype_password"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginTop="30dp"
+        android:autofillHints=""
+        android:background="@drawable/custom_input_field"
+        android:ems="10"
+        android:hint="Confirm password"
+        android:inputType="textPassword"
+        android:padding="12dp"
+        android:textColorHint="#757575"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edt_password" />
 
     <Button
         android:id="@+id/btn_sign_up"
@@ -95,13 +111,13 @@
         android:id="@+id/radioGroup"
         android:layout_width="350dp"
         android:layout_height="35dp"
-        android:weightSum="100"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="50dp"
         android:orientation="horizontal"
+        android:weightSum="100"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_password">
+        app:layout_constraintTop_toBottomOf="@+id/edt_retype_password">
 
         <RadioButton
             android:id="@+id/radio_btn_worker"
@@ -117,8 +133,8 @@
 
         <RadioButton
             android:id="@+id/radio_btn_company"
-            android:layout_height="wrap_content"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="50"
             android:background="@drawable/radio_flat_selector"
             android:button="@android:color/transparent"

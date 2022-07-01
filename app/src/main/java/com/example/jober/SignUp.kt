@@ -19,6 +19,7 @@ class SignUp : AppCompatActivity() {
 
     private lateinit var edt_email : EditText
     private lateinit var edt_password : EditText
+    private lateinit var edt_retype_password : EditText
     private lateinit var btn_sign_up : Button
     private lateinit var mAuth : FirebaseAuth
     private lateinit var radio_btn_company : RadioButton
@@ -37,6 +38,7 @@ class SignUp : AppCompatActivity() {
 
         edt_email = findViewById(R.id.edt_email)
         edt_password = findViewById(R.id.edt_password)
+        edt_retype_password = findViewById(R.id.edt_retype_password)
         btn_sign_up = findViewById(R.id.btn_sign_up)
         radioGroup = findViewById(R.id.radioGroup)
         radio_btn_company = findViewById(R.id.radio_btn_company)
@@ -59,6 +61,7 @@ class SignUp : AppCompatActivity() {
         btn_sign_up.setOnClickListener {
             val email = edt_email.text.toString()
             val password = edt_password.text.toString()
+            val confirm_password = edt_retype_password.text.toString()
 
 
             var error_present = false
@@ -69,6 +72,18 @@ class SignUp : AppCompatActivity() {
             }
             if (password.isEmpty()) {
                 edt_password.error = "Please enter a password"
+                error_present = true
+            }
+            if (confirm_password.isEmpty()) {
+                edt_retype_password.error = "Please confirm your password"
+                error_present = true
+            }
+            if (!password.equals(confirm_password)) {
+                edt_retype_password.error = "The passwords don't match"
+                error_present = true
+            }
+            if (password.length < 6) {
+                edt_password.error = "The password is too short"
                 error_present = true
             }
 
