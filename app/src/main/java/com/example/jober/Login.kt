@@ -1,13 +1,16 @@
 package com.example.jober
 
+import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.InputType
 import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.google.firebase.auth.FirebaseAuth
 
 class Login : AppCompatActivity() {
@@ -74,5 +77,30 @@ class Login : AppCompatActivity() {
         val intent : Intent = Intent(this, SignUp::class.java)
         finish()
         startActivity(intent)
+    }
+
+    fun recoverPassword(v: View){
+        val builder: android.app.AlertDialog.Builder = android.app.AlertDialog.Builder(this)
+        builder.setTitle("Password recovery")
+
+        val input = EditText(this)
+        input.setHint("Enter e-mail address")
+        input.inputType = InputType.TYPE_CLASS_TEXT
+        builder.setView(input)
+
+        builder.setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
+            // Here you get get input text from the Edittext
+            var email= input.text.toString()
+            mAuth.sendPasswordResetEmail(email).addOnCompleteListener {
+                if(it.isSuccessful){
+                    Toast.makeText(this, "Mail for password recover has been sent!", Toast.LENGTH_LONG).show()
+                }
+            }.addOnFailureListener {
+                Toast.makeText(this, "Something went wrong...", Toast.LENGTH_LONG).show()
+            }
+        })
+        builder.setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, which -> dialog.cancel() })
+
+        builder.show()
     }
 }
