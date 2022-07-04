@@ -176,7 +176,7 @@
                     android:background="@drawable/custom_input_field"
                     android:ems="10"
                     android:gravity="top"
-                    android:hint="Educational experiences required"
+                    android:hint="@string/offer_edit_ed_exp"
                     android:inputType="textMultiLine"
                     android:paddingTop="25dp"
                     android:textColorHint="#757575"

@@ -49,12 +49,12 @@
                     android:elevation="20dp"
                     android:padding="13dp"
                     android:scaleType="fitCenter"
-                    android:tint="@color/black"
                     app:layout_constraintBottom_toBottomOf="@+id/iv_profile"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toEndOf="@+id/iv_profile"
-                    app:srcCompat="@drawable/ic_edit" />
+                    app:srcCompat="@drawable/ic_edit"
+                    app:tint="@color/black" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
@@ -71,7 +71,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="30"
                     android:paddingStart="16dp"
-                    android:text="Name:" />
+                    android:text="@string/worker_profile_name" />
 
                 <TextView
                     android:id="@+id/tv_name"
@@ -95,7 +95,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="30"
                     android:paddingStart="16dp"
-                    android:text="Surname:" />
+                    android:text="@string/worker_profile_surname" />
 
                 <TextView
                     android:id="@+id/tv_surname"
@@ -120,7 +120,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="30"
                     android:paddingStart="16dp"
-                    android:text="Age:" />
+                    android:text="@string/worker_profile_age" />
 
                 <TextView
                     android:id="@+id/tv_age"
@@ -152,7 +152,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="30"
                     android:paddingStart="16dp"
-                    android:text="Country:" />
+                    android:text="@string/worker_profile_country" />
 
                 <TextView
                     android:id="@+id/tv_country"
@@ -175,7 +175,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="30"
                     android:paddingStart="16dp"
-                    android:text="City:" />
+                    android:text="@string/worker_profile_city" />
 
                 <TextView
                     android:id="@+id/tv_city"
@@ -204,7 +204,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="30"
                     android:paddingStart="16dp"
-                    android:text="Main profession:" />
+                    android:text="@string/worker_profile_main_profession" />
 
                 <TextView
                     android:id="@+id/tv_main_profession"
@@ -227,7 +227,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="30"
                     android:paddingStart="16dp"
-                    android:text="Bio:" />
+                    android:text="@string/worker_profile_bio" />
 
                 <TextView
                     android:id="@+id/tv_bio"
@@ -256,7 +256,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="30"
                     android:paddingStart="16dp"
-                    android:text="Skills:" />
+                    android:text="@string/worker_profile_skills" />
 
                 <TextView
                     android:id="@+id/tv_skills"
@@ -285,7 +285,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="30"
                     android:paddingStart="16dp"
-                    android:text="Languages:" />
+                    android:text="@string/worker_profile_languages" />
 
                 <TextView
                     android:id="@+id/tv_languages"
@@ -316,7 +316,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="30"
                     android:paddingStart="16dp"
-                    android:text="Educational experiences:" />
+                    android:text="@string/worker_profile_edu_exp" />
 
                 <TextView
                     android:id="@+id/tv_educational_experiences"
@@ -344,7 +344,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="35dp"
-            android:text="Contact"
+            android:text="@string/worker_profile_contact"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

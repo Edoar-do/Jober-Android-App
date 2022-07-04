@@ -90,7 +90,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="30"
                     android:paddingStart="16dp"
-                    android:text="Company:" />
+                    android:text="@string/offer_description_company" />
 
                 <TextView
                     android:id="@+id/tv_company_name"
@@ -113,7 +113,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="30"
                     android:paddingStart="16dp"
-                    android:text="Sector:" />
+                    android:text="@string/offer_description_sector" />
 
                 <TextView
                     android:id="@+id/tv_company_sector"
@@ -144,7 +144,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="30"
                     android:paddingStart="16dp"
-                    android:text="Position:" />
+                    android:text="@string/offer_description_position" />
 
                 <TextView
                     android:id="@+id/tv_position"
@@ -166,7 +166,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="30"
                     android:paddingStart="16dp"
-                    android:text="Location:" />
+                    android:text="@string/offer_description_location" />
 
                 <TextView
                     android:id="@+id/tv_location"
@@ -188,7 +188,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="30"
                     android:paddingStart="16dp"
-                    android:text="Job description:" />
+                    android:text="@string/offer_description_job_description" />
 
                 <TextView
                     android:id="@+id/tv_job_description"
@@ -218,7 +218,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="30"
                     android:paddingStart="16dp"
-                    android:text="Skills required:" />
+                    android:text="@string/offer_description_skills_required" />
 
                 <TextView
                     android:id="@+id/tv_skills_required"
@@ -240,7 +240,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="30"
                     android:paddingStart="16dp"
-                    android:text="Languages required:" />
+                    android:text="@string/offer_description_languages_required" />
 
                 <TextView
                     android:id="@+id/tv_languages_required"
@@ -262,7 +262,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="30"
                     android:paddingStart="16dp"
-                    android:text="Educational experiences required:" />
+                    android:text="@string/offer_description_educational_experiences_required" />
 
                 <TextView
                     android:id="@+id/tv_edu_exp_required"

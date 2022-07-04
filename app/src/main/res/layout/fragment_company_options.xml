@@ -30,7 +30,7 @@
                 android:layout_height="56dp"
                 android:layout_marginTop="52dp"
                 android:backgroundTint="#000000"
-                android:text="company profile" />
+                android:text="@string/company_options_company_profile" />
 
             <Button
                 android:id="@+id/btn_new_offer"
@@ -38,7 +38,7 @@
                 android:layout_height="56dp"
                 android:layout_marginTop="32dp"
                 android:backgroundTint="#000000"
-                android:text="new offer" />
+                android:text="@string/company_options_new_offer" />
 
             <Button
                 android:id="@+id/btn_company_offers"
@@ -46,7 +46,7 @@
                 android:layout_height="56dp"
                 android:layout_marginTop="32dp"
                 android:backgroundTint="#000000"
-                android:text="company offers" />
+                android:text="@string/company_profile_company_offers" />
 
             <Button
                 android:id="@+id/btn_logout"
