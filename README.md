@@ -2,6 +2,7 @@
 
 ## Why
 More and more people worldwide are looking for a job and job-search apps are spreading. However, just a few of them allow to manage the entire end-to-end process (job search, application, contacts & chats, agenda, interviews, profile creation) within a single mobile-app. Jober is one of them!
+(*University project*)
 
 ## What
 Jober is a search-job android application developed in Kotlin within Android Studio. It is completeley open-source and released under the LICENSE file conditions.
